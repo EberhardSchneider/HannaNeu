@@ -1,0 +1,76 @@
+.navigation {
+	position: absolute;
+	display: inline-block;
+	left: 0%;
+	right: 78%;
+	height: 100vh;
+	z-index: 50;
+	background-color: #fff;
+
+	
+}
+
+.fadeOutArea {
+	position: absolute;
+	display: inline-block;
+
+	left: 22%;
+	right: 68%;
+
+	height: 100vh;
+
+	@include filter-gradient(#ffffff, #00ffff, vertical); // IE6-9
+	@include background-image(linear-gradient(left, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%));
+}
+
+
+.content {
+	position: absolute;
+	display: inline-block;
+	left: 0%;
+	right: 0;
+	height: 100vh;
+
+	z-index: -255;
+	overflow: hidden;
+}
+
+//  agenda ----------------------------------------------------------------------
+
+.agenda {
+	position: absolute;
+	left: 0;
+	top: 25%;
+	width: 1000%;
+	height: 400px;
+	overflow: hidden;
+
+	z-index: -255;
+}
+
+// audio 
+
+
+.audio {
+	position: absolute;
+	left: 30%;
+	right: 0;
+	top: 48%;
+	bottom: 0;
+
+	z-index: 255;
+
+
+}
+
+
+// gallery
+
+.gallery {
+	@include user-select(none);
+	position: absolute;
+	top: 48%;
+	left: 30%;
+	width: 500%;
+	height: 340px;
+}

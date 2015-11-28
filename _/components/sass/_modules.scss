@@ -1,0 +1,274 @@
+.home-button {
+	position: absolute;
+	width: 128px;
+	top: 0px;
+	z-index: 255;
+	padding: 10px;
+
+	opacity: 0.2;
+
+	&:hover {
+		opacity: 1;
+	}
+	img {
+		color: black;
+		width: 128px;
+	}
+}
+
+.menu-name, .menu-sopran {
+	position: absolute;
+	z-index: 205;
+	width: 256px;
+	img {
+		color: black;
+		width: 256px;
+	}
+
+	font-style: italic;
+}
+
+
+
+
+// agenda  --------------------------------------------------------------
+
+
+
+
+.event {
+	height: 330px;
+	width: 230px;
+	float: left;
+	padding: 22px;
+
+	font-size: 120%;
+
+	border: solid 2px  rgba(0,0,0,0);
+	margin: 22px;
+
+	background-color: #ddf;
+
+	@include user-select(none);
+
+	&:hover {
+		border: solid 2px black;
+	}
+
+	.komponist {
+		font-size: 80%;
+		text-align: center;
+	}
+
+	.title {
+		font-size: 95%;
+		text-align: center;
+		font-weight: bold;
+		border-bottom: solid black 2px;
+	}
+
+	.ort {
+		font-size: 80%;
+		opacity: .8;
+		text-align: center;
+		padding-top: 2px;
+	}
+
+	.datum {
+		font-weight: bold;
+		font-size: 95%;
+		text-align: center;
+		padding-top: 10px;
+	
+	}
+
+	.besetzung {
+		position: absolute;
+		bottom: 50px;
+		font-size: 80%;
+		padding-top: 40px;
+		margin-left: 25px;
+
+		.zeile {
+			padding-top: 2px;
+		}
+		
+		.darsteller {
+			float: right;
+			margin-right: 25px;
+		}
+	}
+}
+
+
+// vita ------------------------------------------------------------------------------
+
+.vita-wrapper {
+	position: absolute;
+	left: 30%;
+	right: 4%;
+	top: 0;
+
+
+	padding: 5px;
+
+}
+
+.vita-image {
+	display: block;
+	width: 100%;
+	margin-bottom: 120px;
+}
+
+
+// audio -----------------------------------------------------------------------
+
+.audio-track {
+	margin-bottom: 35px;
+	width: 100%;
+
+	&:hover {
+		background-color: #888;
+	}
+	z-index: 255;
+}
+
+.selected {
+
+	.audio-komponist {
+		border-bottom: solid 1px black;
+	}
+}
+
+.audio-komponist {
+	border-bottom: solid 1px rgba(0,0,0,0);
+	width: 100%;
+}
+
+.time-box {
+	position: absolute;
+	right: 5px;
+}
+
+
+
+.play-button {
+	position: absolute;
+	left: -64px;
+	z-index: 255;
+	opacity: 0;
+	width:64px;
+
+	img {
+		width: 64px;
+		color: black;
+	}
+} // play-button
+
+.nav-audio {
+	cursor: ew-resize;
+}
+
+.audio-info-box {
+	position: absolute;
+	right: 5px;
+	width: 200px;
+	height: 150px;
+	padding: 3px;
+
+	background-color: #ddd;
+
+	span { display: inline-block; }
+
+	.jahr {
+		float: right;
+	}
+
+	.besetzung {
+		padding-top: 30px;
+	}
+} // audio-info-box
+
+
+// Gallery -------------------------------------------------------------------
+
+.gallery {
+	width: 500%;
+	height: 340px;
+	img {
+		margin: 4px;
+		@include user-select(none);
+		z-index: -255;
+		
+	}
+
+
+}
+
+.overlay {
+		position: fixed;
+		top: 5%;
+		left: 5%;
+		bottom: 5%;
+		right: 5%;
+		background-color: rgba( 0, 0, 0, 0.6);
+		border-radius: 20px;
+
+		z-index: 255;
+
+
+		.presentation {
+			width: 50%;
+			display: block;
+    		margin-left: auto;
+    		margin-right: auto;
+    		margin-top: 15%;
+
+    		border: solid 10px white;
+    		@include border-radius( 10px );
+
+    		z-index: 200;
+		}
+
+		.close-icon {
+			position: fixed;
+			top: 5%;
+			right: 5%;
+			width: 64px;
+			background-color: black;
+
+			&:hover {
+				background-color: #333;
+			}
+
+			img {
+				width: 64px;
+				fill: white;
+			}
+		}
+}
+
+
+// kontakt ------------------------------------------------------------------------------
+
+.kontakt-wrapper {
+	position: absolute;
+	left: 30%;
+	right: 4%;
+	top: -40%;
+
+	padding: 5px;
+
+	.kontakt-image {
+		
+		left: 0;
+		right: 0;
+		img { width: 110%; }
+	}
+
+
+}
+
+
+
+

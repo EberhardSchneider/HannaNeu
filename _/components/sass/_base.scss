@@ -1,0 +1,23 @@
+body {
+	font-family: gothic;
+	font-size: 1em;
+	overflow: hidden;
+
+	@include box-sizing(border-box);
+
+}
+
+.menu-item {
+	position: absolute !important;
+	z-index: 100;
+	@include user-select( none );
+	background-color: rgba( 0,0,0,0 );
+}
+
+svg  {
+	alignment-baseline: baseline;
+}
+
+.hide {
+	display: none;
+}

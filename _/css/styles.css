@@ -1,0 +1,354 @@
+/* line 5, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+/* line 103, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+/* line 1, ../components/sass/_base.scss */
+body {
+  font-family: gothic;
+  font-size: 1em;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* line 10, ../components/sass/_base.scss */
+.menu-item {
+  position: absolute !important;
+  z-index: 100;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: transparent; }
+
+/* line 17, ../components/sass/_base.scss */
+svg {
+  alignment-baseline: baseline; }
+
+/* line 21, ../components/sass/_base.scss */
+.hide {
+  display: none; }
+
+/* line 1, ../components/sass/_layout.scss */
+.navigation {
+  position: absolute;
+  display: inline-block;
+  left: 0%;
+  right: 78%;
+  height: 100vh;
+  z-index: 50;
+  background-color: #fff; }
+
+/* line 13, ../components/sass/_layout.scss */
+.fadeOutArea {
+  position: absolute;
+  display: inline-block;
+  left: 22%;
+  right: 68%;
+  height: 100vh;
+  *zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FFFFFFFF', endColorstr='#FF00FFFF');
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIwLjAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ffffff), color-stop(100%, rgba(255, 255, 255, 0)));
+  background-image: -moz-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: -webkit-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0) 100%); }
+
+/* line 27, ../components/sass/_layout.scss */
+.content {
+  position: absolute;
+  display: inline-block;
+  left: 0%;
+  right: 0;
+  height: 100vh;
+  z-index: -255;
+  overflow: hidden; }
+
+/* line 40, ../components/sass/_layout.scss */
+.agenda {
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 1000%;
+  height: 400px;
+  overflow: hidden;
+  z-index: -255; }
+
+/* line 54, ../components/sass/_layout.scss */
+.audio {
+  position: absolute;
+  left: 30%;
+  right: 0;
+  top: 48%;
+  bottom: 0;
+  z-index: 255; }
+
+/* line 69, ../components/sass/_layout.scss */
+.gallery {
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  position: absolute;
+  top: 48%;
+  left: 30%;
+  width: 500%;
+  height: 340px; }
+
+/* line 1, ../components/sass/_modules.scss */
+.home-button {
+  position: absolute;
+  width: 128px;
+  top: 0px;
+  z-index: 255;
+  padding: 10px;
+  opacity: 0.2; }
+/* line 10, ../components/sass/_modules.scss */
+.home-button:hover {
+  opacity: 1; }
+/* line 13, ../components/sass/_modules.scss */
+.home-button img {
+  color: black;
+  width: 128px; }
+
+/* line 19, ../components/sass/_modules.scss */
+.menu-name, .menu-sopran {
+  position: absolute;
+  z-index: 205;
+  width: 256px;
+  font-style: italic; }
+/* line 23, ../components/sass/_modules.scss */
+.menu-name img, .menu-sopran img {
+  color: black;
+  width: 256px; }
+
+/* line 39, ../components/sass/_modules.scss */
+.event {
+  height: 330px;
+  width: 230px;
+  float: left;
+  padding: 22px;
+  font-size: 120%;
+  border: solid 2px transparent;
+  margin: 22px;
+  background-color: #ddf;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none; }
+/* line 54, ../components/sass/_modules.scss */
+.event:hover {
+  border: solid 2px black; }
+/* line 58, ../components/sass/_modules.scss */
+.event .komponist {
+  font-size: 80%;
+  text-align: center; }
+/* line 63, ../components/sass/_modules.scss */
+.event .title {
+  font-size: 95%;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: solid black 2px; }
+/* line 70, ../components/sass/_modules.scss */
+.event .ort {
+  font-size: 80%;
+  opacity: .8;
+  text-align: center;
+  padding-top: 2px; }
+/* line 77, ../components/sass/_modules.scss */
+.event .datum {
+  font-weight: bold;
+  font-size: 95%;
+  text-align: center;
+  padding-top: 10px; }
+/* line 85, ../components/sass/_modules.scss */
+.event .besetzung {
+  position: absolute;
+  bottom: 50px;
+  font-size: 80%;
+  padding-top: 40px;
+  margin-left: 25px; }
+/* line 92, ../components/sass/_modules.scss */
+.event .besetzung .zeile {
+  padding-top: 2px; }
+/* line 96, ../components/sass/_modules.scss */
+.event .besetzung .darsteller {
+  float: right;
+  margin-right: 25px; }
+
+/* line 106, ../components/sass/_modules.scss */
+.vita-wrapper {
+  position: absolute;
+  left: 30%;
+  right: 4%;
+  top: 0;
+  padding: 5px; }
+
+/* line 117, ../components/sass/_modules.scss */
+.vita-image {
+  display: block;
+  width: 100%;
+  margin-bottom: 120px; }
+
+/* line 126, ../components/sass/_modules.scss */
+.audio-track {
+  margin-bottom: 35px;
+  width: 100%;
+  z-index: 255; }
+/* line 130, ../components/sass/_modules.scss */
+.audio-track:hover {
+  background-color: #888; }
+
+/* line 138, ../components/sass/_modules.scss */
+.selected .audio-komponist {
+  border-bottom: solid 1px black; }
+
+/* line 143, ../components/sass/_modules.scss */
+.audio-komponist {
+  border-bottom: solid 1px transparent;
+  width: 100%; }
+
+/* line 148, ../components/sass/_modules.scss */
+.time-box {
+  position: absolute;
+  right: 5px; }
+
+/* line 155, ../components/sass/_modules.scss */
+.play-button {
+  position: absolute;
+  left: -64px;
+  z-index: 255;
+  opacity: 0;
+  width: 64px; }
+/* line 162, ../components/sass/_modules.scss */
+.play-button img {
+  width: 64px;
+  color: black; }
+
+/* line 168, ../components/sass/_modules.scss */
+.nav-audio {
+  cursor: ew-resize; }
+
+/* line 172, ../components/sass/_modules.scss */
+.audio-info-box {
+  position: absolute;
+  right: 5px;
+  width: 200px;
+  height: 150px;
+  padding: 3px;
+  background-color: #ddd; }
+/* line 181, ../components/sass/_modules.scss */
+.audio-info-box span {
+  display: inline-block; }
+/* line 183, ../components/sass/_modules.scss */
+.audio-info-box .jahr {
+  float: right; }
+/* line 187, ../components/sass/_modules.scss */
+.audio-info-box .besetzung {
+  padding-top: 30px; }
+
+/* line 195, ../components/sass/_modules.scss */
+.gallery {
+  width: 500%;
+  height: 340px; }
+/* line 198, ../components/sass/_modules.scss */
+.gallery img {
+  margin: 4px;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: -255; }
+
+/* line 208, ../components/sass/_modules.scss */
+.overlay {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  bottom: 5%;
+  right: 5%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  z-index: 255; }
+/* line 220, ../components/sass/_modules.scss */
+.overlay .presentation {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  border: solid 10px white;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  z-index: 200; }
+/* line 233, ../components/sass/_modules.scss */
+.overlay .close-icon {
+  position: fixed;
+  top: 5%;
+  right: 5%;
+  width: 64px;
+  background-color: black; }
+/* line 240, ../components/sass/_modules.scss */
+.overlay .close-icon:hover {
+  background-color: #333; }
+/* line 244, ../components/sass/_modules.scss */
+.overlay .close-icon img {
+  width: 64px;
+  fill: white; }
+
+/* line 254, ../components/sass/_modules.scss */
+.kontakt-wrapper {
+  position: absolute;
+  left: 30%;
+  right: 4%;
+  top: -40%;
+  padding: 5px; }
+/* line 262, ../components/sass/_modules.scss */
+.kontakt-wrapper .kontakt-image {
+  left: 0;
+  right: 0; }
+/* line 266, ../components/sass/_modules.scss */
+.kontakt-wrapper .kontakt-image img {
+  width: 110%; }
