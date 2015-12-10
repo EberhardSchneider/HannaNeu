@@ -42,7 +42,7 @@ var VController = (function(window, document, undefined) {
 		self.cc.addContent("vita", new Content( Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita)));
 		self.cc.addContent("hören", new Content( AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer)));
 		self.cc.addContent("sehen", new Content( Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery)));
-		self.cc.addContent("kontakt", new Content( Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt)));
+		self.cc.addContent("kontakt", new Content( Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt)));
 		self.cc.addContent("home", new Content( (function() { return ""; }), function(){}, function(){}));
 
 
@@ -117,7 +117,7 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("vita");
 		for (var i = 0; i<5; i++ ) {
 			if ( i == 1 ) {
-				vitaState.push({ x: menuLeft, y: .48 * window.innerHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - .5, opacity: 1 });
+				vitaState.push({ x: menuLeft, y: .43 * window.innerHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - .5, opacity: 1 });
 			} else {
 			vitaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: .7});
 			}
@@ -170,7 +170,7 @@ var VController = (function(window, document, undefined) {
 		
 		for (var i = 0; i<5; i++ ) {
 			if ( i == 4 ) {
-				kontaktState.push({ x: 50, y: menuTop  + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - .5, opacity: 1 });
+				kontaktState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: menuLength + 20 , height: menuItemHeight, fontSize: homeFontSize - .5, opacity: 1 });
 			} else {
 			kontaktState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: .7});
 			}

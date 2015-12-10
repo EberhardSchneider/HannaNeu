@@ -410,10 +410,10 @@ var AudioPlayer = {
 
 		if ( parseInt(topTrack + heightBox) > window.innerHeight ) {
 			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack + 20) + "px" );
-			$(".time-box").css("top", ( topTrack  ) + "px" );
+			$(".time-box").css("top", ( topTrack + 3  ) + "px" );
 
 		}  else {
-			$(".time-box").css("top", ( topTrack - 40 ) + "px" );
+			$(".time-box").css("top", ( topTrack - 16  ) + "px" );
 		}
 
 		// Time Box justieren

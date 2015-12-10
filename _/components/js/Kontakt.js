@@ -8,6 +8,14 @@ var Kontakt = {
 
 	activate: function() {},
 
-	deactivate: function() {}
+	deactivate: function() {},
+
+	callback: function() {
+		var top = parseInt( $(".menu-item").eq(4).css("top"), 10);
+		var height = $(".menu-item")[4].getBoundingClientRect().height;
+		$(".kontakt-schablone").css( { "height": ( height + 20 ) + "px", top: (top * 1.08 - 10) + "px", display: "none"});
+		$(".kontakt-schablone").fadeIn(500);
+	}
+		
 
 };

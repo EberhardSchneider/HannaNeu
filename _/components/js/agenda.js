@@ -95,7 +95,6 @@ var Agenda = {
 	},	// init
 
 	getMarkUp: 	function() {
-		console.log("GetMarkUp");
 		return Agenda.html;
 	},
 
@@ -120,7 +119,7 @@ var Agenda = {
 
 		self.eventBoxWidth = $(".event")[0].getBoundingClientRect().width;
 		self.timelineLength = Agenda.numberOfEventboxes * self.eventBoxWidth;
-		console.log(self.timelineLength);
+		$(".agenda").css("width", self.timelineLength + "px");
 	},
 
 

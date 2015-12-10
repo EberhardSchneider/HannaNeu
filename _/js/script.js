@@ -122,7 +122,15 @@ var Content = function(a, b, c) {
         return a += $(".kontakt").html(), a += "</div>";
     },
     activate: function() {},
-    deactivate: function() {}
+    deactivate: function() {},
+    callback: function() {
+        var a = parseInt($(".menu-item").eq(4).css("top"), 10), b = $(".menu-item")[4].getBoundingClientRect().height;
+        $(".kontakt-schablone").css({
+            height: b + 20 + "px",
+            top: 1.08 * a - 10 + "px",
+            display: "none"
+        }), $(".kontakt-schablone").fadeIn(500);
+    }
 }, MenuController = function(a, b, c) {
     function d(a, b) {
         var c = this;
@@ -202,7 +210,7 @@ var Content = function(a, b, c) {
         a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita))), 
         a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer))), 
         a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery))), 
-        a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt))), 
+        a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
         a.cc.addContent("home", new Content(function() {
             return "";
         }, function() {}, function() {})), events.on("resize", function() {
@@ -304,7 +312,7 @@ var Content = function(a, b, c) {
         this.mc.removeState("vita");
         for (var j = 0; 5 > j; j++) 1 == j ? m.push({
             x: d,
-            y: .48 * a.innerHeight,
+            y: .43 * a.innerHeight,
             width: e,
             height: c,
             fontSize: h - .5,
@@ -439,9 +447,9 @@ var Content = function(a, b, c) {
             opacity: 0
         }), this.mc.addState("sehen", new State("sehen", o));
         for (var p = [], j = 0; 5 > j; j++) 4 == j ? p.push({
-            x: 50,
+            x: .25 * a.innerWidth,
             y: b + j * c,
-            width: e,
+            width: e + 20,
             height: c,
             fontSize: h - .5,
             opacity: 1
@@ -552,7 +560,7 @@ var Content = function(a, b, c) {
         });
     },
     getMarkUp: function() {
-        return console.log("GetMarkUp"), Agenda.html;
+        return Agenda.html;
     },
     activate: function() {
         var a = Agenda;
@@ -564,7 +572,7 @@ var Content = function(a, b, c) {
     callback: function() {
         var a = this;
         a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
-        console.log(a.timelineLength);
+        $(".agenda").css("width", a.timelineLength + "px");
     },
     activateNavigation: function() {
         for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
@@ -773,7 +781,7 @@ var Content = function(a, b, c) {
         var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2));
         window.innerHeight;
         parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + 20 + "px"), 
-        $(".time-box").css("top", d + "px")) : $(".time-box").css("top", d - 40 + "px");
+        $(".time-box").css("top", d + 3 + "px")) : $(".time-box").css("top", d - 16 + "px");
     },
     audioReady: function() {
         var a = AudioPlayer;

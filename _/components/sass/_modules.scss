@@ -9,6 +9,7 @@
 
 	&:hover {
 		opacity: 1;
+		cursor: pointer;
 	}
 	img {
 		color: black;
@@ -28,6 +29,12 @@
 	font-style: italic;
 }
 
+.menu-item {
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 
 
 
@@ -37,7 +44,7 @@
 
 .agenda {
 	@include user-select(none);
-	
+	width: 150%;
 }
 
 .event {
@@ -114,7 +121,7 @@
 	display: block;
 	height: 45%;
 	top: 0;
-	margin-bottom: 120px;
+	margin-bottom: 10%;
 
 	
 
@@ -125,21 +132,31 @@
 
 .vita-text {
 
-	background-color: #ddd;
-		p {
+	position: relative;
+	height: 45%;
+	
+	
+	text-align: justify;
+
+	p {
 		margin: 15px;
 	}
+	
+	overflow: auto;
 }
 
 
 // audio -----------------------------------------------------------------------
 
 .audio-track {
+	
+	@include user-select(none);
+
 	margin-bottom: 35px;
 	width: 100%;
 
 	&:hover {
-		background-color: #888;
+		cursor: pointer;
 	}
 	z-index: 255;
 }
@@ -174,6 +191,10 @@
 		width: 64px;
 		color: black;
 	}
+
+	&:hover {
+		cursor: pointer;
+	}
 } // play-button
 
 .nav-audio {
@@ -185,9 +206,9 @@
 	right: 5px;
 	width: 200px;
 	height: 150px;
-	padding: 3px;
+	padding: 6px;
 
-	background-color: #ddd;
+	border: solid black 2px;
 
 	span { display: inline-block; }
 
@@ -266,7 +287,7 @@
 	position: absolute;
 	left: 30%;
 	right: 4%;
-	top: -40%;
+	/* top: -40%; */
 
 	padding: 5px;
 
@@ -275,6 +296,16 @@
 		left: 0;
 		right: 0;
 		img { width: 110%; }
+	}
+
+	.kontakt-schablone {
+		position: absolute;
+		width: 150%;
+		z-index: 255;
+		top: 0;
+		left: 0;
+		height: 70px;
+		background-color: #fff;
 	}
 
 
