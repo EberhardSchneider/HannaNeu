@@ -1,7 +1,7 @@
 var MenuController = (function(window, document, undefined) {
 	
 	// speichert MenuStates
-	// animiert Wechsel .... besser in VController!!!???
+	// animiert Wechsel .... 
 
 
 	// Constructor -----------------------------------------------------------------------------

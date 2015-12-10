@@ -38,6 +38,8 @@ var Item = (function() {
 		var self = this;
 		duration = duration || 1.5;
 
+		newY -= 60;
+
 
 		TweenMax.to( self._$obj, duration, { left: newX, top: newY, onComplete: callback } );
 

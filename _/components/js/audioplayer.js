@@ -72,8 +72,7 @@ var AudioPlayer = {
 	
 
 		// HTML bereiten
-		var container = document.createElement("div");
-		container.className = "audio";
+		var container = "<div class='audio-image'></div><div class = 'audio'>";
 
 		var markUp = "";
 
@@ -81,7 +80,8 @@ var AudioPlayer = {
 			markUp += "<div class='audio-track'><div class='audio-komponist'>"+ elem.komponist +"</div><div class='audio-titel'>"+ elem.titel +"</div></div>";
 		});
 
-		container.innerHTML = markUp;
+		container +=  markUp;
+		container += "</div>";
 		
 
 		self._html = container;
@@ -122,6 +122,8 @@ var AudioPlayer = {
 		$(".nav-audio").removeClass("nav-audio");
 
 		$(".play-button").off();
+
+		self.isMouseDown = false;
 	},
 
 	getMarkUp: function() {
@@ -192,6 +194,8 @@ var AudioPlayer = {
 
 	playTrack: function( trackToPlay ) {
 		var self = AudioPlayer;
+
+		self.isMouseDown = false;
 		// jede Animation zur Sicherheit stoppen und Audio
 		$( self.audioMenuItem ).stop();
 
@@ -302,7 +306,7 @@ var AudioPlayer = {
 
 			
 			
-			var perc = ( (newLeft - 74) * 100 / ( self.windowWidth - self.audioMenuItemWidth - 60)  );
+			var perc = ( (newLeft - 74) * 100 / ( window.innerWidth - self.audioMenuItemWidth - 60)  );
 			perc = ( perc > 100 ) ? 100 : perc;
 			perc = ( perc < 0 ) ? 0 : perc;
 
@@ -346,11 +350,15 @@ var AudioPlayer = {
 	timeUpdate: function() {
 		var self = AudioPlayer;
 
+		var secondsComplete = Math.floor(self.audioElements[ self.trackNumberPlaying ].duration );
+		var minutesComplete = Math.floor( secondsComplete / 60 );
+		secondsComplete -= minutesComplete*60;
+		
 		var seconds = Math.floor( self.audioElements[ self.trackNumberPlaying ].currentTime );
 		var minutes = Math.floor( seconds / 60 );
 		seconds -= minutes*60;
 
-		$(".time-box").text( self.formatTime(minutes, seconds) );
+		$(".time-box").text( self.formatTime(minutes, seconds) + " / "+ self.formatTime( minutesComplete, secondsComplete ) );
 	},
 
 	formatTime: function ( minutes, seconds ) {

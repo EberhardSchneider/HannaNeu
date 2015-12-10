@@ -1,6 +1,6 @@
 var Content = function(a, b, c) {
-    function d(a, b, c) {
-        this.getMarkUp = a, this.activate = b, this.deactivate = c;
+    function d(a, b, c, d) {
+        this.getMarkUp = a, this.activate = b, this.deactivate = c, this.callback = d;
     }
     return d;
 }(window, document), ContentController = function(a, b, c) {
@@ -22,7 +22,8 @@ var Content = function(a, b, c) {
         return this._content[a] === c ? void console.log("ContentController: unknown content '" + a + "'") : (this._content[this._currentContentName] !== c && this._content[this._currentContentName].deactivate(), 
         void this._animateOut(700, function() {
             b._currentMarkUp = b._content[a].getMarkUp(), b._$targetContainer.empty().html(b._currentMarkUp), 
-            b._currentContentName = a, b._content[b._currentContentName].activate(), b._animateIn();
+            b._currentContentName = a, b._content[b._currentContentName].activate(), b._animateIn(), 
+            setTimeout(b._content[b._currentContentName].callback, 1e3);
         }));
     }, d;
 }(window, document), events = {
@@ -51,7 +52,7 @@ var Content = function(a, b, c) {
         0 != this._$text.length && this._$text[0].setAttribute("textLength", 300);
     }, a.prototype._render = function() {}, a.prototype._animateXY = function(a, b, c, d) {
         var e = this;
-        d = d || 1.5, TweenMax.to(e._$obj, d, {
+        d = d || 1.5, b -= 60, TweenMax.to(e._$obj, d, {
             left: a,
             top: b,
             onComplete: c
@@ -197,7 +198,7 @@ var Content = function(a, b, c) {
         a.cc = new ContentController($(".content")), this.mc = new MenuController(b, this._browser), 
         AudioPlayer.init(), b.find("text").each(function() {
             $(this) !== c && ($(this)[0].setAttribute("textLength", 372), $(this)[0].setAttribute("y", 0));
-        }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda))), 
+        }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
         a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita))), 
         a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer))), 
         a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery))), 
@@ -208,278 +209,279 @@ var Content = function(a, b, c) {
             a._calculatePositions(), a.mc.render();
         }), this._calculatePositions();
     }, d.prototype._manageContent = function(a) {
-        var b = this.cc.getCurrentContentName();
-        -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], console.log("old: " + b + "   new:" + newContentName), 
-        this.cc.changeContent(newContentName);
+        this.cc.getCurrentContentName();
+        -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        for (var b = .1 * a.innerHeight, c = .1 * a.innerHeight, d = .3 * a.innerWidth, e = .25 * a.innerWidth, f = 5.5, g = [], h = 0; 5 > h; h++) {
-            var i = [ 372, 190, 318, 304, 410 ][h];
-            g.push({
+        var b = .25 * a.innerHeight, c = .07 * a.innerHeight, d = .3 * a.innerWidth, e = .25 * a.innerWidth;
+        e = e > 300 ? 300 : e;
+        for (var f = 10, g = 70, h = .005 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
+            var k = [ 372, 190, 318, 304, 410 ][j];
+            i.push({
                 x: d,
-                y: b + h * c,
-                width: i,
+                y: b + j * c,
+                width: k,
                 height: c,
-                fontSize: f,
+                fontSize: h,
                 opacity: 1
             });
         }
-        g.push({
-            x: 10,
-            y: 10,
+        i.push({
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), g.push({
+        }), i.push({
             x: -130,
             y: b + 2.75 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), g.push({
-            x: d - 130,
-            y: b - 84,
+        }), i.push({
+            x: d - 140,
+            y: b - 104,
             width: 350,
             height: 128,
-            fontSize: f / 2.5,
+            fontSize: h / 2.5,
             opacity: 1
-        }), g.push({
-            x: d - 130,
-            y: b - 46,
+        }), i.push({
+            x: d - 140,
+            y: b - 66,
             width: 150,
             height: 128,
-            fontSize: f / 2.5,
+            fontSize: h / 2.5,
             opacity: 1
-        }), this.mc.addState("home", new State("home", g));
-        var j = [];
-        this.mc.removeState("agenda"), j.push({
+        }), this.mc.addState("home", new State("home", i));
+        var l = [];
+        this.mc.removeState("agenda"), l.push({
             x: 50,
             y: b,
             width: e,
             height: c,
-            fontSize: f - .5,
+            fontSize: h - .5,
             opacity: 1
         });
-        for (var h = 1; 5 > h; h++) j.push({
+        for (var j = 1; 5 > j; j++) l.push({
             x: 10,
-            y: b + h * c,
+            y: b + j * c,
             width: e,
             height: c,
-            fontSize: f - 2,
-            opacity: .7
-        });
-        j.push({
-            x: 10,
-            y: 10,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), j.push({
-            x: -130,
-            y: b + 2.75 * c,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), j.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), j.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("agenda", new State("agenda", j));
-        var k = [];
-        this.mc.removeState("vita");
-        for (var h = 0; 5 > h; h++) 1 == h ? k.push({
-            x: d,
-            y: 4.5 * b,
-            width: e,
-            height: c,
-            fontSize: f - .5,
-            opacity: 1
-        }) : k.push({
-            x: 10,
-            y: b + h * c,
-            width: e,
-            height: c,
-            fontSize: f - 2,
-            opacity: .7
-        });
-        k.push({
-            x: 10,
-            y: 10,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), k.push({
-            x: -130,
-            y: b + 2.75 * c,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), k.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), k.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("vita", new State("vita", k));
-        var l = [];
-        this.mc.removeState("hören");
-        for (var h = 0; 5 > h; h++) 2 == h ? l.push({
-            x: 74,
-            y: b + h * c,
-            width: e,
-            height: c,
-            fontSize: f - .5,
-            opacity: 1
-        }) : l.push({
-            x: 10,
-            y: b + h * c,
-            width: e,
-            height: c,
-            fontSize: f - 2,
+            fontSize: h - 2,
             opacity: .7
         });
         l.push({
-            x: 10,
-            y: 10,
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
         }), l.push({
+            x: -130,
+            y: b + 2.75 * c,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), l.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), l.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("agenda", new State("agenda", l));
+        var m = [];
+        this.mc.removeState("vita");
+        for (var j = 0; 5 > j; j++) 1 == j ? m.push({
+            x: d,
+            y: .48 * a.innerHeight,
+            width: e,
+            height: c,
+            fontSize: h - .5,
+            opacity: 1
+        }) : m.push({
+            x: 10,
+            y: b + j * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
+            opacity: .7
+        });
+        m.push({
+            x: f,
+            y: g,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), m.push({
+            x: -130,
+            y: b + 2.75 * c,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), m.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), m.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("vita", new State("vita", m));
+        var n = [];
+        this.mc.removeState("hören");
+        for (var j = 0; 5 > j; j++) 2 == j ? n.push({
+            x: 74,
+            y: b + j * c,
+            width: e,
+            height: c,
+            fontSize: h - .5,
+            opacity: 1
+        }) : n.push({
+            x: 10,
+            y: b + j * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
+            opacity: .7
+        });
+        n.push({
+            x: f,
+            y: g,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), n.push({
             x: 5,
             y: b + 2.75 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 1
-        }), l.push({
+        }), n.push({
             x: d - 50,
             y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), l.push({
+        }), n.push({
             x: d - 50,
             y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("hören", new State("hören", l));
-        var m = [];
+        }), this.mc.addState("hören", new State("hören", n));
+        var o = [];
         this.mc.removeState("sehen");
-        for (var h = 0; 5 > h; h++) 3 == h ? m.push({
+        for (var j = 0; 5 > j; j++) 3 == j ? o.push({
             x: 50,
-            y: b + h * c,
+            y: b + j * c,
             width: e,
             height: c,
-            fontSize: f - .5,
+            fontSize: h - .5,
             opacity: 1
-        }) : m.push({
+        }) : o.push({
             x: 10,
-            y: b + h * c,
+            y: b + j * c,
             width: e,
             height: c,
-            fontSize: f - 2,
+            fontSize: h - 2,
             opacity: .7
         });
-        m.push({
-            x: 10,
-            y: 10,
+        o.push({
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
-        }), m.push({
+        }), o.push({
             x: -130,
             y: b + 2.75 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), m.push({
+        }), o.push({
             x: d - 50,
             y: b - 30,
             width: 0,
             height: 0,
             fontSize: 0,
             opacity: 0
-        }), m.push({
+        }), o.push({
             x: d - 50,
             y: b - 30,
             width: 0,
             height: 0,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("sehen", new State("sehen", m));
-        for (var n = [], h = 0; 5 > h; h++) 4 == h ? n.push({
+        }), this.mc.addState("sehen", new State("sehen", o));
+        for (var p = [], j = 0; 5 > j; j++) 4 == j ? p.push({
             x: 50,
-            y: b + h * c,
+            y: b + j * c,
             width: e,
             height: c,
-            fontSize: f - .5,
+            fontSize: h - .5,
             opacity: 1
-        }) : n.push({
+        }) : p.push({
             x: 10,
-            y: b + h * c,
+            y: b + j * c,
             width: e,
             height: c,
-            fontSize: f - 2,
+            fontSize: h - 2,
             opacity: .7
         });
-        n.push({
-            x: 10,
-            y: 10,
+        p.push({
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
-        }), n.push({
+        }), p.push({
             x: -130,
             y: b + 2.75 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), n.push({
+        }), p.push({
             x: d - 50,
             y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), n.push({
+        }), p.push({
             x: d - 50,
             y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("kontakt", new State("kontakt", n));
+        }), this.mc.addState("kontakt", new State("kontakt", p));
     }, d.prototype._detectBrowser = function() {
         var a, b, c, d = (navigator.appVersion, navigator.userAgent), e = navigator.appName, f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10);
         -1 != (b = d.indexOf("Opera")) && (e = "Opera", f = d.substring(b + 6), -1 != (b = d.indexOf("Version")) && (f = d.substring(b + 8))), 
@@ -517,6 +519,7 @@ var Content = function(a, b, c) {
         timeLine: []
     },
     markUp: "",
+    numberOfEventboxes: 0,
     deceleration: .9,
     isMouseDown: !1,
     draggedObject: {
@@ -537,10 +540,11 @@ var Content = function(a, b, c) {
             dataType: "json",
             url: "include/events.json",
             success: function(b) {
+                Agenda.numberOfEventboxes = 0;
                 var c = "<div class='agenda'>";
                 $.each(b, function(a, b) {
                     var d = "";
-                    $.each(b.besetzung, function(a, b) {
+                    Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
                         d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
                     }), c += '<div class="event">\r\n							<div class="komponist">' + b.komponist + '</div>\r\n							<div class="title">' + b.title + '</div>\r\n							<div class="ort">' + b.ort + '</div>\r\n							<div class="datum">' + b.datum + '</div>\r\n							<div class="besetzung">' + d + "</div>\r\n						</div>";
                 }), c += "</div>", a.html = c;
@@ -557,6 +561,11 @@ var Content = function(a, b, c) {
     deactivate: function() {
         Agenda.deactivateNavigation();
     },
+    callback: function() {
+        var a = this;
+        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
+        console.log(a.timelineLength);
+    },
     activateNavigation: function() {
         for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
         document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
@@ -564,7 +573,10 @@ var Content = function(a, b, c) {
     deactivateNavigation: function() {},
     animateTimeline: function() {
         var a = Agenda;
-        a.leftPos += a.scrollSpeed, $(".agenda").css("left", a.leftPos + "px");
+        a.leftPos += a.scrollSpeed, a.leftPos > 350 ? (a.leftPos = 300, a.scrollSpeed = 0, 
+        Agenda.isMouseDown = !1) : a.leftPos < -a.timelineLength && (a.leftPos = -a.timelineLength, 
+        a.scrollSpeed = 0, Agenda.isMouseDown = !1), console.log(a.leftPos + " < " + -a.timelineLength), 
+        $(".agenda").css("left", a.leftPos + "px");
     },
     mouseDownHandler: function(a) {
         var b = Agenda;
@@ -582,7 +594,8 @@ var Content = function(a, b, c) {
     mouseMoveHandler: function(a) {
         if (Agenda.isMouseDown) {
             var b = Agenda.draggedObject.x - a.pageX;
-            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), Agenda.scrollSpeed = -b / 10;
+            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), Agenda.scrollSpeed = -b / 10, 
+            Agenda.scrollSpeed = Agenda.scrollSpeed > 25 ? 25 : Agenda.scrollSpeed, Agenda.scrollSpeed = Agenda.scrollSpeed < -25 ? -25 : Agenda.scrollSpeed;
         }
     }
 }, AudioPlayer = {
@@ -632,12 +645,10 @@ var Content = function(a, b, c) {
             a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
             a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
         })), $(".play-button").empty().append(a.playIcon);
-        var b = document.createElement("div");
-        b.className = "audio";
-        var c = "";
+        var b = "<div class='audio-image'></div><div class = 'audio'>", c = "";
         a.audioElements.forEach(function(a) {
             c += "<div class='audio-track'><div class='audio-komponist'>" + a.komponist + "</div><div class='audio-titel'>" + a.titel + "</div></div>";
-        }), b.innerHTML = c, a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
+        }), b += c, b += "</div>", a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
         a.isMouseDown = !1;
     },
     activate: function() {
@@ -657,7 +668,7 @@ var Content = function(a, b, c) {
     deactivate: function() {
         AudioPlayer.stopCurrentPlaying(), AudioPlayer.clearAudioNavigation(), $(".menu-item").eq(2).on("click", function() {
             events.emit("itemClicked", $(this).index());
-        }), $(".nav-audio").removeClass("nav-audio"), $(".play-button").off();
+        }), $(".nav-audio").removeClass("nav-audio"), $(".play-button").off(), self.isMouseDown = !1;
     },
     getMarkUp: function() {
         return this._html;
@@ -686,9 +697,10 @@ var Content = function(a, b, c) {
     },
     playTrack: function(a) {
         var b = AudioPlayer;
-        $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), $(b.audioMenuItem).addClass("nav-audio"), 
-        b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), 
-        b.trackNumberPlaying = a, $(".play-button").empty().append(b.pauseIcon), $(".selected").removeClass("selected"), 
+        b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
+        $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
+        a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
+        $(".play-button").empty().append(b.pauseIcon), $(".selected").removeClass("selected"), 
         b.currentTrackDiv.addClass("selected"), clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), 
         b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), 
         b.audioElements[a].play(), b.createTime(), b.createInfoBox(), b.initAudioNavigation(), 
@@ -725,7 +737,7 @@ var Content = function(a, b, c) {
     mouseMoveHandler: function(a) {
         var b = AudioPlayer;
         if (b.isMouseDown) {
-            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (b.windowWidth - b.audioMenuItemWidth - 60);
+            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (window.innerWidth - b.audioMenuItemWidth - 60);
             e = e > 100 ? 100 : e, e = 0 > e ? 0 : e, b.navPerc = e;
             var f = b.audioElements[b.trackNumberPlaying];
             f.currentTime = b.navPerc * f.duration / 100, b.navigationUpdate(), b.timeUpdate();
@@ -738,8 +750,10 @@ var Content = function(a, b, c) {
         $(a.audioMenuItem).css("left", d + "px");
     },
     timeUpdate: function() {
-        var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), c = Math.floor(b / 60);
-        b -= 60 * c, $(".time-box").text(a.formatTime(c, b));
+        var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].duration), c = Math.floor(b / 60);
+        b -= 60 * c;
+        var d = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), e = Math.floor(d / 60);
+        d -= 60 * e, $(".time-box").text(a.formatTime(e, d) + " / " + a.formatTime(c, b));
     },
     formatTime: function(a, b) {
         var c = "";

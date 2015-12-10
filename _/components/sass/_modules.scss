@@ -103,21 +103,28 @@
 
 // vita ------------------------------------------------------------------------------
 
-.vita-wrapper {
-	position: absolute;
-	left: 30%;
-	right: 4%;
+
+
+.vita-image {
+	position: relative;
+	display: block;
+	height: 45%;
 	top: 0;
+	margin-bottom: 120px;
 
+	
 
-	padding: 5px;
+	img { height: 100%;}
+
 
 }
 
-.vita-image {
-	display: block;
-	width: 100%;
-	margin-bottom: 120px;
+.vita-text {
+
+	background-color: #ddd;
+		p {
+		margin: 15px;
+	}
 }
 
 

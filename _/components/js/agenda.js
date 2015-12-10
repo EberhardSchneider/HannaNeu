@@ -17,6 +17,8 @@ var Agenda = {
 
 	markUp: 	"",   // hier das einzuhängende HTML
 
+	numberOfEventboxes: 0 ,
+
 	deceleration: 	0.9,
 
 	isMouseDown: 	false,
@@ -59,12 +61,15 @@ var Agenda = {
 		  
 		  success:  function( data ) { 
 
+		  	Agenda.numberOfEventboxes = 0;
+
 		  	var html = "<div class='agenda'>";
 
 			$.each( data, function( key, elem ) {
 				// events.push( elem );
 
 				var besetzung = "";
+				Agenda.numberOfEventboxes++;
 
 				$.each( elem.besetzung, function( rolle, darsteller ) { 
 					besetzung += "<div class='zeile'><span class='rolle'>"+ rolle +":</span><span class='darsteller'>"+ darsteller +"</span></div>";
@@ -81,6 +86,8 @@ var Agenda = {
 
 			html += "</div>";
 			self.html = html;
+
+
 
 			} // success
 		}); // ajax
@@ -103,6 +110,17 @@ var Agenda = {
 
 	deactivate: function() {
 		Agenda.deactivateNavigation();  ////////////////// TO BE IMPLEMENTED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	},
+
+	
+
+	// callback after html is inserted
+	callback: function() {
+		var self = this;
+
+		self.eventBoxWidth = $(".event")[0].getBoundingClientRect().width;
+		self.timelineLength = Agenda.numberOfEventboxes * self.eventBoxWidth;
+		console.log(self.timelineLength);
 	},
 
 
@@ -130,10 +148,22 @@ var Agenda = {
 	animateTimeline: 	function() {
 		var self = Agenda;
 
-		// if ( Math.abs( self.scrollSpeed ) < 0.02 ) return;s
 
 		
 		self.leftPos += self.scrollSpeed;
+
+		if ( self.leftPos > 350 ) {
+			self.leftPos = 300;
+			self.scrollSpeed = 0;
+			Agenda.isMouseDown = false;
+		} else if ( self.leftPos < (-self.timelineLength)  ) {
+			self.leftPos = -self.timelineLength ;
+			self.scrollSpeed = 0;
+			Agenda.isMouseDown = false;
+		}
+
+		console.log(self.leftPos + " < " + -self.timelineLength);
+
 
 		$(".agenda").css("left", self.leftPos + "px" );
 
@@ -204,6 +234,11 @@ var Agenda = {
 			Agenda.deltaT = $.now() - Agenda.lastT;
 			Agenda.lastT = $.now();
 			Agenda.scrollSpeed = - deltaX / 10;
+
+			Agenda.scrollSpeed = ( Agenda.scrollSpeed > 25) ? 25 : Agenda.scrollSpeed;
+			Agenda.scrollSpeed = ( Agenda.scrollSpeed < -25) ? -25 : Agenda.scrollSpeed;
+
+
 
 		}
 

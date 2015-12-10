@@ -1,10 +1,11 @@
 // class content ------------------------------------------
 
 var Content = (function(window, document, undefined) {
-	function Content( getMarkupFunc, activateFunc, deactivateFunc ) {
+	function Content( getMarkupFunc, activateFunc, deactivateFunc, callbackFunc ) {
 		this.getMarkUp = getMarkupFunc;
 		this.activate = activateFunc;
 		this.deactivate = deactivateFunc;
+		this.callback = callbackFunc;
 	} // Constructor
 
 	return Content;
@@ -74,10 +75,16 @@ var ContentController = (function(window, document, undefined) {
 		this._animateOut( 700, function() {
 			self._currentMarkUp = self._content[name].getMarkUp();
 			self._$targetContainer.empty().html( self._currentMarkUp );
+			
+
 			self._currentContentName = name;
 
 			self._content[ self._currentContentName ].activate();
 			self._animateIn();
+
+			setTimeout( self._content[ self._currentContentName ].callback, 1000 );
+
+
 		});
 
 
