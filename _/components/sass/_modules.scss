@@ -35,6 +35,10 @@
 
 
 
+.agenda {
+	@include user-select(none);
+	
+}
 
 .event {
 	height: 330px;

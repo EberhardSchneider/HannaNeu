@@ -71,13 +71,13 @@ var VController = (function(window, document, undefined) {
 
 		// home-State
 
-		var menuTop = window.innerHeight * 0.25;
+		var menuTop = window.innerHeight * 0.22;
 		var menuItemHeight = window.innerHeight * 0.07;
 		var menuLeft = window.innerWidth * 0.3;
 		var menuLength = window.innerWidth * 0.25;
 		menuLength = (menuLength > 300) ? 300 : menuLength;
 		var homeButtonX = 10;
-		var homeButtonY = 70;
+		var homeButtonY = 10;
 
 		var homeFontSize = window.innerHeight * 0.005;
 		
@@ -141,7 +141,7 @@ var VController = (function(window, document, undefined) {
 			}
 		}
 		hoerenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
-		hoerenState.push( { x: 5, y: menuTop +  2.75 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 1 });  // play-button
+		hoerenState.push( { x: 5, y: menuTop +  2.75 * menuItemHeight, width: window.innerHeight/15, height:window.innerHeight/15, fontSize: 0, opacity: 1 });  // play-button
 		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("hören", new State( "hören", hoerenState ));

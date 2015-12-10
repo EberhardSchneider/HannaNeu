@@ -150,7 +150,7 @@ var Agenda = {
 
 
 		
-		self.leftPos += self.scrollSpeed;
+		/*self.leftPos += self.scrollSpeed;
 
 		if ( self.leftPos > 350 ) {
 			self.leftPos = 300;
@@ -164,7 +164,7 @@ var Agenda = {
 
 		console.log(self.leftPos + " < " + -self.timelineLength);
 
-
+*/
 		$(".agenda").css("left", self.leftPos + "px" );
 
 
@@ -191,8 +191,7 @@ var Agenda = {
 			var oldLeftString = $('.agenda').css("left");
 			oldLeftString = oldLeftString.substring( 0 , oldLeftString.length - 2);
 			self.oldLeftPos = parseInt( oldLeftString );
-
-			self.animateHandler = setInterval( self.animateTimeline, 20);
+			self.leftPos = self.oldLeftPos;
 
 		}
 		
@@ -228,16 +227,28 @@ var Agenda = {
 	},
 	
 	mouseMoveHandler: function( event ) {
+
+		var self = Agenda;
+
+
 		if (Agenda.isMouseDown) {
 			
 			var deltaX = Agenda.draggedObject.x - event.pageX;
 			Agenda.deltaT = $.now() - Agenda.lastT;
 			Agenda.lastT = $.now();
-			Agenda.scrollSpeed = - deltaX / 10;
 
-			Agenda.scrollSpeed = ( Agenda.scrollSpeed > 25) ? 25 : Agenda.scrollSpeed;
-			Agenda.scrollSpeed = ( Agenda.scrollSpeed < -25) ? -25 : Agenda.scrollSpeed;
+			self.leftPos = self.oldLeftPos -  deltaX;
 
+			
+			if ( self.leftPos > 350 ) {
+				self.leftPos = 300;
+				Agenda.isMouseDown = false;
+			} else if ( self.leftPos < (-self.timelineLength)  ) {
+				self.leftPos = -self.timelineLength ;
+				Agenda.isMouseDown = false;
+			}
+			$(".agenda").css("left", self.leftPos + "px" );
+		
 
 
 		}

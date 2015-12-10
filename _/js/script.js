@@ -52,7 +52,7 @@ var Content = function(a, b, c) {
         0 != this._$text.length && this._$text[0].setAttribute("textLength", 300);
     }, a.prototype._render = function() {}, a.prototype._animateXY = function(a, b, c, d) {
         var e = this;
-        d = d || 1.5, b -= 60, TweenMax.to(e._$obj, d, {
+        d = d || 1.5, TweenMax.to(e._$obj, d, {
             left: a,
             top: b,
             onComplete: c
@@ -212,9 +212,9 @@ var Content = function(a, b, c) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        var b = .25 * a.innerHeight, c = .07 * a.innerHeight, d = .3 * a.innerWidth, e = .25 * a.innerWidth;
+        var b = .22 * a.innerHeight, c = .07 * a.innerHeight, d = .3 * a.innerWidth, e = .25 * a.innerWidth;
         e = e > 300 ? 300 : e;
-        for (var f = 10, g = 70, h = .005 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
+        for (var f = 10, g = 10, h = .005 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
             var k = [ 372, 190, 318, 304, 410 ][j];
             i.push({
                 x: d,
@@ -373,8 +373,8 @@ var Content = function(a, b, c) {
         }), n.push({
             x: 5,
             y: b + 2.75 * c,
-            width: 64,
-            height: 64,
+            width: a.innerHeight / 15,
+            height: a.innerHeight / 15,
             fontSize: 0,
             opacity: 1
         }), n.push({
@@ -573,9 +573,6 @@ var Content = function(a, b, c) {
     deactivateNavigation: function() {},
     animateTimeline: function() {
         var a = Agenda;
-        a.leftPos += a.scrollSpeed, a.leftPos > 350 ? (a.leftPos = 300, a.scrollSpeed = 0, 
-        Agenda.isMouseDown = !1) : a.leftPos < -a.timelineLength && (a.leftPos = -a.timelineLength, 
-        a.scrollSpeed = 0, Agenda.isMouseDown = !1), console.log(a.leftPos + " < " + -a.timelineLength), 
         $(".agenda").css("left", a.leftPos + "px");
     },
     mouseDownHandler: function(a) {
@@ -584,7 +581,7 @@ var Content = function(a, b, c) {
             b.isMouseDown = !0, b.lastT = $.now(), $(".agenda").css("cursor", "move"), b.draggedObject.domElement = $(this), 
             b.draggedObject.x = a.pageX, b.draggedObject.y = a.pageY;
             var c = $(".agenda").css("left");
-            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.animateHandler = setInterval(b.animateTimeline, 20);
+            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.leftPos = b.oldLeftPos;
         }
     },
     mouseUpHandler: function(a) {
@@ -592,10 +589,12 @@ var Content = function(a, b, c) {
         b.scrollSpeed = 0, b.isMouseDown = !1, clearInterval(b.animateHandler), $(".agenda").css("cursor", "auto");
     },
     mouseMoveHandler: function(a) {
+        var b = Agenda;
         if (Agenda.isMouseDown) {
-            var b = Agenda.draggedObject.x - a.pageX;
-            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), Agenda.scrollSpeed = -b / 10, 
-            Agenda.scrollSpeed = Agenda.scrollSpeed > 25 ? 25 : Agenda.scrollSpeed, Agenda.scrollSpeed = Agenda.scrollSpeed < -25 ? -25 : Agenda.scrollSpeed;
+            var c = Agenda.draggedObject.x - a.pageX;
+            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), b.leftPos = b.oldLeftPos - c, 
+            b.leftPos > 350 ? (b.leftPos = 300, Agenda.isMouseDown = !1) : b.leftPos < -b.timelineLength && (b.leftPos = -b.timelineLength, 
+            Agenda.isMouseDown = !1), $(".agenda").css("left", b.leftPos + "px");
         }
     }
 }, AudioPlayer = {
