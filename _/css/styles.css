@@ -128,9 +128,12 @@ svg {
   left: 30%;
   right: 0;
   top: 0;
-  height: 35%; }
-
+  height: 39%; }
 /* line 74, ../components/sass/_layout.scss */
+.audio-image img {
+  height: 100%; }
+
+/* line 78, ../components/sass/_layout.scss */
 .audio {
   position: absolute;
   left: 30%;
@@ -139,7 +142,7 @@ svg {
   bottom: 0;
   z-index: 255; }
 
-/* line 87, ../components/sass/_layout.scss */
+/* line 91, ../components/sass/_layout.scss */
 .gallery {
   -moz-user-select: -moz-none;
   -ms-user-select: none;
@@ -150,7 +153,7 @@ svg {
   left: 30%;
   width: 500%;
   height: 340px; }
-/* line 95, ../components/sass/_layout.scss */
+/* line 99, ../components/sass/_layout.scss */
 .gallery img {
   height: 200px;
   margin-right: 30px;
