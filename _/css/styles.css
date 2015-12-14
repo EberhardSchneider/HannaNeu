@@ -109,8 +109,8 @@ svg {
 .agenda {
   position: absolute;
   left: 0;
-  top: 25%;
-  height: 400px;
+  top: 15%;
+  height: 60%;
   overflow: hidden;
   z-index: -255; }
 
@@ -208,7 +208,7 @@ svg {
   font-size: 120%;
   border: solid 2px transparent;
   margin: 22px;
-  background-color: #ddf;
+  background-color: #fff;
   -moz-user-select: -moz-none;
   -ms-user-select: none;
   -webkit-user-select: none;
@@ -237,11 +237,11 @@ svg {
   font-weight: bold;
   font-size: 95%;
   text-align: center;
-  padding-top: 10px; }
+  padding-top: 40px; }
 /* line 96, ../components/sass/_modules.scss */
 .event .besetzung {
   position: absolute;
-  bottom: 50px;
+  top: 150px;
   font-size: 80%;
   padding-top: 40px;
   margin-left: 25px; }
@@ -327,7 +327,7 @@ svg {
   width: 200px;
   height: 150px;
   padding: 6px;
-  border: solid black 2px; }
+  /* border: solid black 2px; */ }
 /* line 214, ../components/sass/_modules.scss */
 .audio-info-box span {
   display: inline-block; }
@@ -397,6 +397,7 @@ svg {
   padding: 5px; }
 /* line 295, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image {
+  top: -300px;
   left: 0;
   right: 0; }
 /* line 299, ../components/sass/_modules.scss */
