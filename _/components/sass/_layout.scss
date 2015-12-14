@@ -70,7 +70,6 @@
 	right: 0;
 	top: 0;
 	height: 35%;
-	background-color: red;
 }
 .audio {
 	position: absolute;
@@ -88,8 +87,14 @@
 .gallery {
 	@include user-select(none);
 	position: absolute;
-	top: 48%;
+	top: 18%;
 	left: 30%;
 	width: 500%;
 	height: 340px;
+
+	img {
+		height: 200px;
+		margin-right: 30px;
+		border: 1px solid black;
+	}
 }

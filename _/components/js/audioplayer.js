@@ -1,4 +1,4 @@
-var AudioPlayer = {
+;var AudioPlayer = {
 
 
 	_html: 	"",   // HTML MarkUp
@@ -72,7 +72,7 @@ var AudioPlayer = {
 	
 
 		// HTML bereiten
-		var container = "<div class='audio-image'></div><div class = 'audio'>";
+		var container = "<div class='audio-image'><img src='images/hören.jpg' /></div><div class = 'audio'>";
 
 		var markUp = "";
 
@@ -137,8 +137,9 @@ var AudioPlayer = {
 			self.stopCurrentPlaying();
 			$(".play-button").empty().append(self.playIcon);
 		} else {
+			self.pauseIcon.style.width = self.playIcon.width + "px"; // make pause icon same size as play icon
 			$(".play-button").empty().append(self.pauseIcon);
-			if (self.trackNumberPlaying == -1) { self.playTrack(0) } 
+			if (self.trackNumberPlaying == -1) { self.playTrack(0); } 
 				else { self.playTrack( self.trackNumberPlaying ); }
 		}
 	},
@@ -393,7 +394,7 @@ var AudioPlayer = {
 
 		var box = document.createElement('div');
 		box.className = "audio-info-box";
-		box.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna herfurtner</span>";
+		box.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna Herfurtner</span><span class='besetzung'>Wiener Philharmoniker</span><span>Leitung: Sir Simon Rattle</span>";
 
 
 		self.currentTrackDiv.append( box );

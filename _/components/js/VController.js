@@ -34,6 +34,7 @@ var VController = (function(window, document, undefined) {
 		});
 
 		Agenda.init();
+		
 		Gallery.init();
 
 		// Content Managment ------------------------------------------------------------------------------------------
@@ -87,7 +88,7 @@ var VController = (function(window, document, undefined) {
 			homeState.push( { x: menuLeft, y: menuTop + i*menuItemHeight, width: w , height: menuItemHeight, fontSize: homeFontSize, opacity: 1 });
 		}
 		homeState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 0 });  // home-button
-		homeState.push( { x: -130, y: menuTop +  2.75 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		homeState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
 		homeState.push( { x: menuLeft - 140, y: menuTop - 104, width: 350, height: 128, fontSize: homeFontSize/2.5, opacity: 1 });  // menu-name
 		homeState.push( { x: menuLeft - 140, y: menuTop - 66, width: 150, height: 128, fontSize: homeFontSize/2.5, opacity: 1 });  // menu-sopran
 		this.mc.addState("home", new State( "home", homeState) );
@@ -102,7 +103,7 @@ var VController = (function(window, document, undefined) {
 			agendaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: .7});
 		}
 		agendaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
-		agendaState.push( { x: -130, y: menuTop +  2.75 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		agendaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
 		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		
@@ -123,7 +124,7 @@ var VController = (function(window, document, undefined) {
 			}
 		}
 		vitaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
-		vitaState.push( { x: -130, y: menuTop +  2.75 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		vitaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
 		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("vita", new State( "vita", vitaState ));
@@ -135,13 +136,13 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("hören");
 		for (var i = 0; i<5; i++ ) {
 			if ( i == 2 ) {
-				hoerenState.push({ x: 74, y: menuTop  + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - .5, opacity: 1 });
+				hoerenState.push({ x: 74, y: menuTop  + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			hoerenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: .7});
+			hoerenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.7});
 			}
 		}
 		hoerenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
-		hoerenState.push( { x: 5, y: menuTop +  2.75 * menuItemHeight, width: window.innerHeight/15, height:window.innerHeight/15, fontSize: 0, opacity: 1 });  // play-button
+		hoerenState.push( { x: 5, y: menuTop +  2.65 * menuItemHeight, width: window.innerHeight/17, height:window.innerHeight/17, fontSize: 0, opacity: 1 });  // play-button
 		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("hören", new State( "hören", hoerenState ));
@@ -159,7 +160,7 @@ var VController = (function(window, document, undefined) {
 			}
 		}
 		sehenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
-		sehenState.push( { x: -130, y: menuTop +  2.75 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		sehenState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
 		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 0, height: 0, fontSize: 0, opacity: 0 });  // menu-decoration
 		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 0, height: 0, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("sehen", new State( "sehen", sehenState ));
@@ -176,7 +177,7 @@ var VController = (function(window, document, undefined) {
 			}
 		}
 		kontaktState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
-		kontaktState.push( { x: -130, y: menuTop +  2.75 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		kontaktState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
 		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("kontakt", new State( "kontakt", kontaktState ));

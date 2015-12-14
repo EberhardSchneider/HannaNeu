@@ -38,5 +38,13 @@ var Thumbnail = (function() {
 		return parseInt( this.thumbClass.slice(5,-1), 10 );
 	};
 
+	Thumbnail.prototype.getThumb = function() {
+		return this.thumb_img;
+	};
+
+	Thumbnail.prototype.getBig = function() {
+		return this.big_img;
+	};
+
 	return Thumbnail;
 })();
