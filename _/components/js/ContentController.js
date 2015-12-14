@@ -5,7 +5,7 @@ var Content = (function(window, document, undefined) {
 		this.getMarkUp = getMarkupFunc;
 		this.activate = activateFunc;
 		this.deactivate = deactivateFunc;
-		this.callback = callbackFunc;
+		this.callback = callbackFunc; // called when html is present
 	} // Constructor
 
 	return Content;
@@ -65,9 +65,13 @@ var ContentController = (function(window, document, undefined) {
 		if ( this._content[name] === undefined) {
 			console.log( "ContentController: unknown content '" + name + "'" );
 			return;
+		} else
+		if ( this._currentContentName === name ) {
+			console.log("Content already present");
+			return;
 		}
-		
-		
+
+
 		if ( this._content[ this._currentContentName ]!== undefined ) {
 			this._content[ this._currentContentName ].deactivate();
 		}
@@ -82,7 +86,7 @@ var ContentController = (function(window, document, undefined) {
 			self._content[ self._currentContentName ].activate();
 			self._animateIn();
 
-			setTimeout( self._content[ self._currentContentName ].callback, 1000 );
+			setTimeout( self._content[ self._currentContentName ].callback, 900 );
 
 
 		});

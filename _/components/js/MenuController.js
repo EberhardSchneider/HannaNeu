@@ -93,8 +93,7 @@ var MenuController = (function(window, document, undefined) {
 		if ( newState === undefined ) {
 			console.log( "MenuController: State '" + stateName + "' doesn't exist.");
 			return;
-		} else if ( newState == this._currentState ) {
-			console.log("Already in State");
+		} else if ( newState == self._currentState ) {
 			self._isMenuAnimating = false;
 			return;
 		}

@@ -1,277 +1,4 @@
-var Agenda = {
-    container: {
-        css: {
-            position: "absolute",
-            left: "0",
-            top: "80px",
-            width: "1000%",
-            height: "220px",
-            overflow: "hidden"
-        },
-        timeLine: []
-    },
-    markUp: "",
-    numberOfEventboxes: 0,
-    deceleration: .9,
-    isMouseDown: !1,
-    draggedObject: {
-        domElement: {},
-        x: 0,
-        y: 0
-    },
-    leftPos: 0,
-    oldLeftPos: 0,
-    scrollSpeed: 0,
-    lastT: 0,
-    deltaT: 0,
-    scrolling: !1,
-    scrollHandler: function() {},
-    init: function() {
-        var a = Agenda, b = document.createElement("div");
-        b.className = "agenda invisible", $.ajax({
-            dataType: "json",
-            url: "include/events.json",
-            success: function(b) {
-                Agenda.numberOfEventboxes = 0;
-                var c = "<div class='agenda'>";
-                $.each(b, function(a, b) {
-                    var d = "";
-                    Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
-                        d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
-                    }), c += '<div class="event">\r\n							<div class="komponist">' + b.komponist + '</div>\r\n							<div class="title">' + b.title + '</div>\r\n							<div class="ort">' + b.ort + '</div>\r\n							<div class="datum">' + b.datum + '</div>\r\n							<div class="besetzung">' + d + "</div>\r\n						</div>";
-                }), c += "</div>", a.html = c;
-            }
-        });
-    },
-    getMarkUp: function() {
-        return Agenda.html;
-    },
-    activate: function() {
-        var a = Agenda;
-        a.activateNavigation();
-    },
-    deactivate: function() {
-        Agenda.deactivateNavigation();
-    },
-    callback: function() {
-        var a = this;
-        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
-        $(".agenda").css("width", a.timelineLength + "px");
-    },
-    activateNavigation: function() {
-        for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
-        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
-    },
-    deactivateNavigation: function() {},
-    animateTimeline: function() {
-        var a = Agenda;
-        $(".agenda").css("left", a.leftPos + "px");
-    },
-    mouseDownHandler: function(a) {
-        var b = Agenda;
-        if (!b.isMouseDown) {
-            b.isMouseDown = !0, b.lastT = $.now(), $(".agenda").css("cursor", "move"), b.draggedObject.domElement = $(this), 
-            b.draggedObject.x = a.pageX, b.draggedObject.y = a.pageY;
-            var c = $(".agenda").css("left");
-            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.leftPos = b.oldLeftPos;
-        }
-    },
-    mouseUpHandler: function(a) {
-        var b = Agenda;
-        b.scrollSpeed = 0, b.isMouseDown = !1, clearInterval(b.animateHandler), $(".agenda").css("cursor", "auto");
-    },
-    mouseMoveHandler: function(a) {
-        var b = Agenda;
-        if (Agenda.isMouseDown) {
-            var c = Agenda.draggedObject.x - a.pageX;
-            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), b.leftPos = b.oldLeftPos - c, 
-            b.leftPos > 350 ? (b.leftPos = 300, Agenda.isMouseDown = !1) : b.leftPos < -b.timelineLength && (b.leftPos = -b.timelineLength, 
-            Agenda.isMouseDown = !1), $(".agenda").css("left", b.leftPos + "px");
-        }
-    }
-}, AudioPlayer = {
-    _html: "",
-    audioMenuItem: {},
-    audioMenuItemWidth: 0,
-    pauseIcon: {},
-    playIcon: {},
-    isAudioPlaying: !1,
-    trackNumberPlaying: -1,
-    currentTrackDiv: {},
-    timeUpdateHandler: {},
-    navigationUpdateHandler: {},
-    isMouseDown: !1,
-    startX: 0,
-    oldItemPos: 0,
-    navPerc: 0,
-    windowWidth: 0,
-    audioSources: [ {
-        komponist: "Johann Adolf Mozart",
-        titel: "Eine kleine Osterandacht",
-        src: "audio/audio.mp3"
-    }, {
-        komponist: "Johann Rainer Mozart",
-        titel: "Eine kleine Pfingstmusik",
-        src: "audio/audio02.mp3"
-    }, {
-        komponist: "Johann Adolf Meier",
-        titel: "Eine kleine Osterandacht",
-        src: "audio/audio03.mp3"
-    }, {
-        komponist: "Klaus Adolf Mozart",
-        titel: "Eine große Osterandacht",
-        src: "audio/audio04.mp3"
-    }, {
-        komponist: "Johann Gustav Schubert",
-        titel: "Eine kleine Verandaschlacht",
-        src: "audio/audio05.mp3"
-    } ],
-    audioElements: [],
-    audioElementsLoaded: 0,
-    init: function() {
-        var a = AudioPlayer;
-        a.pauseIcon.src || (a.pauseIcon = new Image(), a.playIcon = new Image(), a.pauseIcon.src = "icons/pause-icon.svg", 
-        a.playIcon.src = "icons/play-icon.svg", a.playIcon.className = "play-button-img", 
-        a.pauseIcon.className = "play-button-img", a.audioSources.forEach(function(b, c) {
-            a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
-            a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
-        })), $(".play-button").empty().append(a.playIcon);
-        var b = "<div class='audio-image'></div><div class = 'audio'>", c = "";
-        a.audioElements.forEach(function(a) {
-            c += "<div class='audio-track'><div class='audio-komponist'>" + a.komponist + "</div><div class='audio-titel'>" + a.titel + "</div></div>";
-        }), b += c, b += "</div>", a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
-        a.isMouseDown = !1;
-    },
-    activate: function() {
-        var a = AudioPlayer;
-        a.audioMenuItem = $(".menu-item")[2];
-        var b = $(a.audioMenuItem).css("width");
-        a.audioMenuItemWidth = parseInt(b.substring(0, b.length - 2));
-        var c = $(a.audioMenuItem).css("height");
-        a.audioMenuItemHeight = parseInt(c.substring(0, c.length - 2)), a._onClickFunctionOfMenuItem = $._data(a.audioMenuItem, "events").click.handler, 
-        $(a.audioMenuItem).off(), a.windowWidth = window.innerWidth - a.audioMenuItemWidth + 80, 
-        $(".play-button").on("click", function() {
-            setTimeout(a.playButtonClickHandler, 100);
-        }), $(".audio").children().each(function(b, c) {
-            c.addEventListener("click", a.audioClicked, !1);
-        });
-    },
-    deactivate: function() {
-        AudioPlayer.stopCurrentPlaying(), AudioPlayer.clearAudioNavigation(), $(".menu-item").eq(2).on("click", function() {
-            events.emit("itemClicked", $(this).index());
-        }), $(".nav-audio").removeClass("nav-audio"), $(".play-button").off(), self.isMouseDown = !1;
-    },
-    getMarkUp: function() {
-        return this._html;
-    },
-    playButtonClickHandler: function() {
-        var a = AudioPlayer;
-        a.isAudioPlaying ? (a.stopCurrentPlaying(), $(".play-button").empty().append(a.playIcon)) : ($(".play-button").empty().append(a.pauseIcon), 
-        -1 == a.trackNumberPlaying ? a.playTrack(0) : a.playTrack(a.trackNumberPlaying));
-    },
-    stopCurrentPlaying: function() {
-        var a = AudioPlayer;
-        a.isAudioPlaying && (clearInterval(a.timeUpdateHandler), a.audioElements[a.trackNumberPlaying].pause(), 
-        a.isAudioPlaying = !1, $(".play-button").empty().append(a.playIcon));
-    },
-    playNextTrack: function() {
-        var a, b = AudioPlayer;
-        a = b.isAudioPlaying ? b.trackNumberPlaying + 1 == b.audioElements.length ? 0 : b.trackNumberPlaying + 1 : 0, 
-        console.log(a), b.playTrack(a);
-    },
-    clearAudioNavigation: function() {
-        var a = AudioPlayer;
-        $(a.audioMenuItem).off("mousedown"), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
-        document.body.removeEventListener("mousemove", a.mouseMoveHandler), clearInterval(AudioPlayer.navigationUpdateHandler), 
-        clearInterval(a.timeUpdateHandler), a.isMouseDown = !1, a.startX = 0, a.oldItemPos = 0, 
-        a.navPerc = 0;
-    },
-    playTrack: function(a) {
-        var b = AudioPlayer;
-        b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
-        $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
-        a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
-        $(".play-button").empty().append(b.pauseIcon), $(".selected").removeClass("selected"), 
-        b.currentTrackDiv.addClass("selected"), clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), 
-        b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), 
-        b.audioElements[a].play(), b.createTime(), b.createInfoBox(), b.initAudioNavigation(), 
-        b.timeUpdate();
-    },
-    audioClicked: function() {
-        var a = AudioPlayer;
-        a.clearAudioNavigation();
-        var b = $(this).index();
-        a.currentTrackDiv = $(this), a.playTrack(b);
-    },
-    initAudioNavigation: function() {
-        var a = AudioPlayer, b = (a.audioElements[a.trackNumberPlaying], a.audioMenuItem);
-        b.addEventListener("mousedown", a.mouseDownHandler, !1), document.body.addEventListener("mouseup", a.mouseUpHandler, !1), 
-        document.body.addEventListener("mousemove", a.mouseMoveHandler, !1);
-    },
-    mouseDownHandler: function(a) {
-        var b = AudioPlayer;
-        b.isMouseDown = !0, b.startX = a.pageX;
-        var c = $(b.audioMenuItem).css("left");
-        b.oldItemPos = parseInt(c.substring(0, c.length - 2)), b.audioElements[b.trackNumberPlaying].pause(), 
-        clearInterval(b.navigationUpdateHandler), clearInterval(b.timeUpdateHandler);
-    },
-    mouseUpHandler: function() {
-        var a = AudioPlayer;
-        if (a.isMouseDown) {
-            a.isMouseDown = !1;
-            var b = a.audioElements[a.trackNumberPlaying];
-            b.currentTime = a.navPerc * b.duration / 100, a.isAudioPlaying && b.play(), clearInterval(a.navigationUpdateHandler), 
-            clearInterval(a.timeUpdateHandler), a.timeUpdateHandler = setInterval(a.timeUpdate, 1e3), 
-            a.navigationUpdateHandler = setInterval(a.navigationUpdate, 30);
-        }
-    },
-    mouseMoveHandler: function(a) {
-        var b = AudioPlayer;
-        if (b.isMouseDown) {
-            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (window.innerWidth - b.audioMenuItemWidth - 60);
-            e = e > 100 ? 100 : e, e = 0 > e ? 0 : e, b.navPerc = e;
-            var f = b.audioElements[b.trackNumberPlaying];
-            f.currentTime = b.navPerc * f.duration / 100, b.navigationUpdate(), b.timeUpdate();
-        }
-    },
-    navigationUpdate: function() {
-        var a = AudioPlayer, b = a.audioElements[a.trackNumberPlaying], c = b.currentTime / b.duration;
-        b.duration - b.currentTime < 1 && !a.isMouseDown && a.playNextTrack();
-        var d = c * (window.innerWidth - a.audioMenuItemWidth - 60) + 74;
-        $(a.audioMenuItem).css("left", d + "px");
-    },
-    timeUpdate: function() {
-        var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].duration), c = Math.floor(b / 60);
-        b -= 60 * c;
-        var d = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), e = Math.floor(d / 60);
-        d -= 60 * e, $(".time-box").text(a.formatTime(e, d) + " / " + a.formatTime(c, b));
-    },
-    formatTime: function(a, b) {
-        var c = "";
-        for (c += "" + a, b = "" + b; b.length < 2; ) b = "0" + b;
-        return c += ":" + b;
-    },
-    createTime: function() {
-        $(".time-box").remove();
-        var a = document.createElement("div");
-        a.className = "time-box", $(".content").append(a);
-    },
-    createInfoBox: function() {
-        var a = AudioPlayer;
-        $(".audio-info-box").remove();
-        var b = document.createElement("div");
-        b.className = "audio-info-box", b.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna herfurtner</span>", 
-        a.currentTrackDiv.append(b);
-        var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2));
-        window.innerHeight;
-        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + 20 + "px"), 
-        $(".time-box").css("top", d + 3 + "px")) : $(".time-box").css("top", d - 16 + "px");
-    },
-    audioReady: function() {
-        var a = AudioPlayer;
-        a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
-    }
-}, Content = function(a, b, c) {
+var Content = function(a, b, c) {
     function d(a, b, c, d) {
         this.getMarkUp = a, this.activate = b, this.deactivate = c, this.callback = d;
     }
@@ -292,11 +19,11 @@ var Agenda = {
         this._content[a] !== c && delete _this.content[a];
     }, d.prototype.changeContent = function(a) {
         var b = this;
-        return this._content[a] === c ? void console.log("ContentController: unknown content '" + a + "'") : (this._content[this._currentContentName] !== c && this._content[this._currentContentName].deactivate(), 
+        return this._content[a] === c ? void console.log("ContentController: unknown content '" + a + "'") : this._currentContentName === a ? void console.log("Content already present") : (this._content[this._currentContentName] !== c && this._content[this._currentContentName].deactivate(), 
         void this._animateOut(700, function() {
             b._currentMarkUp = b._content[a].getMarkUp(), b._$targetContainer.empty().html(b._currentMarkUp), 
             b._currentContentName = a, b._content[b._currentContentName].activate(), b._animateIn(), 
-            setTimeout(b._content[b._currentContentName].callback, 1e3);
+            setTimeout(b._content[b._currentContentName].callback, 900);
         }));
     }, d;
 }(window, document), events = {
@@ -315,135 +42,16 @@ var Agenda = {
             a(b);
         });
     }
-}, Gallery = {
-    isMouseDown: !1,
-    draggedObject: {
-        x: 0,
-        y: 0,
-        domElement: {}
-    },
-    lastT: 0,
-    oldLeftPos: 0,
-    imageSelectedTimer: 0,
-    imageSelectionThreshold: 250,
-    sources: [ {
-        src: "images/picture_01.jpg",
-        alt: "Bild 1"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 2"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 3"
-    }, {
-        src: "images/picture_01.jpg",
-        alt: "Bild 4"
-    } ],
-    images: [],
-    thumbnails: [],
-    init: function() {
-        var a = Gallery;
-        a.loadImages(), a.makeHTML();
-    },
-    activate: function() {
-        var a = Gallery;
-        a.activateNavigation();
-    },
-    deactivate: function() {},
-    getMarkUp: function() {
-        return Gallery.html;
-    },
-    reset: function() {
-        var a = Gallery;
-        a.resetNavigation();
-    },
-    loadImages: function() {
-        var a = Gallery;
-        a.sources.forEach(function(b, c) {
-            var d = new Image(), e = b.src;
-            e = e.substr(0, e.lastIndexOf(".")) || e, d.src = e + "_thn.jpg", d.alt = b.alt, 
-            d.className = "id_" + c, a.thumbnails.push(d);
-        }), a.sources.forEach(function(b) {
-            var c = new Image();
-            c.src = b.src, c.alt = b.alt, a.images.push(c);
-        });
-    },
-    makeHTML: function() {
-        var a = Gallery, b = document.createElement("div");
-        b.className = "gallery", a.thumbnails.forEach(function(a) {
-            $(b).append(a);
-        }), a.html = b;
-    },
-    activateNavigation: function() {
-        var a = Gallery;
-        $(".gallery").on("mousedown", a.mouseDownHandler), $("body").on("mousemove", a.mouseMoveHandler), 
-        $("body").on("mouseup", a.mouseUpHandler), $(".gallery img").on("click", function() {
-            a.imageSelectedHandler($(this));
-        });
-    },
-    resetNavigation: function() {},
-    imageSelectedHandler: function(a) {
-        var b = Gallery;
-        $.now() - b.imageSelectedTimer < b.imageSelectionThreshold && b.selectImage(a), 
-        b.imageSelectedTimer = $.now();
-    },
-    selectImage: function(a) {
-        var b = Gallery, c = a[0].className;
-        c = c.substring(3, c.length), console.log(c);
-        var d = document.createElement("div");
-        d.className = "overlay";
-        var e = b.images[c];
-        e.className = "presentation";
-        var f = new Image();
-        f.src = "icons/close-icon.svg", f.className = "close-icon", d.appendChild(e), d.appendChild(f), 
-        $("body").append(d), $(".close-icon").on("click", b.closeImage);
-    },
-    closeImage: function() {
-        $(".overlay").remove();
-    },
-    mouseDownHandler: function(a) {
-        var b = Gallery;
-        if (!b.isMouseDown) {
-            b.isMouseDown = !0, b.lastT = $.now(), b.draggedObject.domElement = $(this), b.draggedObject.x = a.pageX, 
-            b.draggedObject.y = a.pageY;
-            var c = $(".gallery").css("left");
-            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c);
-        }
-        return !1;
-    },
-    mouseUpHandler: function(a) {
-        var b = Gallery;
-        return b.isMouseDown = !1, b.oldLeftPos = 0, b.draggedObject.x = 0, b.draggedObject.y = 0, 
-        !1;
-    },
-    mouseMoveHandler: function(a) {
-        var b = Gallery;
-        if (b.isMouseDown) {
-            var c = b.draggedObject.x - a.pageX;
-            b.deltaT = $.now() - b.lastT, b.lastT = $.now(), b.scrollSpeed = c / b.deltaT, b.deltaT > 500 && (b.mouseUpHandler(), 
-            console.log("alarm")), $(".gallery").css("left", "" + (b.oldLeftPos - c) + "px");
-        }
-        return !1;
+}, GalleryClass = function() {
+    function a() {
+        this.images = [];
     }
-}, Item = function() {
+    return a.prototype._addImage = function(a, b) {}, a.prototype.init = function() {}, 
+    a.prototype.activate = function() {}, a.prototype.deactivate = function() {}, a.prototype.callback = function() {}, 
+    a.prototype.getMarkUp = function() {
+        return a.html;
+    }, a;
+}(), Item = function() {
     function a(a, b, c, d, e, f, g, h) {
         this._$obj = a, this._$svg = a.find("svg"), this._$text = a.find("text"), this._x = b, 
         this._y = c, this._width = d, this._height = e, this._fontSize = f, this._opacity = g, 
@@ -565,7 +173,7 @@ var Agenda = {
         if (this._isMenuAnimating !== !0) {
             var d = b._menuStates.getState(a);
             if (d === c) return void console.log("MenuController: State '" + a + "' doesn't exist.");
-            if (d == this._currentState) return console.log("Already in State"), void (b._isMenuAnimating = !1);
+            if (d == b._currentState) return void (b._isMenuAnimating = !1);
             events.emit("stateChanges"), b._items.forEach(function(a, c) {
                 b._propertiesAnimated += 5, a.move(d.x[c], d.y[c], b._propertiesAnimationHandler.bind(b)), 
                 a.stretch(d.width[c], b._propertiesAnimationHandler.bind(b)), a.changeHeight(d.height[c], b._propertiesAnimationHandler.bind(b)), 
@@ -595,17 +203,18 @@ var Agenda = {
         return this._states[a];
     }, d;
 }(window, document), Thumbnail = function() {
-    function a(a, b, c, d, e, f) {
+    function a(a, b, c, d) {
         this.sourceThumb = a, this.sourceBig = b, this.thumbClass = c, this.bigClass = d, 
-        this.thumbWidth = e, this.thumbHeight = f, this.thumb_img = void 0, this.big_img = void 0;
+        this.thumb_img = void 0, this.big_img = void 0, this._loadThumb(), this._loadBig();
     }
-    return a.prototype.loadThumb = function() {
+    return a.prototype._loadThumb = function() {
         var a = this;
-        a.thumb_img = new Image(a.thumbWidth, a.thumbHeight), a.thumb_img.src = a.sourceThumb, 
-        a.thumb_img["class"] = a.thumbClass;
-    }, a.prototype.loadBig = function() {
+        a.thumb_img = new Image(), a.thumb_img.src = a.sourceThumb, a.thumb_img["class"] = a.thumbClass;
+    }, a.prototype._loadBig = function() {
         var a = this;
         a.big_img = new Image(), a.big_img.src = a.sourceBig, a.big_img["class"] = a.bigClass;
+    }, a.prototype.getIndex = function() {
+        return parseInt(this.thumbClass.slice(5, -1), 10);
     }, a;
 }(), VController = function(a, b, c) {
     function d() {
@@ -928,6 +537,407 @@ var Agenda = {
     },
     activate: function() {},
     deactivate: function() {}
+}, Agenda = {
+    container: {
+        css: {
+            position: "absolute",
+            left: "0",
+            top: "80px",
+            width: "1000%",
+            height: "220px",
+            overflow: "hidden"
+        },
+        timeLine: []
+    },
+    markUp: "",
+    numberOfEventboxes: 0,
+    deceleration: .9,
+    isMouseDown: !1,
+    draggedObject: {
+        domElement: {},
+        x: 0,
+        y: 0
+    },
+    leftPos: 0,
+    oldLeftPos: 0,
+    scrollSpeed: 0,
+    lastT: 0,
+    deltaT: 0,
+    scrolling: !1,
+    scrollHandler: function() {},
+    init: function() {
+        var a = Agenda, b = document.createElement("div");
+        b.className = "agenda invisible", $.ajax({
+            dataType: "json",
+            url: "include/events.json",
+            success: function(b) {
+                Agenda.numberOfEventboxes = 0;
+                var c = "<div class='agenda'>";
+                $.each(b, function(a, b) {
+                    var d = "";
+                    Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
+                        d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
+                    }), c += '<div class="event">\r\n							<div class="komponist">' + b.komponist + '</div>\r\n							<div class="title">' + b.title + '</div>\r\n							<div class="ort">' + b.ort + '</div>\r\n							<div class="datum">' + b.datum + '</div>\r\n							<div class="besetzung">' + d + "</div>\r\n						</div>";
+                }), c += "</div>", a.html = c;
+            }
+        });
+    },
+    getMarkUp: function() {
+        return Agenda.html;
+    },
+    activate: function() {
+        var a = Agenda;
+        a.activateNavigation();
+    },
+    deactivate: function() {
+        Agenda.deactivateNavigation();
+    },
+    callback: function() {
+        var a = this;
+        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
+        $(".agenda").css("width", a.timelineLength + "px");
+    },
+    activateNavigation: function() {
+        for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
+        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
+    },
+    deactivateNavigation: function() {},
+    animateTimeline: function() {
+        var a = Agenda;
+        $(".agenda").css("left", a.leftPos + "px");
+    },
+    mouseDownHandler: function(a) {
+        var b = Agenda;
+        if (!b.isMouseDown) {
+            b.isMouseDown = !0, b.lastT = $.now(), $(".agenda").css("cursor", "move"), b.draggedObject.domElement = $(this), 
+            b.draggedObject.x = a.pageX, b.draggedObject.y = a.pageY;
+            var c = $(".agenda").css("left");
+            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.leftPos = b.oldLeftPos;
+        }
+    },
+    mouseUpHandler: function(a) {
+        var b = Agenda;
+        b.scrollSpeed = 0, b.isMouseDown = !1, clearInterval(b.animateHandler), $(".agenda").css("cursor", "auto");
+    },
+    mouseMoveHandler: function(a) {
+        var b = Agenda;
+        if (Agenda.isMouseDown) {
+            var c = Agenda.draggedObject.x - a.pageX;
+            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), b.leftPos = b.oldLeftPos - c, 
+            b.leftPos > 350 ? (b.leftPos = 300, Agenda.isMouseDown = !1) : b.leftPos < -b.timelineLength && (b.leftPos = -b.timelineLength, 
+            Agenda.isMouseDown = !1), $(".agenda").css("left", b.leftPos + "px");
+        }
+    }
+}, AudioPlayer = {
+    _html: "",
+    audioMenuItem: {},
+    audioMenuItemWidth: 0,
+    pauseIcon: {},
+    playIcon: {},
+    isAudioPlaying: !1,
+    trackNumberPlaying: -1,
+    currentTrackDiv: {},
+    timeUpdateHandler: {},
+    navigationUpdateHandler: {},
+    isMouseDown: !1,
+    startX: 0,
+    oldItemPos: 0,
+    navPerc: 0,
+    windowWidth: 0,
+    audioSources: [ {
+        komponist: "Johann Adolf Mozart",
+        titel: "Eine kleine Osterandacht",
+        src: "audio/audio.mp3"
+    }, {
+        komponist: "Johann Rainer Mozart",
+        titel: "Eine kleine Pfingstmusik",
+        src: "audio/audio02.mp3"
+    }, {
+        komponist: "Johann Adolf Meier",
+        titel: "Eine kleine Osterandacht",
+        src: "audio/audio03.mp3"
+    }, {
+        komponist: "Klaus Adolf Mozart",
+        titel: "Eine große Osterandacht",
+        src: "audio/audio04.mp3"
+    }, {
+        komponist: "Johann Gustav Schubert",
+        titel: "Eine kleine Verandaschlacht",
+        src: "audio/audio05.mp3"
+    } ],
+    audioElements: [],
+    audioElementsLoaded: 0,
+    init: function() {
+        var a = AudioPlayer;
+        a.pauseIcon.src || (a.pauseIcon = new Image(), a.playIcon = new Image(), a.pauseIcon.src = "icons/pause-icon.svg", 
+        a.playIcon.src = "icons/play-icon.svg", a.playIcon.className = "play-button-img", 
+        a.pauseIcon.className = "play-button-img", a.audioSources.forEach(function(b, c) {
+            a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
+            a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
+        })), $(".play-button").empty().append(a.playIcon);
+        var b = "<div class='audio-image'></div><div class = 'audio'>", c = "";
+        a.audioElements.forEach(function(a) {
+            c += "<div class='audio-track'><div class='audio-komponist'>" + a.komponist + "</div><div class='audio-titel'>" + a.titel + "</div></div>";
+        }), b += c, b += "</div>", a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
+        a.isMouseDown = !1;
+    },
+    activate: function() {
+        var a = AudioPlayer;
+        a.audioMenuItem = $(".menu-item")[2];
+        var b = $(a.audioMenuItem).css("width");
+        a.audioMenuItemWidth = parseInt(b.substring(0, b.length - 2));
+        var c = $(a.audioMenuItem).css("height");
+        a.audioMenuItemHeight = parseInt(c.substring(0, c.length - 2)), a._onClickFunctionOfMenuItem = $._data(a.audioMenuItem, "events").click.handler, 
+        $(a.audioMenuItem).off(), a.windowWidth = window.innerWidth - a.audioMenuItemWidth + 80, 
+        $(".play-button").on("click", function() {
+            setTimeout(a.playButtonClickHandler, 100);
+        }), $(".audio").children().each(function(b, c) {
+            c.addEventListener("click", a.audioClicked, !1);
+        });
+    },
+    deactivate: function() {
+        AudioPlayer.stopCurrentPlaying(), AudioPlayer.clearAudioNavigation(), $(".menu-item").eq(2).on("click", function() {
+            events.emit("itemClicked", $(this).index());
+        }), $(".nav-audio").removeClass("nav-audio"), $(".play-button").off(), self.isMouseDown = !1;
+    },
+    getMarkUp: function() {
+        return this._html;
+    },
+    playButtonClickHandler: function() {
+        var a = AudioPlayer;
+        a.isAudioPlaying ? (a.stopCurrentPlaying(), $(".play-button").empty().append(a.playIcon)) : ($(".play-button").empty().append(a.pauseIcon), 
+        -1 == a.trackNumberPlaying ? a.playTrack(0) : a.playTrack(a.trackNumberPlaying));
+    },
+    stopCurrentPlaying: function() {
+        var a = AudioPlayer;
+        a.isAudioPlaying && (clearInterval(a.timeUpdateHandler), a.audioElements[a.trackNumberPlaying].pause(), 
+        a.isAudioPlaying = !1, $(".play-button").empty().append(a.playIcon));
+    },
+    playNextTrack: function() {
+        var a, b = AudioPlayer;
+        a = b.isAudioPlaying ? b.trackNumberPlaying + 1 == b.audioElements.length ? 0 : b.trackNumberPlaying + 1 : 0, 
+        console.log(a), b.playTrack(a);
+    },
+    clearAudioNavigation: function() {
+        var a = AudioPlayer;
+        $(a.audioMenuItem).off("mousedown"), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
+        document.body.removeEventListener("mousemove", a.mouseMoveHandler), clearInterval(AudioPlayer.navigationUpdateHandler), 
+        clearInterval(a.timeUpdateHandler), a.isMouseDown = !1, a.startX = 0, a.oldItemPos = 0, 
+        a.navPerc = 0;
+    },
+    playTrack: function(a) {
+        var b = AudioPlayer;
+        b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
+        $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
+        a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
+        $(".play-button").empty().append(b.pauseIcon), $(".selected").removeClass("selected"), 
+        b.currentTrackDiv.addClass("selected"), clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), 
+        b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), 
+        b.audioElements[a].play(), b.createTime(), b.createInfoBox(), b.initAudioNavigation(), 
+        b.timeUpdate();
+    },
+    audioClicked: function() {
+        var a = AudioPlayer;
+        a.clearAudioNavigation();
+        var b = $(this).index();
+        a.currentTrackDiv = $(this), a.playTrack(b);
+    },
+    initAudioNavigation: function() {
+        var a = AudioPlayer, b = (a.audioElements[a.trackNumberPlaying], a.audioMenuItem);
+        b.addEventListener("mousedown", a.mouseDownHandler, !1), document.body.addEventListener("mouseup", a.mouseUpHandler, !1), 
+        document.body.addEventListener("mousemove", a.mouseMoveHandler, !1);
+    },
+    mouseDownHandler: function(a) {
+        var b = AudioPlayer;
+        b.isMouseDown = !0, b.startX = a.pageX;
+        var c = $(b.audioMenuItem).css("left");
+        b.oldItemPos = parseInt(c.substring(0, c.length - 2)), b.audioElements[b.trackNumberPlaying].pause(), 
+        clearInterval(b.navigationUpdateHandler), clearInterval(b.timeUpdateHandler);
+    },
+    mouseUpHandler: function() {
+        var a = AudioPlayer;
+        if (a.isMouseDown) {
+            a.isMouseDown = !1;
+            var b = a.audioElements[a.trackNumberPlaying];
+            b.currentTime = a.navPerc * b.duration / 100, a.isAudioPlaying && b.play(), clearInterval(a.navigationUpdateHandler), 
+            clearInterval(a.timeUpdateHandler), a.timeUpdateHandler = setInterval(a.timeUpdate, 1e3), 
+            a.navigationUpdateHandler = setInterval(a.navigationUpdate, 30);
+        }
+    },
+    mouseMoveHandler: function(a) {
+        var b = AudioPlayer;
+        if (b.isMouseDown) {
+            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (window.innerWidth - b.audioMenuItemWidth - 60);
+            e = e > 100 ? 100 : e, e = 0 > e ? 0 : e, b.navPerc = e;
+            var f = b.audioElements[b.trackNumberPlaying];
+            f.currentTime = b.navPerc * f.duration / 100, b.navigationUpdate(), b.timeUpdate();
+        }
+    },
+    navigationUpdate: function() {
+        var a = AudioPlayer, b = a.audioElements[a.trackNumberPlaying], c = b.currentTime / b.duration;
+        b.duration - b.currentTime < 1 && !a.isMouseDown && a.playNextTrack();
+        var d = c * (window.innerWidth - a.audioMenuItemWidth - 60) + 74;
+        $(a.audioMenuItem).css("left", d + "px");
+    },
+    timeUpdate: function() {
+        var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].duration), c = Math.floor(b / 60);
+        b -= 60 * c;
+        var d = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), e = Math.floor(d / 60);
+        d -= 60 * e, $(".time-box").text(a.formatTime(e, d) + " / " + a.formatTime(c, b));
+    },
+    formatTime: function(a, b) {
+        var c = "";
+        for (c += "" + a, b = "" + b; b.length < 2; ) b = "0" + b;
+        return c += ":" + b;
+    },
+    createTime: function() {
+        $(".time-box").remove();
+        var a = document.createElement("div");
+        a.className = "time-box", $(".content").append(a);
+    },
+    createInfoBox: function() {
+        var a = AudioPlayer;
+        $(".audio-info-box").remove();
+        var b = document.createElement("div");
+        b.className = "audio-info-box", b.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna herfurtner</span>", 
+        a.currentTrackDiv.append(b);
+        var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2));
+        window.innerHeight;
+        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + 20 + "px"), 
+        $(".time-box").css("top", d + 3 + "px")) : $(".time-box").css("top", d - 16 + "px");
+    },
+    audioReady: function() {
+        var a = AudioPlayer;
+        a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
+    }
+}, Gallery = {
+    isMouseDown: !1,
+    draggedObject: {
+        x: 0,
+        y: 0,
+        domElement: {}
+    },
+    lastT: 0,
+    oldLeftPos: 0,
+    imageSelectedTimer: 0,
+    imageSelectionThreshold: 250,
+    sources: [ {
+        src: "images/picture_01.jpg",
+        alt: "Bild 1"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 2"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 3"
+    }, {
+        src: "images/picture_01.jpg",
+        alt: "Bild 4"
+    } ],
+    images: [],
+    thumbnails: [],
+    init: function() {
+        var a = Gallery;
+        a.loadImages(), a.makeHTML();
+    },
+    activate: function() {
+        var a = Gallery;
+        a.activateNavigation();
+    },
+    deactivate: function() {},
+    getMarkUp: function() {
+        return Gallery.html;
+    },
+    reset: function() {
+        var a = Gallery;
+        a.resetNavigation();
+    },
+    loadImages: function() {
+        var a = Gallery;
+        a.sources.forEach(function(b, c) {
+            var d = new Image(), e = b.src;
+            e = e.substr(0, e.lastIndexOf(".")) || e, d.src = e + "_thn.jpg", d.alt = b.alt, 
+            d.className = "id_" + c, a.thumbnails.push(d);
+        }), a.sources.forEach(function(b) {
+            var c = new Image();
+            c.src = b.src, c.alt = b.alt, a.images.push(c);
+        });
+    },
+    makeHTML: function() {
+        var a = Gallery, b = document.createElement("div");
+        b.className = "gallery", a.thumbnails.forEach(function(a) {
+            $(b).append(a);
+        }), a.html = b;
+    },
+    activateNavigation: function() {
+        var a = Gallery;
+        $(".gallery").on("mousedown", a.mouseDownHandler), $("body").on("mousemove", a.mouseMoveHandler), 
+        $("body").on("mouseup", a.mouseUpHandler), $(".gallery img").on("click", function() {
+            a.imageSelectedHandler($(this));
+        });
+    },
+    resetNavigation: function() {},
+    imageSelectedHandler: function(a) {
+        var b = Gallery;
+        $.now() - b.imageSelectedTimer < b.imageSelectionThreshold && b.selectImage(a), 
+        b.imageSelectedTimer = $.now();
+    },
+    selectImage: function(a) {
+        var b = Gallery, c = a[0].className;
+        c = c.substring(3, c.length), console.log(c);
+        var d = document.createElement("div");
+        d.className = "overlay";
+        var e = b.images[c];
+        e.className = "presentation";
+        var f = new Image();
+        f.src = "icons/close-icon.svg", f.className = "close-icon", d.appendChild(e), d.appendChild(f), 
+        $("body").append(d), $(".close-icon").on("click", b.closeImage);
+    },
+    closeImage: function() {
+        $(".overlay").remove();
+    },
+    mouseDownHandler: function(a) {
+        var b = Gallery;
+        if (!b.isMouseDown) {
+            b.isMouseDown = !0, b.lastT = $.now(), b.draggedObject.domElement = $(this), b.draggedObject.x = a.pageX, 
+            b.draggedObject.y = a.pageY;
+            var c = $(".gallery").css("left");
+            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c);
+        }
+        return !1;
+    },
+    mouseUpHandler: function(a) {
+        var b = Gallery;
+        return b.isMouseDown = !1, b.oldLeftPos = 0, b.draggedObject.x = 0, b.draggedObject.y = 0, 
+        !1;
+    },
+    mouseMoveHandler: function(a) {
+        var b = Gallery;
+        if (b.isMouseDown) {
+            var c = b.draggedObject.x - a.pageX;
+            b.deltaT = $.now() - b.lastT, b.lastT = $.now(), b.scrollSpeed = c / b.deltaT, b.deltaT > 500 && (b.mouseUpHandler(), 
+            console.log("alarm")), $(".gallery").css("left", "" + (b.oldLeftPos - c) + "px");
+        }
+        return !1;
+    }
 };
 
 vc = new VController(), $(".menu-item").on("click", function() {
