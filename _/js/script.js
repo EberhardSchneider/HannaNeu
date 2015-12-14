@@ -264,7 +264,7 @@ var Agenda = {
         a.currentTrackDiv.append(b);
         var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2));
         window.innerHeight;
-        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + 20 + "px"), 
+        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + .01 * window.innerHeight + "px"), 
         $(".time-box").css("top", d + 3 + "px")) : $(".time-box").css("top", d - 16 + "px");
     },
     audioReady: function() {
@@ -664,7 +664,7 @@ var Agenda = {
         this.mc.removeState("vita");
         for (var j = 0; 5 > j; j++) 1 == j ? m.push({
             x: d,
-            y: .43 * a.innerHeight,
+            y: b + j * c,
             width: e,
             height: c,
             fontSize: h - .5,

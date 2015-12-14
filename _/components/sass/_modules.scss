@@ -48,23 +48,21 @@
 }
 
 .event {
-	height: 330px;
+	height: 100%;
 	width: 230px;
 	float: left;
-	padding: 22px;
+	padding-right: 44px;
 
 	font-size: 120%;
 
 	border: solid 2px  rgba(0,0,0,0);
-	margin: 22px;
+	margin-right: 44px;
 
 	background-color: #fff;
 
 	@include user-select(none);
 
-	&:hover {
-		border: solid 2px black;
-	}
+
 
 	.komponist {
 		font-size: 80%;
@@ -89,15 +87,14 @@
 		font-weight: bold;
 		font-size: 95%;
 		text-align: center;
-		padding-top: 40px;
+		padding-top: 22%;
 	
 	}
 
 	.besetzung {
-		position: absolute;
-		top: 150px;
+		
 		font-size: 80%;
-		padding-top: 40px;
+		padding-top: 22%;
 		margin-left: 25px;
 
 		.zeile {
@@ -119,7 +116,8 @@
 .vita-image {
 	position: relative;
 	display: block;
-	height: 45%;
+	height: 27%;
+	width: 100%;
 	top: 0;
 	margin-bottom: 10%;
 
@@ -229,10 +227,8 @@
 	width: 500%;
 	height: 340px;
 	img {
-		margin: 4px;
 		@include user-select(none);
 		z-index: -255;
-		
 	}
 
 

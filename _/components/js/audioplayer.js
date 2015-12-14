@@ -410,7 +410,7 @@
 		var bodyHeight = window.innerHeight;
 
 		if ( parseInt(topTrack + heightBox) > window.innerHeight ) {
-			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack + 20) + "px" );
+			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack + window.innerHeight * 0.01) + "px" );
 			$(".time-box").css("top", ( topTrack + 3  ) + "px" );
 
 		}  else {
