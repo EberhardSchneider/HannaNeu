@@ -42,7 +42,7 @@ var VController = (function(window, document, undefined) {
 		self.cc.addContent("agenda", new Content( Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda)));
 		self.cc.addContent("vita", new Content( Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita)));
 		self.cc.addContent("hören", new Content( AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer)));
-		self.cc.addContent("sehen", new Content( Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery)));
+		self.cc.addContent("sehen", new Content( Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery)));
 		self.cc.addContent("kontakt", new Content( Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt)));
 		self.cc.addContent("home", new Content( (function() { return ""; }), function(){}, function(){}));
 
@@ -51,6 +51,10 @@ var VController = (function(window, document, undefined) {
 
 
 		this._calculatePositions();
+
+		$(".menu-item").hover(function(e) {
+			e.stopPropagation();
+		});
 
 	};
 
@@ -75,7 +79,7 @@ var VController = (function(window, document, undefined) {
 		var menuTop = window.innerHeight * 0.22;
 		var menuItemHeight = window.innerHeight * 0.07;
 		var menuLeft = window.innerWidth * 0.3;
-		var menuLength = window.innerWidth * 0.25;
+		var menuLength = window.innerWidth * 0.29;
 		menuLength = (menuLength > 300) ? 300 : menuLength;
 		var homeButtonX = 10;
 		var homeButtonY = 10;

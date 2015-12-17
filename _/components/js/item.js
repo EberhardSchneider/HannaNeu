@@ -40,7 +40,7 @@ var Item = (function() {
 
 
 
-		TweenMax.to( self._$obj, duration, { left: newX, top: newY, onComplete: callback } );
+		TweenMax.to( self._$obj, duration, { left: newX, top: newY, onComplete: callback, ease: Back.easeInOut } );
 
 	};
 
@@ -50,17 +50,17 @@ var Item = (function() {
 		duration = duration || 1.5;
 
 		if (newWidth == -1) {
-			TweenMax.to( self._$svg, duration, {  "width": 300, onComplete: callback  });
+			TweenMax.to( self._$svg, duration, {  width: 300, onComplete: callback, ease: Back.easeInOut  });
 			return;
 		}
 
-		TweenMax.to( self._$svg, duration, {  "width": newWidth, onComplete: callback  });
+		TweenMax.to( self._$svg, duration, { "width": newWidth, onComplete: callback, ease: Back.easeInOut  });
 		if (self._$text) { 
-			TweenMax.to( self._$text, duration, { attr:{ "textLength": ( (newWidth>5) ? newWidth-5 : 0) } } );
+			TweenMax.to( self._$text, duration, { attr:{ "textLength": ( (newWidth>5) ? newWidth-5 : 0) }, ease: Back.easeInOut  } );
 		}
 
 		if ( self._$obj.find("img") ) {
-				TweenMax.to( self._$obj.find("img"), duration, {  "width": newWidth });
+				TweenMax.to( self._$obj.find("img"), duration, {  "width": newWidth, ease: Back.easeInOut });
 		}
 
 	};
@@ -83,8 +83,8 @@ var Item = (function() {
 		var self = this;
 		duration = duration || 1.5;
 		if (self._$text == undefined) { return; }
-		TweenMax.to(self._$obj, duration, { y: newFontSize*7.5, onComplete: callback } );
-		TweenMax.to( self._$text, duration, { "font-size": newFontSize*15});
+		TweenMax.to(self._$obj, duration, { y: newFontSize*7.5, onComplete: callback, ease: Back.easeInOut  } );
+		TweenMax.to( self._$text, duration, { "font-size": newFontSize*15, ease: Back.easeInOut });
 
 	};
 

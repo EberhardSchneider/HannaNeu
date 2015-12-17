@@ -46,5 +46,9 @@ var Thumbnail = (function() {
 		return this.big_img;
 	};
 
+	Thumbnail.prototype.getWidth = function() {
+		return this.thumb_img.width;
+	};
+
 	return Thumbnail;
 })();

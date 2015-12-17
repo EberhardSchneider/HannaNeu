@@ -359,7 +359,10 @@
 		var minutes = Math.floor( seconds / 60 );
 		seconds -= minutes*60;
 
-		$(".time-box").text( self.formatTime(minutes, seconds) + " / "+ self.formatTime( minutesComplete, secondsComplete ) );
+		var secondsToGo = Math.floor( self.audioElements[ self.trackNumberPlaying ].duration - self.audioElements[ self.trackNumberPlaying ].currentTime );
+		var minutesToGo = Math.floor( secondsToGo / 60 );
+		secondsToGo -= minutesToGo*60;
+		$(".time-box").text(self.formatTime( minutesToGo, secondsToGo ) );
 	},
 
 	formatTime: function ( minutes, seconds ) {

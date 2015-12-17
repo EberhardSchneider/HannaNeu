@@ -244,7 +244,9 @@ var Agenda = {
         var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].duration), c = Math.floor(b / 60);
         b -= 60 * c;
         var d = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), e = Math.floor(d / 60);
-        d -= 60 * e, $(".time-box").text(a.formatTime(e, d) + " / " + a.formatTime(c, b));
+        d -= 60 * e;
+        var f = Math.floor(a.audioElements[a.trackNumberPlaying].duration - a.audioElements[a.trackNumberPlaying].currentTime), g = Math.floor(f / 60);
+        f -= 60 * g, $(".time-box").text(a.formatTime(g, f));
     },
     formatTime: function(a, b) {
         var c = "";
@@ -316,30 +318,105 @@ var Agenda = {
         });
     }
 }, Gallery = {
-    numberOfGalleries: 2,
-    sourcefileNames: [ "include/images1.json", "include/images2.json" ],
-    galleries: [],
     html: "",
-    init: function() {
-        for (var a = this, b = 0; b < a.numberOfGalleries; b++) {
-            var c = new GalleryClass(Gallery.sourcefileNames[b]);
-            c.init(), Gallery.galleries.push(c);
+    isOrientationChecked: !1,
+    _sceneImageNames: {
+        "0": {
+            thumb: "aschenputtel_hut.png",
+            big: "aschenputtel_hut.png"
+        },
+        "1": {
+            thumb: "aschenputtel_kleider.png",
+            big: "aschenputtel_kleider.png"
+        },
+        "2": {
+            thumb: "aschenputtel_lachend.png",
+            big: "aschenputtel_lachend.png"
+        },
+        "3": {
+            thumb: "gisela_abteil.png",
+            big: "gisela_abteil.png"
+        },
+        "4": {
+            thumb: "gisela_gold.png",
+            big: "gisela_gold.png"
+        },
+        "5": {
+            thumb: "judy_punch.jpeg",
+            big: "judy_punch.jpeg"
+        },
+        "6": {
+            thumb: "papagena_ei.png",
+            big: "papagena_ei.png"
+        },
+        "7": {
+            thumb: "what_what.jpg",
+            big: "what_what.jpg"
         }
+    },
+    _portraitImageNames: {
+        "0": {
+            thumb: "portrait_1.jpg",
+            big: "portrait_1.jpg"
+        },
+        "1": {
+            thumb: "portrait_2.jpg",
+            big: "portrait_2.jpg"
+        },
+        "2": {
+            thumb: "portrait_2.jpg",
+            big: "portrait_2.jpg"
+        },
+        "3": {
+            thumb: "portrait_2.jpg",
+            big: "portrait_2.jpg"
+        }
+    },
+    _sceneImages: [],
+    _portraitImages: [],
+    init: function() {
+        var a = Gallery;
+        $.each(a._sceneImageNames, function(b, c) {
+            a._addSceneImage(c.thumb, c.big);
+        }), $.each(a._portraitImageNames, function(b, c) {
+            a._addPortraitImage(c.thumb, c.big);
+        }), a._makeHTML();
     },
     activate: function() {
-        for (var a = this, b = 0; b < a.numberOfGalleries; b++) Gallery.galleries[b].activate();
+        var a = Gallery, b = .21 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
+        $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
+        a.isOrientationChecked || (a.isOrientationChecked = !0, $.each(a._sceneImages, function(a, b) {
+            var c = b.getThumb();
+            c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
+        }), $.each(a._portraitImages, function(a, b) {
+            var c = b.getThumb();
+            c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
+        }));
     },
     deactivate: function() {
-        for (var a = this, b = 0; b < a.numberOfGalleries; b++) Gallery.galleries[b].deactivate();
     },
     getMarkUp: function() {
-        var a = this;
-        Gallery.html = $("<div class='gallery'>");
-        for (var b = 0; b < a.numberOfGalleries; b++) {
-            var c = $("<div class='gallery-wrapper-" + b + "'>");
-            c.append(Gallery.galleries[b].getMarkUp()), Gallery.html.append(c);
-        }
+        $(".sehen").html();
         return Gallery.html;
+    },
+    callback: function() {},
+    _makeHTML: function() {
+        var a = Gallery, b = $("<div class='image-wrapper'>"), c = $("<div class='scene-images-container'></div>"), d = $("<div class='portrait-images-container'></div>");
+        $.each(a._sceneImages, function(a, b) {
+            var d = $("<div class='scene-div-" + a + "'>");
+            d.append(b.getThumb()), c.append(d);
+        }), $.each(a._portraitImages, function(a, b) {
+            var c = $("<div class='portrait-div-" + a + "'>");
+            c.append(b.getThumb()), d.append(c);
+        }), b.append(c), b.append(d), Gallery.html = b;
+    },
+    _addSceneImage: function(a, b) {
+        var c = Gallery, d = c._sceneImages.length + 1;
+        c._sceneImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
+    },
+    _addPortraitImage: function(a, b) {
+        var c = Gallery, d = c._portraitImages.length + 1;
+        c._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
     }
 }, GalleryClass = function() {
     function a(a) {
@@ -389,22 +466,27 @@ var Agenda = {
         d = d || 1.5, TweenMax.to(e._$obj, d, {
             left: a,
             top: b,
-            onComplete: c
+            onComplete: c,
+            ease: Back.easeInOut
         });
     }, a.prototype._animateWidth = function(a, b, c) {
         var d = this;
         return c = c || 1.5, -1 == a ? void TweenMax.to(d._$svg, c, {
             width: 300,
-            onComplete: b
+            onComplete: b,
+            ease: Back.easeInOut
         }) : (TweenMax.to(d._$svg, c, {
             width: a,
-            onComplete: b
+            onComplete: b,
+            ease: Back.easeInOut
         }), d._$text && TweenMax.to(d._$text, c, {
             attr: {
                 textLength: a > 5 ? a - 5 : 0
-            }
+            },
+            ease: Back.easeInOut
         }), void (d._$obj.find("img") && TweenMax.to(d._$obj.find("img"), c, {
-            width: a
+            width: a,
+            ease: Back.easeInOut
         })));
     }, a.prototype._animateHeight = function(a, b, c) {
         var d = this;
@@ -424,9 +506,11 @@ var Agenda = {
         var d = this;
         c = c || 1.5, void 0 != d._$text && (TweenMax.to(d._$obj, c, {
             y: 7.5 * a,
-            onComplete: b
+            onComplete: b,
+            ease: Back.easeInOut
         }), TweenMax.to(d._$text, c, {
-            "font-size": 15 * a
+            "font-size": 15 * a,
+            ease: Back.easeInOut
         }));
     }, a.prototype._animateOpacity = function(a, b, c) {
         var d = this;
@@ -544,6 +628,8 @@ var Agenda = {
         return this.thumb_img;
     }, a.prototype.getBig = function() {
         return this.big_img;
+    }, a.prototype.getWidth = function() {
+        return this.thumb_img.width;
     }, a;
 }(), VController = function(a, b, c) {
     function d() {
@@ -561,18 +647,20 @@ var Agenda = {
         }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
         a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita))), 
         a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer))), 
-        a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery))), 
+        a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
         a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
         a.cc.addContent("home", new Content(function() {
             return "";
         }, function() {}, function() {})), events.on("resize", function() {
             a._calculatePositions(), a.mc.render();
-        }), this._calculatePositions();
+        }), this._calculatePositions(), $(".menu-item").hover(function(a) {
+            a.stopPropagation();
+        });
     }, d.prototype._manageContent = function(a) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        var b = .22 * a.innerHeight, c = .07 * a.innerHeight, d = .3 * a.innerWidth, e = .25 * a.innerWidth;
+        var b = .22 * a.innerHeight, c = .07 * a.innerHeight, d = .3 * a.innerWidth, e = .29 * a.innerWidth;
         e = e > 300 ? 300 : e;
         for (var f = 10, g = 10, h = .005 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
             var k = [ 372, 190, 318, 304, 410 ][j];

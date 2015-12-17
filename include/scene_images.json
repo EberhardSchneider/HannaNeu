@@ -1,7 +1,4 @@
 {
-
-	"sceneImages": {
-
 		"0": { "thumb": "aschenputtel_hut.png",
 					"big" : "aschenputtel_hut.png" },
 
@@ -25,16 +22,5 @@
 
 		"7": { "thumb": "what_what.jpg",
 					"big" : "what_what.jpg" }
-	},
-	
-
-	"portraitImages": {
-
-		"0": "portrait_1.jpg",
-
-		"1":	"portrait_2.jpg"
-
-	}
-
 
 }

@@ -29,12 +29,6 @@
 	font-style: italic;
 }
 
-.menu-item {
-	&:hover {
-		cursor: pointer;
-	}
-}
-
 
 
 
@@ -116,14 +110,14 @@
 .vita-image {
 	position: relative;
 	display: block;
-	height: 27%;
+	height: 30%;
 	width: 100%;
 	top: 0;
 	margin-bottom: 10%;
 
 	
 
-	img { height: 100%;}
+	img { height: 100%; width: auto;}
 
 
 }

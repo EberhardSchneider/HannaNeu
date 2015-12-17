@@ -1,25 +1,6 @@
 {
-	"0": { "thumb": "aschenputtel_hut.png",
-				"big" : "aschenputtel_hut.png" },
 
-	"1": { "thumb": "aschenputtel_kleider.png",
-				"big" : "aschenputtel_kleider.png" },
+	"0": "blabla",
+	"1": "blablabla"
 
-	"2": { "thumb": "aschenputtel_lachend.png",
-				"big" : "aschenputtel_lachend.png" },
-
-	"3": { "thumb": "gisela_abteil.png",
-				"big" : "gisela_abteil.png" },
-
-	"4": { "thumb": "gisela_gold.png",
-				"big" : "gisela_gold.png" },
-
-	"5": { "thumb": "judy_punch.jpeg",
-				"big" : "judy_punch.jpeg" },
-
-	"6": { "thumb": "papagena_ei.png",
-				"big" : "papagena_ei.png" },
-
-	"7": { "thumb": "what_what.jpg",
-				"big" : "what_what.jpg" }
 }
