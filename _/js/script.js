@@ -217,7 +217,7 @@ var Agenda = {
     },
     mouseUpHandler: function() {
         var a = AudioPlayer;
-        if (a.isMouseDown) {
+        if (console.log("AudioUp"), a.isMouseDown) {
             a.isMouseDown = !1;
             var b = a.audioElements[a.trackNumberPlaying];
             b.currentTime = a.navPerc * b.duration / 100, a.isAudioPlaying && b.play(), clearInterval(a.navigationUpdateHandler), 
@@ -391,15 +391,50 @@ var Agenda = {
         }), $.each(a._portraitImages, function(a, b) {
             var c = b.getThumb();
             c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
-        }));
+        })), a.navMenuItem = $(".menu-item")[3], a._navItemStartPos = parseInt($(a.navMenuItem).css("left"), 10), 
+        console.log(a._navItemStartPos);
+        var e = $(a.navMenuItem).css("width");
+        a.navMenuItemWidth = parseInt(e.substring(0, e.length - 2));
+        var f = $(a.navMenuItem).css("height");
+        a.navMenuItemHeight = parseInt(f.substring(0, f.length - 2)), a._activateNavigation(), 
+        a.windowWidth = window.innerWidth - a.navMenuItemWidth + 80;
     },
     deactivate: function() {
+        var a = Gallery;
+        a._deactivateNavigation(), a.isMouseDown = !1;
     },
     getMarkUp: function() {
         $(".sehen").html();
         return Gallery.html;
     },
     callback: function() {},
+    _activateNavigation: function() {
+        var a = Gallery;
+        $(a.navMenuItem).off(), a.navMenuItem.addEventListener("mousedown", a._mouseDownHandler, !1), 
+        document.body.addEventListener("mouseup", a._mouseUpHandler, !1), document.body.addEventListener("mousemove", a._mouseMoveHandler, !1);
+    },
+    _mouseDownHandler: function(a) {
+        var b = Gallery;
+        b.oldNavItemPos = parseInt(b.navMenuItem.style.left, 10), b.startX = a.pageX, console.log(b.oldNavItemPos + " .. : .. " + b.startX), 
+        b.isMouseDown = !0;
+    },
+    _mouseUpHandler: function() {
+        Gallery.isMouseDown = !1;
+    },
+    _mouseMoveHandler: function(a) {
+        var b = Gallery;
+        if (b.isMouseDown) {
+            var c = b.oldNavItemPos + (a.pageX - b.startX);
+            c = c < b._navItemStartPos ? b._navItemStartPos : c, $(b.navMenuItem).css("left", c + "px");
+        }
+    },
+    _deactivateNavigation: function() {
+        var a = Gallery;
+        a.navMenuItem.removeEventListener("mousedown", a._mouseDownHandler), document.body.removeEventListener("mouseup", a._mouseUpHandler), 
+        document.body.removeEventListener("mousemove", a._mouseMoveHandler), $(".menu-item").eq(3).on("click", function() {
+            events.emit("itemClicked", $(this).index());
+        });
+    },
     _makeHTML: function() {
         var a = Gallery, b = $("<div class='image-wrapper'>"), c = $("<div class='scene-images-container'></div>"), d = $("<div class='portrait-images-container'></div>");
         $.each(a._sceneImages, function(a, b) {
@@ -482,8 +517,7 @@ var Agenda = {
         }), d._$text && TweenMax.to(d._$text, c, {
             attr: {
                 textLength: a > 5 ? a - 5 : 0
-            },
-            ease: Back.easeInOut
+            }
         }), void (d._$obj.find("img") && TweenMax.to(d._$obj.find("img"), c, {
             width: a,
             ease: Back.easeInOut

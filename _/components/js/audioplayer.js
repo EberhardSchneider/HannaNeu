@@ -43,7 +43,6 @@
 
 
 	// Audio und HTML initalisieren
-	// TODO aufsplitten in init und acivate
 	init:	function() {
 		var self = AudioPlayer;
 
@@ -282,6 +281,8 @@
 
 	mouseUpHandler: function() {
 		var self = AudioPlayer;
+
+		console.log("AudioUp");
 
 		if (!self.isMouseDown) { return; }
 		self.isMouseDown = false;

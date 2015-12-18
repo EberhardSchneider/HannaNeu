@@ -106,16 +106,41 @@ var Gallery = {
 		}
 
 
+	/// navigation init
+
+	
+
+	self.navMenuItem = $( ".menu-item" )[3]; // store "sehen" item
+
+	self._navItemStartPos = parseInt( $(self.navMenuItem).css("left"), 10);
+	console.log(self._navItemStartPos);
+	// store width and height of "sehen" item
+	var widthStr = $( self.navMenuItem ).css("width");
+	self.navMenuItemWidth = parseInt( widthStr.substring( 0, widthStr.length - 2));
+	var heightStr = $( self.navMenuItem ).css("height");
+	self.navMenuItemHeight = parseInt( heightStr.substring( 0, heightStr.length - 2));
+	
+	
+
+	self._activateNavigation();
+
+	self.windowWidth = window.innerWidth - self.navMenuItemWidth + 80;
 		
 	},
 
 	deactivate: function() {
-		var self = this;
+		var self = Gallery;
+
+		self._deactivateNavigation();
+		
+
+
+		self.isMouseDown = false;
 		
 	},
 
 	getMarkUp: function() {
-		var self = this;
+		var self = Gallery;
 		
 		var html = $(".sehen").html();
 
@@ -131,6 +156,52 @@ var Gallery = {
 		var width = $(".scene-div-0")[0].getBoundingClientRect().width;
 		var sceneContainerWidth = Math.floor(self._sceneImages.length/2) * width;
 		$(".scene-images-container").css("width", sceneContainerWidth); */
+	},
+
+	_activateNavigation: function() {
+		var self = Gallery;
+		// unbind onclick event for menu managment
+		$(self.navMenuItem).off();
+
+		self.navMenuItem.addEventListener("mousedown", self._mouseDownHandler, false );
+		document.body.addEventListener("mouseup", self._mouseUpHandler, false );
+		document.body.addEventListener("mousemove", self._mouseMoveHandler, false );
+
+
+	},
+
+	_mouseDownHandler: function( event ) {
+		var self = Gallery;
+
+		self.oldNavItemPos = parseInt( self.navMenuItem.style.left, 10);
+		self.startX = event.pageX;
+		console.log(self.oldNavItemPos + " .. : .. "+ self.startX);
+		self.isMouseDown = true;
+	},
+
+	_mouseUpHandler: function() {
+		Gallery.isMouseDown = false;
+	},
+
+	_mouseMoveHandler: function( event ) {
+		var self = Gallery;
+
+		if ( self.isMouseDown ) {
+			var newItemPos = self.oldNavItemPos + ( event.pageX - self.startX );
+			newItemPos = ( newItemPos < self._navItemStartPos ) ? self._navItemStartPos : newItemPos;
+
+			$(self.navMenuItem).css("left", newItemPos + "px");
+		}
+	},
+
+	_deactivateNavigation: function() {
+		var self=Gallery;
+		self.navMenuItem.removeEventListener( "mousedown", self._mouseDownHandler);
+		document.body.removeEventListener( "mouseup", self._mouseUpHandler);
+		document.body.removeEventListener( "mousemove", self._mouseMoveHandler);
+
+		$(".menu-item").eq(3).on( "click", function() { events.emit("itemClicked", $(this).index() ); });
+
 	},
 
 	_makeHTML: function() {
