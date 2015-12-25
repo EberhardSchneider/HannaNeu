@@ -112,8 +112,7 @@ var Gallery = {
 
 	self.navMenuItem = $( ".menu-item" )[3]; // store "sehen" item
 
-	self._navItemStartPos = parseInt( $(self.navMenuItem).css("left"), 10);
-	console.log(self._navItemStartPos);
+	
 	// store width and height of "sehen" item
 	var widthStr = $( self.navMenuItem ).css("width");
 	self.navMenuItemWidth = parseInt( widthStr.substring( 0, widthStr.length - 2));
@@ -149,13 +148,10 @@ var Gallery = {
 
 	callback: function() {
 
-	/*	var self = Gallery;
-			// set container-width
-
-		// get Container-Width
-		var width = $(".scene-div-0")[0].getBoundingClientRect().width;
-		var sceneContainerWidth = Math.floor(self._sceneImages.length/2) * width;
-		$(".scene-images-container").css("width", sceneContainerWidth); */
+	 self = Gallery;
+	
+		self._navItemStartPos = parseInt( $(self.navMenuItem).css("left"), 10);
+	console.log(self._navItemStartPos);
 	},
 
 	_activateNavigation: function() {

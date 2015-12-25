@@ -76,11 +76,17 @@ var Agenda = {
 				});
 
 				html += '<div class="event">
-							<div class="komponist">' + elem.komponist + '</div>
-							<div class="title">'+ elem.title +'</div>
-							<div class="ort">'+ elem.ort +'</div>
-							<div class="datum">'+ elem.datum +'</div>
-							<div class="besetzung">'+ besetzung +'</div>
+							<div class="event-up">
+								<div class="komponist">' + elem.komponist + '</div>
+								<div class="title">'+ elem.title +'</div>
+								<div class="ort">'+ elem.ort +'</div>
+							</div>
+							<div class="event-date">
+								<div class="datum">'+ elem.datum +'</div>
+							</div>
+							<div class="event-low">
+								<div class="besetzung">'+ besetzung +'</div>
+							</div>
 						</div>';
 				});		// each
 
@@ -108,7 +114,7 @@ var Agenda = {
 	},
 
 	deactivate: function() {
-		Agenda.deactivateNavigation();  ////////////////// TO BE IMPLEMENTED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		Agenda.deactivateNavigation();  
 	},
 
 	
@@ -140,7 +146,10 @@ var Agenda = {
 	},
 
 	deactivateNavigation: 	function() {
-////////////////// TO BE IMPLEMENTED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		var self = Agenda;
+		$(".agenda")[0],removeEventListener("mousedown", self.mouseDownHandler );
+		document.body.removeEventListener("mouseup", self.mouseUpHandler );
+		document.body.removeEventListener("mouesemove", self.mosueMoveHandler );
 	},
 
 
@@ -148,22 +157,7 @@ var Agenda = {
 		var self = Agenda;
 
 
-		
-		/*self.leftPos += self.scrollSpeed;
 
-		if ( self.leftPos > 350 ) {
-			self.leftPos = 300;
-			self.scrollSpeed = 0;
-			Agenda.isMouseDown = false;
-		} else if ( self.leftPos < (-self.timelineLength)  ) {
-			self.leftPos = -self.timelineLength ;
-			self.scrollSpeed = 0;
-			Agenda.isMouseDown = false;
-		}
-
-		console.log(self.leftPos + " < " + -self.timelineLength);
-
-*/
 		$(".agenda").css("left", self.leftPos + "px" );
 
 

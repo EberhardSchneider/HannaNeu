@@ -216,7 +216,9 @@
 
 		self.trackNumberPlaying = trackToPlay;
 		// Play Icon in Pause Icon ändern
-		$(".play-button").empty().append( self.pauseIcon );
+		
+		self.pauseIcon.style.width = self.playIcon.width + "px"; // make pause icon same size as play icon
+		$(".play-button").empty().append(self.pauseIcon);
 		
 		$(".selected").removeClass("selected");
 		self.currentTrackDiv.addClass("selected");

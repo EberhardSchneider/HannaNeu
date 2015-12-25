@@ -56,6 +56,8 @@
 
 	@include user-select(none);
 
+	
+
 
 
 	.komponist {
@@ -81,14 +83,13 @@
 		font-weight: bold;
 		font-size: 95%;
 		text-align: center;
-		padding-top: 22%;
+		@include vertical-align();
 	
 	}
 
 	.besetzung {
 		
 		font-size: 80%;
-		padding-top: 22%;
 		margin-left: 25px;
 
 		.zeile {
@@ -102,6 +103,24 @@
 	}
 }
 
+
+.event-up {
+		display: block;
+		height: 24%;
+		width: 100%;
+}
+
+.event-date {
+		display: block;
+		height: 24%;
+		width: 100%;
+}
+
+.event-low {
+		display: block;
+		height: 50%;
+		width: 100%;
+}
 
 // vita ------------------------------------------------------------------------------
 

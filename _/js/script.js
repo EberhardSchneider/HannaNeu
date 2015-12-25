@@ -38,7 +38,7 @@ var Agenda = {
                     var d = "";
                     Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
                         d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
-                    }), c += '<div class="event">\r\n							<div class="komponist">' + b.komponist + '</div>\r\n							<div class="title">' + b.title + '</div>\r\n							<div class="ort">' + b.ort + '</div>\r\n							<div class="datum">' + b.datum + '</div>\r\n							<div class="besetzung">' + d + "</div>\r\n						</div>";
+                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>\r\n						</div>";
                 }), c += "</div>", a.html = c;
             }
         });
@@ -62,7 +62,11 @@ var Agenda = {
         for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
         document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
     },
-    deactivateNavigation: function() {},
+    deactivateNavigation: function() {
+        var a = Agenda;
+        $(".agenda")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
+        document.body.removeEventListener("mouesemove", a.mosueMoveHandler);
+    },
     animateTimeline: function() {
         var a = Agenda;
         $(".agenda").css("left", a.leftPos + "px");
@@ -191,11 +195,11 @@ var Agenda = {
         b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
         $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
         a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
-        $(".play-button").empty().append(b.pauseIcon), $(".selected").removeClass("selected"), 
-        b.currentTrackDiv.addClass("selected"), clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), 
-        b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), 
-        b.audioElements[a].play(), b.createTime(), b.createInfoBox(), b.initAudioNavigation(), 
-        b.timeUpdate();
+        b.pauseIcon.style.width = b.playIcon.width + "px", $(".play-button").empty().append(b.pauseIcon), 
+        $(".selected").removeClass("selected"), b.currentTrackDiv.addClass("selected"), 
+        clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), 
+        b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), b.audioElements[a].play(), 
+        b.createTime(), b.createInfoBox(), b.initAudioNavigation(), b.timeUpdate();
     },
     audioClicked: function() {
         var a = AudioPlayer;
@@ -391,8 +395,7 @@ var Agenda = {
         }), $.each(a._portraitImages, function(a, b) {
             var c = b.getThumb();
             c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
-        })), a.navMenuItem = $(".menu-item")[3], a._navItemStartPos = parseInt($(a.navMenuItem).css("left"), 10), 
-        console.log(a._navItemStartPos);
+        })), a.navMenuItem = $(".menu-item")[3];
         var e = $(a.navMenuItem).css("width");
         a.navMenuItemWidth = parseInt(e.substring(0, e.length - 2));
         var f = $(a.navMenuItem).css("height");
@@ -407,7 +410,10 @@ var Agenda = {
         $(".sehen").html();
         return Gallery.html;
     },
-    callback: function() {},
+    callback: function() {
+        self = Gallery, self._navItemStartPos = parseInt($(self.navMenuItem).css("left"), 10), 
+        console.log(self._navItemStartPos);
+    },
     _activateNavigation: function() {
         var a = Gallery;
         $(a.navMenuItem).off(), a.navMenuItem.addEventListener("mousedown", a._mouseDownHandler, !1), 
