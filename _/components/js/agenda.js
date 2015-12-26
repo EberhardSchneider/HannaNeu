@@ -86,8 +86,13 @@ var Agenda = {
 							</div>
 							<div class="event-low">
 								<div class="besetzung">'+ besetzung +'</div>
-							</div>
-						</div>';
+							</div>';
+
+						if ( elem.image !== undefined ) {
+							html += ' <div class="event-image"> <img src ="'+ elem.image +'"/> </div>';
+						}	
+
+						html += '</div>';
 				});		// each
 
 			html += "</div>";
@@ -126,6 +131,10 @@ var Agenda = {
 		self.eventBoxWidth = $(".event")[0].getBoundingClientRect().width;
 		self.timelineLength = Agenda.numberOfEventboxes * self.eventBoxWidth;
 		$(".agenda").css("width", self.timelineLength + "px");
+
+		$(".event-image").click( function() {
+			$(this).toggleClass("scroll-out");
+		} );
 	},
 
 

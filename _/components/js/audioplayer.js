@@ -137,6 +137,7 @@
 			$(".play-button").empty().append(self.playIcon);
 		} else {
 			self.pauseIcon.style.width = self.playIcon.width + "px"; // make pause icon same size as play icon
+
 			$(".play-button").empty().append(self.pauseIcon);
 			if (self.trackNumberPlaying == -1) { self.playTrack(0); } 
 				else { self.playTrack( self.trackNumberPlaying ); }
@@ -217,7 +218,9 @@
 		self.trackNumberPlaying = trackToPlay;
 		// Play Icon in Pause Icon ändern
 		
-		self.pauseIcon.style.width = self.playIcon.width + "px"; // make pause icon same size as play icon
+		if ( self.pauseIcon.style.width !== self.playIcon.style.width) {
+			self.pauseIcon.style.width = self.playIcon.width + "px"; // make pause icon same size as play icon
+		}
 		$(".play-button").empty().append(self.pauseIcon);
 		
 		$(".selected").removeClass("selected");
@@ -412,15 +415,17 @@
 		var rect = self.currentTrackDiv[0].getBoundingClientRect();
 		var topTrack = rect.top + 16;
 		var heightBoxStr = $('.audio-info-box').css("height");
-		var heightBox = parseInt( heightBoxStr.substring( 0 , heightBoxStr.length-2) );
+		var heightBox = parseInt( heightBoxStr.substring( 0 , heightBoxStr.length-2) ) + 40 ;
 		var bodyHeight = window.innerHeight;
 
 		if ( parseInt(topTrack + heightBox) > window.innerHeight ) {
 			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack + window.innerHeight * 0.01) + "px" );
-			$(".time-box").css("top", ( topTrack + 3  ) + "px" );
+			$(".time-box").css("top", ( topTrack  - 32  ) + "px" );
 
 		}  else {
-			$(".time-box").css("top", ( topTrack - 16  ) + "px" );
+			$('.audio-info-box').css("top", topTrack - window.innerHeight * 0.475 );
+
+			$(".time-box").css("top", ( topTrack - 16 ) + "px" );
 		}
 
 		// Time Box justieren

@@ -4,6 +4,7 @@ body {
 	overflow: hidden;
 
 	@include box-sizing(border-box);
+	@include user-select(none);
 
 }
 
@@ -15,7 +16,7 @@ body {
 	text-decoration: none;
 
 	&:hover {
-		opacity: 1;
+		cursor: pointer;
 	}
 
 }

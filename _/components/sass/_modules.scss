@@ -7,6 +7,8 @@
 
 	opacity: 0.2;
 
+	@include user-select(none);
+
 	&:hover {
 		opacity: 1;
 		cursor: pointer;
@@ -21,6 +23,9 @@
 	position: absolute;
 	z-index: 205;
 	width: 256px;
+
+	@include user-select(none);
+
 	img {
 		color: black;
 		width: 256px;
@@ -41,16 +46,40 @@
 	width: 150%;
 }
 
+.event-image {
+	position: absolute;
+	top: 30%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	@include transition-property(opacity);
+	@include transition-duration(0.5s);
+	@include transition-timing-function(ease-in);
+	img {
+		width: 100%;
+
+		&:hover {
+			opacity: 0.9;
+		}
+		@include user-select(none);
+
+	}
+	&.scroll-out {
+		opacity: 0;
+	}
+}
+
 .event {
+	position: relative;
 	height: 100%;
 	width: 230px;
 	float: left;
-	padding-right: 44px;
 
 	font-size: 120%;
 
 	border: solid 2px  rgba(0,0,0,0);
-	margin-right: 44px;
+	margin-right: 88px;
 
 	background-color: #fff;
 
@@ -106,13 +135,13 @@
 
 .event-up {
 		display: block;
-		height: 24%;
+		height: 14%;
 		width: 100%;
 }
 
 .event-date {
 		display: block;
-		height: 24%;
+		height: 16%;
 		width: 100%;
 }
 
@@ -210,7 +239,7 @@
 } // play-button
 
 .nav-audio {
-	cursor: ew-resize;
+	cursor: ew-resize !important;
 }
 
 .audio-info-box {
@@ -218,7 +247,7 @@
 	right: 5px;
 	width: 200px;
 	height: 150px;
-	padding: 6px;
+	
 
 	/* border: solid black 2px; */
 

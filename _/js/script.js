@@ -1,283 +1,4 @@
-var Agenda = {
-    container: {
-        css: {
-            position: "absolute",
-            left: "0",
-            top: "80px",
-            width: "1000%",
-            height: "220px",
-            overflow: "hidden"
-        },
-        timeLine: []
-    },
-    markUp: "",
-    numberOfEventboxes: 0,
-    deceleration: .9,
-    isMouseDown: !1,
-    draggedObject: {
-        domElement: {},
-        x: 0,
-        y: 0
-    },
-    leftPos: 0,
-    oldLeftPos: 0,
-    scrollSpeed: 0,
-    lastT: 0,
-    deltaT: 0,
-    scrolling: !1,
-    scrollHandler: function() {},
-    init: function() {
-        var a = Agenda, b = document.createElement("div");
-        b.className = "agenda invisible", $.ajax({
-            dataType: "json",
-            url: "include/events.json",
-            success: function(b) {
-                Agenda.numberOfEventboxes = 0;
-                var c = "<div class='agenda'>";
-                $.each(b, function(a, b) {
-                    var d = "";
-                    Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
-                        d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
-                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>\r\n						</div>";
-                }), c += "</div>", a.html = c;
-            }
-        });
-    },
-    getMarkUp: function() {
-        return Agenda.html;
-    },
-    activate: function() {
-        var a = Agenda;
-        a.activateNavigation();
-    },
-    deactivate: function() {
-        Agenda.deactivateNavigation();
-    },
-    callback: function() {
-        var a = this;
-        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
-        $(".agenda").css("width", a.timelineLength + "px");
-    },
-    activateNavigation: function() {
-        for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
-        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
-    },
-    deactivateNavigation: function() {
-        var a = Agenda;
-        $(".agenda")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
-        document.body.removeEventListener("mouesemove", a.mosueMoveHandler);
-    },
-    animateTimeline: function() {
-        var a = Agenda;
-        $(".agenda").css("left", a.leftPos + "px");
-    },
-    mouseDownHandler: function(a) {
-        var b = Agenda;
-        if (!b.isMouseDown) {
-            b.isMouseDown = !0, b.lastT = $.now(), $(".agenda").css("cursor", "move"), b.draggedObject.domElement = $(this), 
-            b.draggedObject.x = a.pageX, b.draggedObject.y = a.pageY;
-            var c = $(".agenda").css("left");
-            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.leftPos = b.oldLeftPos;
-        }
-    },
-    mouseUpHandler: function(a) {
-        var b = Agenda;
-        b.scrollSpeed = 0, b.isMouseDown = !1, clearInterval(b.animateHandler), $(".agenda").css("cursor", "auto");
-    },
-    mouseMoveHandler: function(a) {
-        var b = Agenda;
-        if (Agenda.isMouseDown) {
-            var c = Agenda.draggedObject.x - a.pageX;
-            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), b.leftPos = b.oldLeftPos - c, 
-            b.leftPos > 350 ? (b.leftPos = 300, Agenda.isMouseDown = !1) : b.leftPos < -b.timelineLength && (b.leftPos = -b.timelineLength, 
-            Agenda.isMouseDown = !1), $(".agenda").css("left", b.leftPos + "px");
-        }
-    }
-}, AudioPlayer = {
-    _html: "",
-    audioMenuItem: {},
-    audioMenuItemWidth: 0,
-    pauseIcon: {},
-    playIcon: {},
-    isAudioPlaying: !1,
-    trackNumberPlaying: -1,
-    currentTrackDiv: {},
-    timeUpdateHandler: {},
-    navigationUpdateHandler: {},
-    isMouseDown: !1,
-    startX: 0,
-    oldItemPos: 0,
-    navPerc: 0,
-    windowWidth: 0,
-    audioSources: [ {
-        komponist: "Johann Adolf Mozart",
-        titel: "Eine kleine Osterandacht",
-        src: "audio/audio.mp3"
-    }, {
-        komponist: "Johann Rainer Mozart",
-        titel: "Eine kleine Pfingstmusik",
-        src: "audio/audio02.mp3"
-    }, {
-        komponist: "Johann Adolf Meier",
-        titel: "Eine kleine Osterandacht",
-        src: "audio/audio03.mp3"
-    }, {
-        komponist: "Klaus Adolf Mozart",
-        titel: "Eine große Osterandacht",
-        src: "audio/audio04.mp3"
-    }, {
-        komponist: "Johann Gustav Schubert",
-        titel: "Eine kleine Verandaschlacht",
-        src: "audio/audio05.mp3"
-    } ],
-    audioElements: [],
-    audioElementsLoaded: 0,
-    init: function() {
-        var a = AudioPlayer;
-        a.pauseIcon.src || (a.pauseIcon = new Image(), a.playIcon = new Image(), a.pauseIcon.src = "icons/pause-icon.svg", 
-        a.playIcon.src = "icons/play-icon.svg", a.playIcon.className = "play-button-img", 
-        a.pauseIcon.className = "play-button-img", a.audioSources.forEach(function(b, c) {
-            a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
-            a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
-        })), $(".play-button").empty().append(a.playIcon);
-        var b = "<div class='audio-image'><img src='images/hören.jpg' /></div><div class = 'audio'>", c = "";
-        a.audioElements.forEach(function(a) {
-            c += "<div class='audio-track'><div class='audio-komponist'>" + a.komponist + "</div><div class='audio-titel'>" + a.titel + "</div></div>";
-        }), b += c, b += "</div>", a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
-        a.isMouseDown = !1;
-    },
-    activate: function() {
-        var a = AudioPlayer;
-        a.audioMenuItem = $(".menu-item")[2];
-        var b = $(a.audioMenuItem).css("width");
-        a.audioMenuItemWidth = parseInt(b.substring(0, b.length - 2));
-        var c = $(a.audioMenuItem).css("height");
-        a.audioMenuItemHeight = parseInt(c.substring(0, c.length - 2)), a._onClickFunctionOfMenuItem = $._data(a.audioMenuItem, "events").click.handler, 
-        $(a.audioMenuItem).off(), a.windowWidth = window.innerWidth - a.audioMenuItemWidth + 80, 
-        $(".play-button").on("click", function() {
-            setTimeout(a.playButtonClickHandler, 100);
-        }), $(".audio").children().each(function(b, c) {
-            c.addEventListener("click", a.audioClicked, !1);
-        });
-    },
-    deactivate: function() {
-        AudioPlayer.stopCurrentPlaying(), AudioPlayer.clearAudioNavigation(), $(".menu-item").eq(2).on("click", function() {
-            events.emit("itemClicked", $(this).index());
-        }), $(".nav-audio").removeClass("nav-audio"), $(".play-button").off(), self.isMouseDown = !1;
-    },
-    getMarkUp: function() {
-        return this._html;
-    },
-    playButtonClickHandler: function() {
-        var a = AudioPlayer;
-        a.isAudioPlaying ? (a.stopCurrentPlaying(), $(".play-button").empty().append(a.playIcon)) : (a.pauseIcon.style.width = a.playIcon.width + "px", 
-        $(".play-button").empty().append(a.pauseIcon), -1 == a.trackNumberPlaying ? a.playTrack(0) : a.playTrack(a.trackNumberPlaying));
-    },
-    stopCurrentPlaying: function() {
-        var a = AudioPlayer;
-        a.isAudioPlaying && (clearInterval(a.timeUpdateHandler), a.audioElements[a.trackNumberPlaying].pause(), 
-        a.isAudioPlaying = !1, $(".play-button").empty().append(a.playIcon));
-    },
-    playNextTrack: function() {
-        var a, b = AudioPlayer;
-        a = b.isAudioPlaying ? b.trackNumberPlaying + 1 == b.audioElements.length ? 0 : b.trackNumberPlaying + 1 : 0, 
-        console.log(a), b.playTrack(a);
-    },
-    clearAudioNavigation: function() {
-        var a = AudioPlayer;
-        $(a.audioMenuItem).off("mousedown"), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
-        document.body.removeEventListener("mousemove", a.mouseMoveHandler), clearInterval(AudioPlayer.navigationUpdateHandler), 
-        clearInterval(a.timeUpdateHandler), a.isMouseDown = !1, a.startX = 0, a.oldItemPos = 0, 
-        a.navPerc = 0;
-    },
-    playTrack: function(a) {
-        var b = AudioPlayer;
-        b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
-        $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
-        a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
-        b.pauseIcon.style.width = b.playIcon.width + "px", $(".play-button").empty().append(b.pauseIcon), 
-        $(".selected").removeClass("selected"), b.currentTrackDiv.addClass("selected"), 
-        clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), 
-        b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), b.audioElements[a].play(), 
-        b.createTime(), b.createInfoBox(), b.initAudioNavigation(), b.timeUpdate();
-    },
-    audioClicked: function() {
-        var a = AudioPlayer;
-        a.clearAudioNavigation();
-        var b = $(this).index();
-        a.currentTrackDiv = $(this), a.playTrack(b);
-    },
-    initAudioNavigation: function() {
-        var a = AudioPlayer, b = (a.audioElements[a.trackNumberPlaying], a.audioMenuItem);
-        b.addEventListener("mousedown", a.mouseDownHandler, !1), document.body.addEventListener("mouseup", a.mouseUpHandler, !1), 
-        document.body.addEventListener("mousemove", a.mouseMoveHandler, !1);
-    },
-    mouseDownHandler: function(a) {
-        var b = AudioPlayer;
-        b.isMouseDown = !0, b.startX = a.pageX;
-        var c = $(b.audioMenuItem).css("left");
-        b.oldItemPos = parseInt(c.substring(0, c.length - 2)), b.audioElements[b.trackNumberPlaying].pause(), 
-        clearInterval(b.navigationUpdateHandler), clearInterval(b.timeUpdateHandler);
-    },
-    mouseUpHandler: function() {
-        var a = AudioPlayer;
-        if (console.log("AudioUp"), a.isMouseDown) {
-            a.isMouseDown = !1;
-            var b = a.audioElements[a.trackNumberPlaying];
-            b.currentTime = a.navPerc * b.duration / 100, a.isAudioPlaying && b.play(), clearInterval(a.navigationUpdateHandler), 
-            clearInterval(a.timeUpdateHandler), a.timeUpdateHandler = setInterval(a.timeUpdate, 1e3), 
-            a.navigationUpdateHandler = setInterval(a.navigationUpdate, 30);
-        }
-    },
-    mouseMoveHandler: function(a) {
-        var b = AudioPlayer;
-        if (b.isMouseDown) {
-            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (window.innerWidth - b.audioMenuItemWidth - 60);
-            e = e > 100 ? 100 : e, e = 0 > e ? 0 : e, b.navPerc = e;
-            var f = b.audioElements[b.trackNumberPlaying];
-            f.currentTime = b.navPerc * f.duration / 100, b.navigationUpdate(), b.timeUpdate();
-        }
-    },
-    navigationUpdate: function() {
-        var a = AudioPlayer, b = a.audioElements[a.trackNumberPlaying], c = b.currentTime / b.duration;
-        b.duration - b.currentTime < 1 && !a.isMouseDown && a.playNextTrack();
-        var d = c * (window.innerWidth - a.audioMenuItemWidth - 60) + 74;
-        $(a.audioMenuItem).css("left", d + "px");
-    },
-    timeUpdate: function() {
-        var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].duration), c = Math.floor(b / 60);
-        b -= 60 * c;
-        var d = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), e = Math.floor(d / 60);
-        d -= 60 * e;
-        var f = Math.floor(a.audioElements[a.trackNumberPlaying].duration - a.audioElements[a.trackNumberPlaying].currentTime), g = Math.floor(f / 60);
-        f -= 60 * g, $(".time-box").text(a.formatTime(g, f));
-    },
-    formatTime: function(a, b) {
-        var c = "";
-        for (c += "" + a, b = "" + b; b.length < 2; ) b = "0" + b;
-        return c += ":" + b;
-    },
-    createTime: function() {
-        $(".time-box").remove();
-        var a = document.createElement("div");
-        a.className = "time-box", $(".content").append(a);
-    },
-    createInfoBox: function() {
-        var a = AudioPlayer;
-        $(".audio-info-box").remove();
-        var b = document.createElement("div");
-        b.className = "audio-info-box", b.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna Herfurtner</span><span class='besetzung'>Wiener Philharmoniker</span><span>Leitung: Sir Simon Rattle</span>", 
-        a.currentTrackDiv.append(b);
-        var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2));
-        window.innerHeight;
-        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + .01 * window.innerHeight + "px"), 
-        $(".time-box").css("top", d + 3 + "px")) : $(".time-box").css("top", d - 16 + "px");
-    },
-    audioReady: function() {
-        var a = AudioPlayer;
-        a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
-    }
-}, Content = function(a, b, c) {
+var Content = function(a, b, c) {
     function d(a, b, c, d) {
         this.getMarkUp = a, this.activate = b, this.deactivate = c, this.callback = d;
     }
@@ -994,6 +715,291 @@ var Agenda = {
     },
     activate: function() {},
     deactivate: function() {}
+}, Agenda = {
+    container: {
+        css: {
+            position: "absolute",
+            left: "0",
+            top: "80px",
+            width: "1000%",
+            height: "220px",
+            overflow: "hidden"
+        },
+        timeLine: []
+    },
+    markUp: "",
+    numberOfEventboxes: 0,
+    deceleration: .9,
+    isMouseDown: !1,
+    draggedObject: {
+        domElement: {},
+        x: 0,
+        y: 0
+    },
+    leftPos: 0,
+    oldLeftPos: 0,
+    scrollSpeed: 0,
+    lastT: 0,
+    deltaT: 0,
+    scrolling: !1,
+    scrollHandler: function() {},
+    init: function() {
+        var a = Agenda, b = document.createElement("div");
+        b.className = "agenda invisible", $.ajax({
+            dataType: "json",
+            url: "include/events.json",
+            success: function(b) {
+                Agenda.numberOfEventboxes = 0;
+                var c = "<div class='agenda'>";
+                $.each(b, function(a, b) {
+                    var d = "";
+                    Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
+                        d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
+                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
+                    void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
+                    c += "</div>";
+                }), c += "</div>", a.html = c;
+            }
+        });
+    },
+    getMarkUp: function() {
+        return Agenda.html;
+    },
+    activate: function() {
+        var a = Agenda;
+        a.activateNavigation();
+    },
+    deactivate: function() {
+        Agenda.deactivateNavigation();
+    },
+    callback: function() {
+        var a = this;
+        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
+        $(".agenda").css("width", a.timelineLength + "px"), $(".event-image").click(function() {
+            $(this).toggleClass("scroll-out");
+        });
+    },
+    activateNavigation: function() {
+        for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
+        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
+    },
+    deactivateNavigation: function() {
+        var a = Agenda;
+        $(".agenda")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
+        document.body.removeEventListener("mouesemove", a.mosueMoveHandler);
+    },
+    animateTimeline: function() {
+        var a = Agenda;
+        $(".agenda").css("left", a.leftPos + "px");
+    },
+    mouseDownHandler: function(a) {
+        var b = Agenda;
+        if (!b.isMouseDown) {
+            b.isMouseDown = !0, b.lastT = $.now(), $(".agenda").css("cursor", "move"), b.draggedObject.domElement = $(this), 
+            b.draggedObject.x = a.pageX, b.draggedObject.y = a.pageY;
+            var c = $(".agenda").css("left");
+            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.leftPos = b.oldLeftPos;
+        }
+    },
+    mouseUpHandler: function(a) {
+        var b = Agenda;
+        b.scrollSpeed = 0, b.isMouseDown = !1, clearInterval(b.animateHandler), $(".agenda").css("cursor", "auto");
+    },
+    mouseMoveHandler: function(a) {
+        var b = Agenda;
+        if (Agenda.isMouseDown) {
+            var c = Agenda.draggedObject.x - a.pageX;
+            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), b.leftPos = b.oldLeftPos - c, 
+            b.leftPos > 350 ? (b.leftPos = 300, Agenda.isMouseDown = !1) : b.leftPos < -b.timelineLength && (b.leftPos = -b.timelineLength, 
+            Agenda.isMouseDown = !1), $(".agenda").css("left", b.leftPos + "px");
+        }
+    }
+}, AudioPlayer = {
+    _html: "",
+    audioMenuItem: {},
+    audioMenuItemWidth: 0,
+    pauseIcon: {},
+    playIcon: {},
+    isAudioPlaying: !1,
+    trackNumberPlaying: -1,
+    currentTrackDiv: {},
+    timeUpdateHandler: {},
+    navigationUpdateHandler: {},
+    isMouseDown: !1,
+    startX: 0,
+    oldItemPos: 0,
+    navPerc: 0,
+    windowWidth: 0,
+    audioSources: [ {
+        komponist: "Johann Adolf Mozart",
+        titel: "Eine kleine Osterandacht",
+        src: "audio/audio.mp3"
+    }, {
+        komponist: "Johann Rainer Mozart",
+        titel: "Eine kleine Pfingstmusik",
+        src: "audio/audio02.mp3"
+    }, {
+        komponist: "Johann Adolf Meier",
+        titel: "Eine kleine Osterandacht",
+        src: "audio/audio03.mp3"
+    }, {
+        komponist: "Klaus Adolf Mozart",
+        titel: "Eine große Osterandacht",
+        src: "audio/audio04.mp3"
+    }, {
+        komponist: "Johann Gustav Schubert",
+        titel: "Eine kleine Verandaschlacht",
+        src: "audio/audio05.mp3"
+    } ],
+    audioElements: [],
+    audioElementsLoaded: 0,
+    init: function() {
+        var a = AudioPlayer;
+        a.pauseIcon.src || (a.pauseIcon = new Image(), a.playIcon = new Image(), a.pauseIcon.src = "icons/pause-icon.svg", 
+        a.playIcon.src = "icons/play-icon.svg", a.playIcon.className = "play-button-img", 
+        a.pauseIcon.className = "play-button-img", a.audioSources.forEach(function(b, c) {
+            a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
+            a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
+        })), $(".play-button").empty().append(a.playIcon);
+        var b = "<div class='audio-image'><img src='images/hören.jpg' /></div><div class = 'audio'>", c = "";
+        a.audioElements.forEach(function(a) {
+            c += "<div class='audio-track'><div class='audio-komponist'>" + a.komponist + "</div><div class='audio-titel'>" + a.titel + "</div></div>";
+        }), b += c, b += "</div>", a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
+        a.isMouseDown = !1;
+    },
+    activate: function() {
+        var a = AudioPlayer;
+        a.audioMenuItem = $(".menu-item")[2];
+        var b = $(a.audioMenuItem).css("width");
+        a.audioMenuItemWidth = parseInt(b.substring(0, b.length - 2));
+        var c = $(a.audioMenuItem).css("height");
+        a.audioMenuItemHeight = parseInt(c.substring(0, c.length - 2)), a._onClickFunctionOfMenuItem = $._data(a.audioMenuItem, "events").click.handler, 
+        $(a.audioMenuItem).off(), a.windowWidth = window.innerWidth - a.audioMenuItemWidth + 80, 
+        $(".play-button").on("click", function() {
+            setTimeout(a.playButtonClickHandler, 100);
+        }), $(".audio").children().each(function(b, c) {
+            c.addEventListener("click", a.audioClicked, !1);
+        });
+    },
+    deactivate: function() {
+        AudioPlayer.stopCurrentPlaying(), AudioPlayer.clearAudioNavigation(), $(".menu-item").eq(2).on("click", function() {
+            events.emit("itemClicked", $(this).index());
+        }), $(".nav-audio").removeClass("nav-audio"), $(".play-button").off(), self.isMouseDown = !1;
+    },
+    getMarkUp: function() {
+        return this._html;
+    },
+    playButtonClickHandler: function() {
+        var a = AudioPlayer;
+        a.isAudioPlaying ? (a.stopCurrentPlaying(), $(".play-button").empty().append(a.playIcon)) : (a.pauseIcon.style.width = a.playIcon.width + "px", 
+        $(".play-button").empty().append(a.pauseIcon), -1 == a.trackNumberPlaying ? a.playTrack(0) : a.playTrack(a.trackNumberPlaying));
+    },
+    stopCurrentPlaying: function() {
+        var a = AudioPlayer;
+        a.isAudioPlaying && (clearInterval(a.timeUpdateHandler), a.audioElements[a.trackNumberPlaying].pause(), 
+        a.isAudioPlaying = !1, $(".play-button").empty().append(a.playIcon));
+    },
+    playNextTrack: function() {
+        var a, b = AudioPlayer;
+        a = b.isAudioPlaying ? b.trackNumberPlaying + 1 == b.audioElements.length ? 0 : b.trackNumberPlaying + 1 : 0, 
+        console.log(a), b.playTrack(a);
+    },
+    clearAudioNavigation: function() {
+        var a = AudioPlayer;
+        $(a.audioMenuItem).off("mousedown"), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
+        document.body.removeEventListener("mousemove", a.mouseMoveHandler), clearInterval(AudioPlayer.navigationUpdateHandler), 
+        clearInterval(a.timeUpdateHandler), a.isMouseDown = !1, a.startX = 0, a.oldItemPos = 0, 
+        a.navPerc = 0;
+    },
+    playTrack: function(a) {
+        var b = AudioPlayer;
+        b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
+        $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
+        a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
+        b.pauseIcon.style.width !== b.playIcon.style.width && (b.pauseIcon.style.width = b.playIcon.width + "px"), 
+        $(".play-button").empty().append(b.pauseIcon), $(".selected").removeClass("selected"), 
+        b.currentTrackDiv.addClass("selected"), clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), 
+        b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), 
+        b.audioElements[a].play(), b.createTime(), b.createInfoBox(), b.initAudioNavigation(), 
+        b.timeUpdate();
+    },
+    audioClicked: function() {
+        var a = AudioPlayer;
+        a.clearAudioNavigation();
+        var b = $(this).index();
+        a.currentTrackDiv = $(this), a.playTrack(b);
+    },
+    initAudioNavigation: function() {
+        var a = AudioPlayer, b = (a.audioElements[a.trackNumberPlaying], a.audioMenuItem);
+        b.addEventListener("mousedown", a.mouseDownHandler, !1), document.body.addEventListener("mouseup", a.mouseUpHandler, !1), 
+        document.body.addEventListener("mousemove", a.mouseMoveHandler, !1);
+    },
+    mouseDownHandler: function(a) {
+        var b = AudioPlayer;
+        b.isMouseDown = !0, b.startX = a.pageX;
+        var c = $(b.audioMenuItem).css("left");
+        b.oldItemPos = parseInt(c.substring(0, c.length - 2)), b.audioElements[b.trackNumberPlaying].pause(), 
+        clearInterval(b.navigationUpdateHandler), clearInterval(b.timeUpdateHandler);
+    },
+    mouseUpHandler: function() {
+        var a = AudioPlayer;
+        if (console.log("AudioUp"), a.isMouseDown) {
+            a.isMouseDown = !1;
+            var b = a.audioElements[a.trackNumberPlaying];
+            b.currentTime = a.navPerc * b.duration / 100, a.isAudioPlaying && b.play(), clearInterval(a.navigationUpdateHandler), 
+            clearInterval(a.timeUpdateHandler), a.timeUpdateHandler = setInterval(a.timeUpdate, 1e3), 
+            a.navigationUpdateHandler = setInterval(a.navigationUpdate, 30);
+        }
+    },
+    mouseMoveHandler: function(a) {
+        var b = AudioPlayer;
+        if (b.isMouseDown) {
+            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (window.innerWidth - b.audioMenuItemWidth - 60);
+            e = e > 100 ? 100 : e, e = 0 > e ? 0 : e, b.navPerc = e;
+            var f = b.audioElements[b.trackNumberPlaying];
+            f.currentTime = b.navPerc * f.duration / 100, b.navigationUpdate(), b.timeUpdate();
+        }
+    },
+    navigationUpdate: function() {
+        var a = AudioPlayer, b = a.audioElements[a.trackNumberPlaying], c = b.currentTime / b.duration;
+        b.duration - b.currentTime < 1 && !a.isMouseDown && a.playNextTrack();
+        var d = c * (window.innerWidth - a.audioMenuItemWidth - 60) + 74;
+        $(a.audioMenuItem).css("left", d + "px");
+    },
+    timeUpdate: function() {
+        var a = AudioPlayer, b = Math.floor(a.audioElements[a.trackNumberPlaying].duration), c = Math.floor(b / 60);
+        b -= 60 * c;
+        var d = Math.floor(a.audioElements[a.trackNumberPlaying].currentTime), e = Math.floor(d / 60);
+        d -= 60 * e;
+        var f = Math.floor(a.audioElements[a.trackNumberPlaying].duration - a.audioElements[a.trackNumberPlaying].currentTime), g = Math.floor(f / 60);
+        f -= 60 * g, $(".time-box").text(a.formatTime(g, f));
+    },
+    formatTime: function(a, b) {
+        var c = "";
+        for (c += "" + a, b = "" + b; b.length < 2; ) b = "0" + b;
+        return c += ":" + b;
+    },
+    createTime: function() {
+        $(".time-box").remove();
+        var a = document.createElement("div");
+        a.className = "time-box", $(".content").append(a);
+    },
+    createInfoBox: function() {
+        var a = AudioPlayer;
+        $(".audio-info-box").remove();
+        var b = document.createElement("div");
+        b.className = "audio-info-box", b.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna Herfurtner</span><span class='besetzung'>Wiener Philharmoniker</span><span>Leitung: Sir Simon Rattle</span>", 
+        a.currentTrackDiv.append(b);
+        var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2)) + 40;
+        window.innerHeight;
+        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + .01 * window.innerHeight + "px"), 
+        $(".time-box").css("top", d - 32 + "px")) : ($(".audio-info-box").css("top", d - .475 * window.innerHeight), 
+        $(".time-box").css("top", d - 16 + "px"));
+    },
+    audioReady: function() {
+        var a = AudioPlayer;
+        a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
+    }
 };
 
 vc = new VController(), $(".menu-item").on("click", function() {

@@ -50,7 +50,8 @@
 		"Sandrina":	"Hanna Herfurtner",
 		"Botticelli": "Maria Schneider",
 		"Klausi":	"Johano Vartucci"
-		}
+		},
+		"image": "images/aschenputtel_hut.png"
 	} 
 	,"4":{ 
 	"title": 			"Die verstellte Gärtnerin",
@@ -76,7 +77,8 @@
 		"Sandrina":	"Hanna Herfurtner",
 		"Botticelli": "Maria Schneider",
 		"Klausi":	"Johano Vartucci"
-		}
+		},
+		"image": "images/papagena_ei.png"
 	} 
 	,"6":{ 
 	"title": 			"Die verstellte Gärtnerin",
