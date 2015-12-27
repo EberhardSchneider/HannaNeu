@@ -38,12 +38,33 @@
 .agenda {
 	position: absolute;
 	left: 0;
-	top: 20%;
+	top: 19%;
 
-	height: 42%;
+	height: 52%;
 	overflow: hidden;
 
 	z-index: -255;
+}
+// home ---------------------------------------------------------------------------
+.home-circle {
+	position: fixed;
+	width: 90vh;
+	height: 90vh;
+
+	border-radius: 80vh;
+	
+	z-index: 99;
+
+	@include centerer;
+
+	overflow: hidden;
+
+	img {
+		width: 110%;
+		height: auto;
+		opacity: 0.3;
+	}
+
 }
 
 
@@ -69,7 +90,7 @@
 	left: 30%;
 	right: 0;
 	top: 0;
-	height: 39%;
+	height: 44%;
 
 	img {
 		height: 100%;
@@ -79,7 +100,7 @@
 	position: absolute;
 	left: 30%;
 	right: 0;
-	top: 48%;
+	top: 56%;
 	bottom: 0;
 
 	z-index: 255;
@@ -100,7 +121,7 @@
 
 .scene-images-container {
 	position: relative;
-		height: 47%;
+		height: 55%;
 		width: 900px;
 
 
@@ -109,9 +130,9 @@
 
 		>div {
 			display: inline-block;
-			width: 19vh;
-			height: 19vh;
-			margin: 1vh;
+			width: 22vh;
+			height: 22vh;
+			margin: 1.7vh;
 			overflow: hidden;
 
 			
@@ -128,7 +149,7 @@
 	.portrait-images-container {
 	position: relative;
 		
-		margin-top: 8vh;
+		margin-top: 9vh;
 		height: 25%;
 		width: 100%;
 
@@ -140,9 +161,9 @@
 
 			>div {
 			display: inline-block;
-			width: 19vh;
-			height: 19vh;
-			margin: 1vh;
+			width: 22vh;
+			height: 22vh;
+			margin: 1.7vh;
 			overflow: hidden;
 
 			

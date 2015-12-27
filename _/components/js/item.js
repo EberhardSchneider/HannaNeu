@@ -56,7 +56,7 @@ var Item = (function() {
 
 		TweenMax.to( self._$svg, duration, { "width": newWidth, onComplete: callback, ease: Back.easeInOut  });
 		if (self._$text) { 
-			TweenMax.to( self._$text, duration, { attr:{ "textLength": ( (newWidth>5) ? newWidth-5 : 0) }/*, ease: Back.easeInOut */ } );
+			TweenMax.to( self._$text, duration, { attr:{ "textLength": ( (newWidth>5) ? newWidth-5 : 0) }, ease: Back.easeInOut  } );
 		}
 
 		if ( self._$obj.find("img") ) {

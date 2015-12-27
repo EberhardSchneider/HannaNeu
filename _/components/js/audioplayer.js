@@ -71,7 +71,7 @@
 	
 
 		// HTML bereiten
-		var container = "<div class='audio-image'><img src='images/hören.jpg' /></div><div class = 'audio'>";
+		var container = "<div class='audio-image'><img src='images/hoeren.jpg' /></div><div class = 'audio'>";
 
 		var markUp = "";
 

@@ -48,7 +48,7 @@
 
 .event-image {
 	position: absolute;
-	top: 30%;
+	top: 34%;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -73,7 +73,7 @@
 .event {
 	position: relative;
 	height: 100%;
-	width: 230px;
+	width: 200px;
 	float: left;
 
 	font-size: 120%;
@@ -141,7 +141,7 @@
 
 .event-date {
 		display: block;
-		height: 16%;
+		height: 20%;
 		width: 100%;
 }
 
@@ -158,10 +158,10 @@
 .vita-image {
 	position: relative;
 	display: block;
-	height: 30%;
+	height: 36%;
 	width: 100%;
 	top: 0;
-	margin-bottom: 10%;
+	margin-bottom: 9%;
 
 	
 
@@ -179,7 +179,7 @@
 	text-align: justify;
 
 	p {
-		margin: 15px;
+		margin-bottom: 25px;
 	}
 	
 	overflow: auto;
@@ -278,24 +278,38 @@
 
 .overlay {
 		position: fixed;
-		top: 5%;
-		left: 5%;
-		bottom: 5%;
-		right: 5%;
-		background-color: rgba( 0, 0, 0, 0.6);
+		top: 3%;
+		left: 3%;
+		bottom: 3%;
+		right: 3%;
+		background-color: rgba( 0, 0, 0, 0.8);
 		border-radius: 20px;
 
 		z-index: 255;
 
 
 		.presentation {
-			width: 50%;
-			display: block;
-    		margin-left: auto;
-    		margin-right: auto;
-    		margin-top: 15%;
+			position: absolute;
+			width: 60%;
+			height: 60%;
 
-    		border: solid 10px white;
+			.portrait {
+				height: 120%;
+				width: auto;
+				margin-left: 30%;
+				@include vertical-align();
+			}
+
+			.landscape {
+				width: 100%;
+				height: auto;
+				@include vertical-align();
+			}
+			
+			display: block;
+    		left: 20%;
+    		top: 20%;
+
     		@include border-radius( 10px );
 
     		z-index: 200;
@@ -303,9 +317,9 @@
 
 		.close-icon {
 			position: fixed;
-			top: 5%;
-			right: 5%;
-			width: 64px;
+			top: 10%;
+			right: 10%;
+			width: 48px;
 			background-color: black;
 
 			&:hover {
@@ -324,17 +338,20 @@
 
 .kontakt-wrapper {
 	position: absolute;
+	top: 0;
 	left: 30%;
 	right: 4%;
-	/* top: -40%; */
+	bottom: 0;
 
 	padding: 5px;
 
 	.kontakt-image {
-		top: -300px;
+		position: absolute;
+		top: 0;
 		left: 0;
-		right: 0;
-		img { width: 110%; }
+		bottom: 0;
+		
+		img { height: 100%; }
 	}
 
 	.kontakt-schablone {

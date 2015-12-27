@@ -108,7 +108,7 @@ var Content = function(a, b, c) {
         }), a._makeHTML();
     },
     activate: function() {
-        var a = Gallery, b = .21 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
+        var a = Gallery, b = .26 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
         $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
         a.isOrientationChecked || (a.isOrientationChecked = !0, $.each(a._sceneImages, function(a, b) {
             var c = b.getThumb();
@@ -116,7 +116,8 @@ var Content = function(a, b, c) {
         }), $.each(a._portraitImages, function(a, b) {
             var c = b.getThumb();
             c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
-        })), a.navMenuItem = $(".menu-item")[3];
+        })), $(".image-wrapper").find("img").click(a._imageClickHandler), $.each(a._portraitImages, function(a, b) {}), 
+        a.navMenuItem = $(".menu-item")[3];
         var e = $(a.navMenuItem).css("width");
         a.navMenuItemWidth = parseInt(e.substring(0, e.length - 2));
         var f = $(a.navMenuItem).css("height");
@@ -179,6 +180,20 @@ var Content = function(a, b, c) {
     _addPortraitImage: function(a, b) {
         var c = Gallery, d = c._portraitImages.length + 1;
         c._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
+    },
+    _imageClickHandler: function(a) {
+        var b = Gallery, c = document.createElement("div");
+        c.className = "overlay";
+        var d = document.createElement("div");
+        d.className = "presentation";
+        var e = new Image();
+        e.src = $(this)[0].src, e.className = $(this)[0].className, $image = $(e);
+        var f = new Image();
+        f.src = "icons/close-icon.svg", f.className = "close-icon", d.appendChild($image[0]), 
+        c.appendChild(d), c.appendChild(f), $("body").append(c), $(".close-icon").on("click", b._closeImage);
+    },
+    _closeImage: function() {
+        $(".overlay").remove();
     }
 }, GalleryClass = function() {
     function a(a) {
@@ -215,7 +230,14 @@ var Content = function(a, b, c) {
     a.prototype.callback = function() {}, a.prototype.getMarkUp = function() {
         return $(this.html).html();
     }, a;
-}(), Item = function() {
+}(), Home = {
+    getMarkUp: function() {
+        var a = $("<div class='home-circle'><img src='images/portrait_1.jpg'></div>");
+        return a;
+    },
+    activate: function() {},
+    deactivate: function() {}
+}, Item = function() {
     function a(a, b, c, d, e, f, g, h) {
         this._$obj = a, this._$svg = a.find("svg"), this._$text = a.find("text"), this._x = b, 
         this._y = c, this._width = d, this._height = e, this._fontSize = f, this._opacity = g, 
@@ -244,7 +266,8 @@ var Content = function(a, b, c) {
         }), d._$text && TweenMax.to(d._$text, c, {
             attr: {
                 textLength: a > 5 ? a - 5 : 0
-            }
+            },
+            ease: Back.easeInOut
         }), void (d._$obj.find("img") && TweenMax.to(d._$obj.find("img"), c, {
             width: a,
             ease: Back.easeInOut
@@ -395,7 +418,7 @@ var Content = function(a, b, c) {
 }(), VController = function(a, b, c) {
     function d() {
         this._menuItems = [ "agenda", "vita", "hören", "sehen", "kontakt" ], this._init(), 
-        this.mc.gotoState("home");
+        this.mc.gotoState("home"), this._manageContent(-1);
     }
     return d.prototype._init = function() {
         var a = this;
@@ -410,21 +433,18 @@ var Content = function(a, b, c) {
         a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer))), 
         a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
         a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
-        a.cc.addContent("home", new Content(function() {
-            return "";
-        }, function() {}, function() {})), events.on("resize", function() {
+        a.cc.addContent("home", new Content(Home.getMarkUp, Home.activate, Home.deactivate)), 
+        events.on("resize", function() {
             a._calculatePositions(), a.mc.render();
-        }), this._calculatePositions(), $(".menu-item").hover(function(a) {
-            a.stopPropagation();
-        });
+        }), this._calculatePositions();
     }, d.prototype._manageContent = function(a) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        var b = .22 * a.innerHeight, c = .07 * a.innerHeight, d = .3 * a.innerWidth, e = .29 * a.innerWidth;
+        var b = .22 * a.innerHeight, c = .09 * a.innerHeight, d = .4 * a.innerWidth, e = .29 * a.innerWidth;
         e = e > 300 ? 300 : e;
-        for (var f = 10, g = 10, h = .005 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
-            var k = [ 372, 190, 318, 304, 410 ][j];
+        for (var f = 10, g = 10, h = .0063 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
+            var k = [ 372, 190, 318, 304, 395 ][j];
             i.push({
                 x: d,
                 y: b + j * c,
@@ -512,7 +532,7 @@ var Content = function(a, b, c) {
         var m = [];
         this.mc.removeState("vita");
         for (var j = 0; 5 > j; j++) 1 == j ? m.push({
-            x: d,
+            x: .3 * a.innerWidth,
             y: b + j * c,
             width: e,
             height: c,
@@ -582,8 +602,8 @@ var Content = function(a, b, c) {
         }), n.push({
             x: 5,
             y: b + 2.65 * c,
-            width: a.innerHeight / 17,
-            height: a.innerHeight / 17,
+            width: a.innerHeight / 14,
+            height: a.innerHeight / 14,
             fontSize: 0,
             opacity: 1
         }), n.push({
@@ -861,7 +881,7 @@ var Content = function(a, b, c) {
             a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
             a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
         })), $(".play-button").empty().append(a.playIcon);
-        var b = "<div class='audio-image'><img src='images/hören.jpg' /></div><div class = 'audio'>", c = "";
+        var b = "<div class='audio-image'><img src='images/hoeren.jpg' /></div><div class = 'audio'>", c = "";
         a.audioElements.forEach(function(a) {
             c += "<div class='audio-track'><div class='audio-komponist'>" + a.komponist + "</div><div class='audio-titel'>" + a.titel + "</div></div>";
         }), b += c, b += "</div>", a._html = b, a.isAudioPlaying = !1, a.trackNumberPlaying = -1, 
@@ -1002,14 +1022,16 @@ var Content = function(a, b, c) {
     }
 };
 
-vc = new VController(), $(".menu-item").on("click", function() {
-    events.emit("itemClicked", $(this).index());
-}), $(".home-button").on("click", function() {
-    events.emit("homeClicked");
-}), window.onresize = function() {
-    events.emit("resize");
-}, events.on("itemClicked", function(a) {
-    vc.clickHandler.bind(vc)(a);
-}), events.on("homeClicked", function() {
-    vc.clickHandler.bind(vc)("home");
+$(function() {
+    vc = new VController(), $(".menu-item").on("click", function() {
+        events.emit("itemClicked", $(this).index());
+    }), $(".home-button").on("click", function() {
+        events.emit("homeClicked");
+    }), window.onresize = function() {
+        events.emit("resize");
+    }, events.on("itemClicked", function(a) {
+        vc.clickHandler.bind(vc)(a);
+    }), events.on("homeClicked", function() {
+        vc.clickHandler.bind(vc)("home");
+    });
 });

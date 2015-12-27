@@ -69,7 +69,7 @@ var Gallery = {
 
 		// give img containers the right width
 
-		var imgWidth = 0.21 * window.innerHeight;
+		var imgWidth = 0.26 * window.innerHeight;
 
 		var sceneImagesContainerWidth = imgWidth * Math.floor( self._sceneImages.length / 2) + 1;
 		var portraitImagesContainerWidth = imgWidth * self._portraitImages.length + 1;
@@ -106,7 +106,13 @@ var Gallery = {
 		}
 
 
-	/// navigation init
+	/// click handler
+
+	$(".image-wrapper").find("img").click( self._imageClickHandler );
+
+	$.each( self._portraitImages, function( index, elem) {
+
+	});
 
 	
 
@@ -241,6 +247,43 @@ var Gallery = {
 
 		var index = self._portraitImages.length + 1;
 		self._portraitImages.push( new Thumbnail( "images/"+sourceThumb, "images/"+sourceBig, "thumb_" + index, "big_"+index ));
+	},
+
+	_imageClickHandler: function( $img ) {
+		var self = Gallery;
+
+		var overlay = document.createElement("div");
+		overlay.className = "overlay";
+
+		var presentation = document.createElement("div");
+		presentation.className = "presentation";
+
+		var image = new Image();
+		image.src = $(this)[0].src;
+		image.className = $(this)[0].className;
+		$image = $(image);
+		
+
+
+		var closeIcon = new Image();
+		closeIcon.src = "icons/close-icon.svg";
+		closeIcon.className = "close-icon";
+
+		presentation.appendChild( $image[0] );
+
+		overlay.appendChild( presentation );
+		overlay.appendChild( closeIcon );
+
+
+
+		$("body").append( overlay );
+
+		// close Icon eventListener
+		$(".close-icon").on("click", self._closeImage );
+	},
+
+	_closeImage: function() {
+		$(".overlay").remove();
 	}
 
 };

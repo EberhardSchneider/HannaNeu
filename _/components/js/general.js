@@ -2,14 +2,15 @@
 MenuStates.addState("home", state);*/
 
 
+$(function() {
+	vc = new VController();
 
-vc = new VController();
+	// get on click events
 
-// get on click events
+	$(".menu-item").on( "click", function() { events.emit("itemClicked", $(this).index() ); });
+	$(".home-button").on("click", function() { events.emit("homeClicked")});
+	window.onresize = function() { events.emit("resize"); };
 
-$(".menu-item").on( "click", function() { events.emit("itemClicked", $(this).index() ); });
-$(".home-button").on("click", function() { events.emit("homeClicked")});
-window.onresize = function() { events.emit("resize"); };
-
-events.on( "itemClicked", function( data ) { vc.clickHandler.bind( vc )( data ); } );
-events.on( "homeClicked", function() { vc.clickHandler.bind( vc )( "home" ); })
+	events.on( "itemClicked", function( data ) { vc.clickHandler.bind( vc )( data ); } );
+	events.on( "homeClicked", function() { vc.clickHandler.bind( vc )( "home" ); });
+});
