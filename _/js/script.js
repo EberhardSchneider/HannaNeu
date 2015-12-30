@@ -99,6 +99,7 @@ var Content = function(a, b, c) {
     },
     _sceneImages: [],
     _portraitImages: [],
+    _presentedImageIndex: -1,
     init: function() {
         var a = Gallery;
         $.each(a._sceneImageNames, function(b, c) {
@@ -182,18 +183,57 @@ var Content = function(a, b, c) {
         c._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
     },
     _imageClickHandler: function(a) {
-        var b = Gallery, c = document.createElement("div");
-        c.className = "overlay";
-        var d = document.createElement("div");
-        d.className = "presentation";
-        var e = new Image();
-        e.src = $(this)[0].src, e.className = $(this)[0].className, $image = $(e);
+        var b = Gallery, c = $(this).closest("div");
+        b._presentedImageIndex = c.index();
+        var d = c[0].className;
+        "sce" == d.substring(0, 3) ? b._presentSceneImage(b._presentedImageIndex) : b._presentPortraitImage(b._presentedImageIndex), 
+        $(".arrow-right").click(b._arrowRightClickHandler.bind(this)), $(".arrow-left").click(b._arrowLeftClickHandler.bind(this)), 
+        $(".close-icon").on("click", b._closeImage);
+    },
+    _presentSceneImage: function(a) {
+        $(".overlay").remove();
+        var b = document.createElement("div");
+        b.className = "overlay";
+        var c = document.createElement("div");
+        c.className = "presentation";
+        var d = new Image(), e = $(".scene-images-container>div").eq(a).find("img")[0];
+        console.log(e), d.src = e.src, d.className = e.className, $image = $(d);
         var f = new Image();
-        f.src = "icons/close-icon.svg", f.className = "close-icon", d.appendChild($image[0]), 
-        c.appendChild(d), c.appendChild(f), $("body").append(c), $(".close-icon").on("click", b._closeImage);
+        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
+        var g = new Image();
+        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
+        var h = new Image();
+        h.src = "icons/close-icon.svg", h.className = "close-icon", c.appendChild($image[0]), 
+        b.appendChild(c), b.appendChild(h), b.appendChild(f), b.appendChild(g), $("body").append(b);
+    },
+    _presentPortraitImage: function(a) {
+        $(".overlay").remove();
+        var b = document.createElement("div");
+        b.className = "overlay";
+        var c = document.createElement("div");
+        c.className = "presentation";
+        var d = new Image(), e = $(".scene-images-container>div").eq(a).find("img")[0];
+        d.src = e.src, d.className = e.className, $image = $(d);
+        var f = new Image();
+        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
+        var g = new Image();
+        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
+        var h = new Image();
+        h.src = "icons/close-icon.svg", h.className = "close-icon", c.appendChild($image[0]), 
+        b.appendChild(c), b.appendChild(h), b.appendChild(f), b.appendChild(g), $("body").append(b);
     },
     _closeImage: function() {
         $(".overlay").remove();
+    },
+    _arrowLeftClickHandler: function() {
+        var a = $(this).closest("div").index();
+        a--, console.log(a), 0 > a && (a = $(this).closest("div").closest("div").children().length), 
+        Gallery._presentPortraitImage(a), self.currentIndex = a;
+    },
+    _arrowRightClickHandler: function() {
+        var a = $(this).closest("div").index();
+        a++, console.log(a), a > $(this).closest("div").closest("div").children().length && (a = 0), 
+        Gallery._presentPortraitImage(a), self.currentIndex = a;
     }
 }, GalleryClass = function() {
     function a(a) {
@@ -251,26 +291,26 @@ var Content = function(a, b, c) {
             left: a,
             top: b,
             onComplete: c,
-            ease: Back.easeInOut
+            ease: Power1.easeInOut
         });
     }, a.prototype._animateWidth = function(a, b, c) {
         var d = this;
         return c = c || 1.5, -1 == a ? void TweenMax.to(d._$svg, c, {
             width: 300,
             onComplete: b,
-            ease: Back.easeInOut
+            ease: Power1.easeInOut
         }) : (TweenMax.to(d._$svg, c, {
             width: a,
             onComplete: b,
-            ease: Back.easeInOut
+            ease: Power1.easeInOut
         }), d._$text && TweenMax.to(d._$text, c, {
             attr: {
                 textLength: a > 5 ? a - 5 : 0
             },
-            ease: Back.easeInOut
+            ease: Power1.easeInOut
         }), void (d._$obj.find("img") && TweenMax.to(d._$obj.find("img"), c, {
             width: a,
-            ease: Back.easeInOut
+            ease: Power1.easeInOut
         })));
     }, a.prototype._animateHeight = function(a, b, c) {
         var d = this;
@@ -451,7 +491,7 @@ var Content = function(a, b, c) {
                 width: k,
                 height: c,
                 fontSize: h,
-                opacity: 1
+                opacity: .5
             });
         }
         i.push({
@@ -473,14 +513,14 @@ var Content = function(a, b, c) {
             y: b - 104,
             width: 350,
             height: 128,
-            fontSize: h / 2.5,
+            fontSize: h / 2.2,
             opacity: 1
         }), i.push({
             x: d - 140,
             y: b - 66,
             width: 150,
             height: 128,
-            fontSize: h / 2.5,
+            fontSize: h / 2.2,
             opacity: 1
         }), this.mc.addState("home", new State("home", i));
         var l = [];
@@ -498,7 +538,7 @@ var Content = function(a, b, c) {
             width: e,
             height: c,
             fontSize: h - 2,
-            opacity: .7
+            opacity: .5
         });
         l.push({
             x: f,
@@ -544,7 +584,7 @@ var Content = function(a, b, c) {
             width: e,
             height: c,
             fontSize: h - 2,
-            opacity: .7
+            opacity: .5
         });
         m.push({
             x: f,
@@ -590,7 +630,7 @@ var Content = function(a, b, c) {
             width: e,
             height: c,
             fontSize: h - 2,
-            opacity: .7
+            opacity: .5
         });
         n.push({
             x: f,
@@ -636,7 +676,7 @@ var Content = function(a, b, c) {
             width: e,
             height: c,
             fontSize: h - 2,
-            opacity: .7
+            opacity: .5
         });
         o.push({
             x: f,
@@ -680,7 +720,7 @@ var Content = function(a, b, c) {
             width: e,
             height: c,
             fontSize: h - 2,
-            opacity: .7
+            opacity: .5
         });
         p.push({
             x: f,
@@ -1012,8 +1052,8 @@ var Content = function(a, b, c) {
         a.currentTrackDiv.append(b);
         var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2)) + 40;
         window.innerHeight;
-        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d + .01 * window.innerHeight + "px"), 
-        $(".time-box").css("top", d - 32 + "px")) : ($(".audio-info-box").css("top", d - .475 * window.innerHeight), 
+        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d - .05 * window.innerHeight), 
+        $(".time-box").css("top", d + 4 + "px")) : ($(".audio-info-box").css("top", d - .55 * window.innerHeight), 
         $(".time-box").css("top", d - 16 + "px"));
     },
     audioReady: function() {

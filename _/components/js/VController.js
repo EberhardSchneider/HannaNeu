@@ -90,12 +90,12 @@ var VController = (function(window, document, undefined) {
 		var homeState = [];
 		for (var i = 0; i<5; i++ ) {
 			var w = [372, 190, 318, 304, 395][i];
-			homeState.push( { x: menuLeft, y: menuTop + i*menuItemHeight, width: w , height: menuItemHeight, fontSize: homeFontSize, opacity: 1 });
+			homeState.push( { x: menuLeft, y: menuTop + i*menuItemHeight, width: w , height: menuItemHeight, fontSize: homeFontSize, opacity: 0.5 });
 		}
 		homeState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 0 });  // home-button
 		homeState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		homeState.push( { x: menuLeft - 140, y: menuTop - 104, width: 350, height: 128, fontSize: homeFontSize/2.5, opacity: 1 });  // menu-name
-		homeState.push( { x: menuLeft - 140, y: menuTop - 66, width: 150, height: 128, fontSize: homeFontSize/2.5, opacity: 1 });  // menu-sopran
+		homeState.push( { x: menuLeft - 140, y: menuTop - 104, width: 350, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-name
+		homeState.push( { x: menuLeft - 140, y: menuTop - 66, width: 150, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-sopran
 		this.mc.addState("home", new State( "home", homeState) );
 
 		// agenda-State
@@ -105,7 +105,7 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("agenda");
 		agendaState.push({ x: 50, y: menuTop, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 		for (var i = 1; i < 5; i++ ) {
-			agendaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.7});
+			agendaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 		}
 		agendaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		agendaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
@@ -125,7 +125,7 @@ var VController = (function(window, document, undefined) {
 			if ( i == 1 ) {
 				vitaState.push({ x: 0.3 * window.innerWidth , y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			vitaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.7});
+			vitaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		vitaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
@@ -143,7 +143,7 @@ var VController = (function(window, document, undefined) {
 			if ( i == 2 ) {
 				hoerenState.push({ x: 74, y: menuTop  + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			hoerenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.7});
+			hoerenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		hoerenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
@@ -161,7 +161,7 @@ var VController = (function(window, document, undefined) {
 			if ( i == 3 ) {
 				sehenState.push({ x: 50, y: menuTop  + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			sehenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.7});
+			sehenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		sehenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
@@ -178,7 +178,7 @@ var VController = (function(window, document, undefined) {
 			if ( i == 4 ) {
 				kontaktState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: menuLength + 20 , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			kontaktState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.7});
+			kontaktState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		kontaktState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button

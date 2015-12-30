@@ -419,12 +419,11 @@
 		var bodyHeight = window.innerHeight;
 
 		if ( parseInt(topTrack + heightBox) > window.innerHeight ) {
-			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack + window.innerHeight * 0.01) + "px" );
-			$(".time-box").css("top", ( topTrack  - 32  ) + "px" );
+			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack -  window.innerHeight * 0.05 ));
+			$(".time-box").css("top", ( topTrack + 4 ) + "px" );
 
 		}  else {
-			$('.audio-info-box').css("top", topTrack - window.innerHeight * 0.475 );
-
+			$('.audio-info-box').css("top", topTrack - window.innerHeight * 0.55 );
 			$(".time-box").css("top", ( topTrack - 16 ) + "px" );
 		}
 

@@ -31,7 +31,7 @@
 		width: 256px;
 	}
 
-	font-style: italic;
+	/* font-style: italic; */
 }
 
 
@@ -48,10 +48,10 @@
 
 .event-image {
 	position: absolute;
-	top: 34%;
+	top: 30%;
 	bottom: 0;
-	left: 0;
-	right: 0;
+	left: 20px;
+	right: 20px;
 
 	@include transition-property(opacity);
 	@include transition-duration(0.5s);
@@ -60,7 +60,8 @@
 		width: 100%;
 
 		&:hover {
-			opacity: 0.9;
+			cursor: pointer;
+
 		}
 		@include user-select(none);
 
@@ -73,13 +74,13 @@
 .event {
 	position: relative;
 	height: 100%;
-	width: 200px;
+	width: 240px;
 	float: left;
 
 	font-size: 120%;
 
 	border: solid 2px  rgba(0,0,0,0);
-	margin-right: 88px;
+	margin-right: 48px;
 
 	background-color: #fff;
 
@@ -141,7 +142,7 @@
 
 .event-date {
 		display: block;
-		height: 20%;
+		height: 15%;
 		width: 100%;
 }
 
@@ -174,6 +175,7 @@
 
 	position: relative;
 	height: 45%;
+	width: 77%;
 	
 	
 	text-align: justify;
@@ -217,6 +219,7 @@
 .time-box {
 	position: absolute;
 	right: 5px;
+	font-weight: bold;
 }
 
 
@@ -245,19 +248,19 @@
 .audio-info-box {
 	position: absolute;
 	right: 5px;
-	width: 200px;
+	width: 220px;
 	height: 150px;
 	
 
 	/* border: solid black 2px; */
 
 	span { display: inline-block; }
-
 	.jahr {
 		float: right;
 	}
 
 	.besetzung {
+		display: block;
 		padding-top: 30px;
 	}
 } // audio-info-box
@@ -283,7 +286,7 @@
 		bottom: 3%;
 		right: 3%;
 		background-color: rgba( 0, 0, 0, 0.8);
-		border-radius: 20px;
+		/* border-radius: 20px; */
 
 		z-index: 255;
 
@@ -294,9 +297,9 @@
 			height: 60%;
 
 			.portrait {
-				height: 120%;
+				height: 160%;
 				width: auto;
-				margin-left: 30%;
+				margin-left: 20%;
 				@include vertical-align();
 			}
 
@@ -331,6 +334,35 @@
 				fill: white;
 			}
 		}
+
+		.arrow-left {
+			position: absolute;
+			left: 5%;
+			top: 40%;
+			height: 15%;
+
+			img {
+				height: 15%;
+			}
+			background-color: #fff;
+
+			border-radius: 100%;
+		}
+
+		.arrow-right {
+			position: absolute;
+			right: 5%;
+			top: 40%;
+			height: 15%;
+
+			img {
+				height: 15%;
+			}
+
+			background-color: #fff;
+
+			border-radius: 100%;
+		}
 }
 
 
@@ -362,6 +394,15 @@
 		left: 0;
 		height: 70px;
 		background-color: #fff;
+	}
+
+	.kontakt-text {
+		position:absolute;
+		top: 75%;
+		color: white;
+		width: 70%;
+		font-size: 130%;
+
 	}
 
 

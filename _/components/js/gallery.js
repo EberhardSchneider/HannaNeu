@@ -48,6 +48,8 @@ var Gallery = {
 	_sceneImages: [],
 	_portraitImages: [],
 
+	_presentedImageIndex: -1,  // Index des Bildes, das gerade präsentiert wird
+
 	init: function() {
 		var self = Gallery;
 
@@ -252,6 +254,32 @@ var Gallery = {
 	_imageClickHandler: function( $img ) {
 		var self = Gallery;
 
+		var $parentDiv = $(this).closest("div");
+
+		self._presentedImageIndex = $parentDiv.index();
+		var containerClassName = $parentDiv[0].className;
+
+		if (containerClassName.substring(0,3) == "sce") {
+			self._presentSceneImage( self._presentedImageIndex );
+		} else {
+			self._presentPortraitImage( self._presentedImageIndex );
+		}
+		
+
+		$(".arrow-right").click( self._arrowRightClickHandler.bind(this) );
+		$(".arrow-left").click( self._arrowLeftClickHandler.bind(this) );
+
+
+		// close Icon eventListener
+		$(".close-icon").on("click", self._closeImage );
+	},
+
+	_presentSceneImage: function( index ) {
+		var self = Gallery;
+		
+		$(".overlay").remove();
+
+
 		var overlay = document.createElement("div");
 		overlay.className = "overlay";
 
@@ -259,10 +287,21 @@ var Gallery = {
 		presentation.className = "presentation";
 
 		var image = new Image();
-		image.src = $(this)[0].src;
-		image.className = $(this)[0].className;
+		var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];
+		console.log(clickedImage);
+		image.src = clickedImage.src;
+		image.className = clickedImage.className;
 		$image = $(image);
-		
+
+
+		var arrowLeft = new Image();
+		arrowLeft.src = "icons/arrow-left.svg";
+		arrowLeft.className = "arrow-left";
+
+		var arrowRight = new Image();
+		arrowRight.src = "icons/arrow-right.svg";
+		arrowRight.className = "arrow-right";
+
 
 
 		var closeIcon = new Image();
@@ -273,17 +312,83 @@ var Gallery = {
 
 		overlay.appendChild( presentation );
 		overlay.appendChild( closeIcon );
-
-
+		overlay.appendChild( arrowLeft );
+		overlay.appendChild( arrowRight );
 
 		$("body").append( overlay );
 
-		// close Icon eventListener
-		$(".close-icon").on("click", self._closeImage );
+	},
+
+	_presentPortraitImage: function( index ) {
+		var self = Gallery;
+
+		$(".overlay").remove();
+
+		var overlay = document.createElement("div");
+		overlay.className = "overlay";
+
+		var presentation = document.createElement("div");
+		presentation.className = "presentation";
+
+		var image = new Image();
+		var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];
+		image.src = clickedImage.src;
+		image.className = clickedImage.className;
+		$image = $(image);
+
+		var arrowLeft = new Image();
+		arrowLeft.src = "icons/arrow-left.svg";
+		arrowLeft.className = "arrow-left";
+
+		var arrowRight = new Image();
+		arrowRight.src = "icons/arrow-right.svg";
+		arrowRight.className = "arrow-right";
+
+
+
+		var closeIcon = new Image();
+		closeIcon.src = "icons/close-icon.svg";
+		closeIcon.className = "close-icon";
+
+		presentation.appendChild( $image[0] );
+
+		overlay.appendChild( presentation );
+		overlay.appendChild( closeIcon );
+		overlay.appendChild( arrowLeft );
+		overlay.appendChild( arrowRight );
+
+		$("body").append( overlay );
+
 	},
 
 	_closeImage: function() {
 		$(".overlay").remove();
-	}
+	},
+
+	_arrowLeftClickHandler: function() {
+		var currentIndex = $(this).closest("div").index();
+		currentIndex--;
+		console.log(currentIndex);
+		if ( currentIndex < 0 ) {
+			currentIndex = $(this).closest("div").closest("div").children().length;
+		}
+
+		Gallery._presentPortraitImage( currentIndex );
+		self.currentIndex = currentIndex;
+
+	},
+
+	_arrowRightClickHandler: function() {
+		var currentIndex = $(this).closest("div").index();
+		currentIndex++;
+		console.log(currentIndex);
+		if ( currentIndex > $(this).closest("div").closest("div").children().length ) {
+			currentIndex = 0;
+		}
+	
+
+	Gallery._presentPortraitImage( currentIndex );
+	self.currentIndex = currentIndex;
+	} // _arrowRightClickHandler
 
 };
