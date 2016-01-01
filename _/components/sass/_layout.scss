@@ -45,6 +45,38 @@
 
 	z-index: -255;
 }
+
+.scroll-div {
+	position: absolute;
+	top: 82%;
+	height: 16px;
+	background-color: #fff;
+	border-bottom: 1px solid black;
+	left: 30%;
+	right: 2%;
+}
+
+.scroll-left {
+	position: absolute;
+	height: 32px;
+	top: 81%;
+	left: 28%;
+}
+
+.scroll-right {
+	position: absolute;
+	height: 32px;
+	top: 81%;
+	right: 0;
+}
+
+.kloetzchen {
+	height: 16px;
+	width: 16px;
+	background-color: #000;
+	position: relative;
+	left: 20%;
+}
 // home ---------------------------------------------------------------------------
 .home-circle {
 	position: fixed;
@@ -188,3 +220,33 @@
 					height: 100%;
 					width: auto;
 				}
+
+.sehen-scroll-div {
+	position: fixed;
+	top: 90%;
+	height: 16px;
+	left: 30%;
+	right: 2%;
+}
+
+.sehen-scroll-left {
+	position: fixed;
+	height: 32px;
+	top: 89%;
+	left: 28%;
+}
+
+.sehen-scroll-right {
+	position: fixed;
+	height: 32px;
+	top: 89%;
+	right: 0;
+}
+
+.sehen-kloetzchen {
+	height: 16px;
+	width: 16px;
+	background-color: #000;
+	position: relative;
+	left: 20%;
+}

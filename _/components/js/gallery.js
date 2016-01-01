@@ -230,6 +230,8 @@ var Gallery = {
 		wrapper.append( sceneImagesContainer );
 		wrapper.append( portraitImagesContainer );
 
+		wrapper.append( $("<div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/>"));
+
 		Gallery.html = wrapper;
 
 

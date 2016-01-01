@@ -172,7 +172,8 @@ var Content = function(a, b, c) {
         }), $.each(a._portraitImages, function(a, b) {
             var c = $("<div class='portrait-div-" + a + "'>");
             c.append(b.getThumb()), d.append(c);
-        }), b.append(c), b.append(d), Gallery.html = b;
+        }), b.append(c), b.append(d), b.append($("<div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/>")), 
+        Gallery.html = b;
     },
     _addSceneImage: function(a, b) {
         var c = Gallery, d = c._sceneImages.length + 1;
@@ -818,7 +819,8 @@ var Content = function(a, b, c) {
                     }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
                     void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
                     c += "</div>";
-                }), c += "</div>", a.html = c;
+                }), c += "</div>", c += "<div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons/arrow-left.svg'/><img class='scroll-right' src='icons/arrow-right.svg'/>", 
+                a.html = c;
             }
         });
     },

@@ -96,6 +96,8 @@ var Agenda = {
 				});		// each
 
 			html += "</div>";
+
+			html += "<div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons/arrow-left.svg'/><img class='scroll-right' src='icons/arrow-right.svg'/>";
 			self.html = html;
 
 
