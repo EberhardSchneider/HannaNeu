@@ -24,6 +24,20 @@
 					"big" : "papagena_ei.png" },
 
 		"7": { "thumb": "what_what.jpg",
+					"big" : "what_what.jpg" },
+		"8": { "thumb": "gisela_abteil.png",
+					"big" : "gisela_abteil.png" },
+
+		"9": { "thumb": "gisela_gold.png",
+					"big" : "gisela_gold.png" },
+
+		"10": { "thumb": "judy_punch.jpeg",
+					"big" : "judy_punch.jpeg" },
+
+		"11": { "thumb": "papagena_ei.png",
+					"big" : "papagena_ei.png" },
+
+		"12": { "thumb": "what_what.jpg",
 					"big" : "what_what.jpg" }
 	},
 	

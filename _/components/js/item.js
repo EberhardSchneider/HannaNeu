@@ -71,7 +71,11 @@ var Item = (function() {
 		duration = duration || 1.5;
 
 		self._$svg.attr( { height: newHeight });
-		if ( (this._browser != "Firefox") && (this._browser != "Microsoft Internet Explorer") ) self._$text.attr( { y: (newHeight - 5) });
+		if ( (this._browser != "Firefox") && (this._browser != "Microsoft Internet Explorer") ) {
+			self._$text.attr( { y: (newHeight - 5) });
+		} else {
+			self._$text.attr( { y: -10 });
+		}
 
 		TweenMax.to( self._$svg, duration, { attr: { "height": newHeight }, onComplete: callback} );
 		TweenMax.to( self._$text, duration, { "y": newHeight } );

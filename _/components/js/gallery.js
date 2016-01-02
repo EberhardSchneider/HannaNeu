@@ -29,6 +29,20 @@ var Gallery = {
 					"big" : "papagena_ei.png" },
 
 		"7": { "thumb": "what_what.jpg",
+					"big" : "what_what.jpg" },
+		"8": { "thumb": "gisela_abteil.png",
+					"big" : "gisela_abteil.png" },
+
+		"9": { "thumb": "gisela_gold.png",
+					"big" : "gisela_gold.png" },
+
+		"10": { "thumb": "judy_punch.jpeg",
+					"big" : "judy_punch.jpeg" },
+
+		"11": { "thumb": "papagena_ei.png",
+					"big" : "papagena_ei.png" },
+
+		"12": { "thumb": "what_what.jpg",
 					"big" : "what_what.jpg" }
 
 	},
@@ -71,10 +85,15 @@ var Gallery = {
 
 		// give img containers the right width
 
-		var imgWidth = 0.26 * window.innerHeight;
+		var imgWidth = 0.3 * window.innerHeight;
 
 		var sceneImagesContainerWidth = imgWidth * Math.floor( self._sceneImages.length / 2) + 1;
 		var portraitImagesContainerWidth = imgWidth * self._portraitImages.length + 1;
+
+		
+		
+		self._sceneMaxScrollWidth = (sceneImagesContainerWidth - 0.7 * window.innerWidth);
+		self._portraitMaxScrollWidth = (portraitImagesContainerWidth - 0.7 * window.innerWidth);
 
 		$(".scene-images-container").css("width", sceneImagesContainerWidth);
 		$(".portrait-images-container").css("width", portraitImagesContainerWidth);
@@ -112,26 +131,15 @@ var Gallery = {
 
 	$(".image-wrapper").find("img").click( self._imageClickHandler );
 
-	$.each( self._portraitImages, function( index, elem) {
-
-	});
+	self.navMenuItem = $(".sehen-kloetzchen")[0];
 
 	
 
-	self.navMenuItem = $( ".menu-item" )[3]; // store "sehen" item
-
-	
-	// store width and height of "sehen" item
-	var widthStr = $( self.navMenuItem ).css("width");
-	self.navMenuItemWidth = parseInt( widthStr.substring( 0, widthStr.length - 2));
-	var heightStr = $( self.navMenuItem ).css("height");
-	self.navMenuItemHeight = parseInt( heightStr.substring( 0, heightStr.length - 2));
-	
 	
 
 	self._activateNavigation();
 
-	self.windowWidth = window.innerWidth - self.navMenuItemWidth + 80;
+
 		
 	},
 
@@ -158,8 +166,14 @@ var Gallery = {
 
 	 self = Gallery;
 	
-		self._navItemStartPos = parseInt( $(self.navMenuItem).css("left"), 10);
-	console.log(self._navItemStartPos);
+		self.windowWidth = parseInt( $(".sehen-scroll-div").css("width"), 10);
+
+		newItemPos = 250;
+
+		$(".sehen-kloetzchen").css("left", newItemPos );
+		var scrollRatio = newItemPos/(self.windowWidth - 32);
+		$(".scene-images-container").animate( { "left": -scrollRatio * self._sceneMaxScrollWidth }, 500);
+		$(".portrait-images-container").animate( { "left": -scrollRatio * self._portraitMaxScrollWidth }, 600 );
 	},
 
 	_activateNavigation: function() {
@@ -177,9 +191,9 @@ var Gallery = {
 	_mouseDownHandler: function( event ) {
 		var self = Gallery;
 
-		self.oldNavItemPos = parseInt( self.navMenuItem.style.left, 10);
+		self.oldNavItemPos = parseInt( $(self.navMenuItem).css("left"), 10);
 		self.startX = event.pageX;
-		console.log(self.oldNavItemPos + " .. : .. "+ self.startX);
+		console.log(self.oldNavItemPos + " .. : .. "+ self.windowWidth);
 		self.isMouseDown = true;
 	},
 
@@ -192,9 +206,14 @@ var Gallery = {
 
 		if ( self.isMouseDown ) {
 			var newItemPos = self.oldNavItemPos + ( event.pageX - self.startX );
-			newItemPos = ( newItemPos < self._navItemStartPos ) ? self._navItemStartPos : newItemPos;
+			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+			newItemPos = ( newItemPos > self.windowWidth - 32) ? self.windowWidth - 32 : newItemPos;
 
 			$(self.navMenuItem).css("left", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.windowWidth - 32);
+			$(".scene-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+			$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );
+
 		}
 	},
 

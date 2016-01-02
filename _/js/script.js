@@ -42,200 +42,6 @@ var Content = function(a, b, c) {
             a(b);
         });
     }
-}, Gallery = {
-    html: "",
-    isOrientationChecked: !1,
-    _sceneImageNames: {
-        "0": {
-            thumb: "aschenputtel_hut.png",
-            big: "aschenputtel_hut.png"
-        },
-        "1": {
-            thumb: "aschenputtel_kleider.png",
-            big: "aschenputtel_kleider.png"
-        },
-        "2": {
-            thumb: "aschenputtel_lachend.png",
-            big: "aschenputtel_lachend.png"
-        },
-        "3": {
-            thumb: "gisela_abteil.png",
-            big: "gisela_abteil.png"
-        },
-        "4": {
-            thumb: "gisela_gold.png",
-            big: "gisela_gold.png"
-        },
-        "5": {
-            thumb: "judy_punch.jpeg",
-            big: "judy_punch.jpeg"
-        },
-        "6": {
-            thumb: "papagena_ei.png",
-            big: "papagena_ei.png"
-        },
-        "7": {
-            thumb: "what_what.jpg",
-            big: "what_what.jpg"
-        }
-    },
-    _portraitImageNames: {
-        "0": {
-            thumb: "portrait_1.jpg",
-            big: "portrait_1.jpg"
-        },
-        "1": {
-            thumb: "portrait_2.jpg",
-            big: "portrait_2.jpg"
-        },
-        "2": {
-            thumb: "portrait_2.jpg",
-            big: "portrait_2.jpg"
-        },
-        "3": {
-            thumb: "portrait_2.jpg",
-            big: "portrait_2.jpg"
-        }
-    },
-    _sceneImages: [],
-    _portraitImages: [],
-    _presentedImageIndex: -1,
-    init: function() {
-        var a = Gallery;
-        $.each(a._sceneImageNames, function(b, c) {
-            a._addSceneImage(c.thumb, c.big);
-        }), $.each(a._portraitImageNames, function(b, c) {
-            a._addPortraitImage(c.thumb, c.big);
-        }), a._makeHTML();
-    },
-    activate: function() {
-        var a = Gallery, b = .26 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
-        $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
-        a.isOrientationChecked || (a.isOrientationChecked = !0, $.each(a._sceneImages, function(a, b) {
-            var c = b.getThumb();
-            c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
-        }), $.each(a._portraitImages, function(a, b) {
-            var c = b.getThumb();
-            c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
-        })), $(".image-wrapper").find("img").click(a._imageClickHandler), $.each(a._portraitImages, function(a, b) {}), 
-        a.navMenuItem = $(".menu-item")[3];
-        var e = $(a.navMenuItem).css("width");
-        a.navMenuItemWidth = parseInt(e.substring(0, e.length - 2));
-        var f = $(a.navMenuItem).css("height");
-        a.navMenuItemHeight = parseInt(f.substring(0, f.length - 2)), a._activateNavigation(), 
-        a.windowWidth = window.innerWidth - a.navMenuItemWidth + 80;
-    },
-    deactivate: function() {
-        var a = Gallery;
-        a._deactivateNavigation(), a.isMouseDown = !1;
-    },
-    getMarkUp: function() {
-        $(".sehen").html();
-        return Gallery.html;
-    },
-    callback: function() {
-        self = Gallery, self._navItemStartPos = parseInt($(self.navMenuItem).css("left"), 10), 
-        console.log(self._navItemStartPos);
-    },
-    _activateNavigation: function() {
-        var a = Gallery;
-        $(a.navMenuItem).off(), a.navMenuItem.addEventListener("mousedown", a._mouseDownHandler, !1), 
-        document.body.addEventListener("mouseup", a._mouseUpHandler, !1), document.body.addEventListener("mousemove", a._mouseMoveHandler, !1);
-    },
-    _mouseDownHandler: function(a) {
-        var b = Gallery;
-        b.oldNavItemPos = parseInt(b.navMenuItem.style.left, 10), b.startX = a.pageX, console.log(b.oldNavItemPos + " .. : .. " + b.startX), 
-        b.isMouseDown = !0;
-    },
-    _mouseUpHandler: function() {
-        Gallery.isMouseDown = !1;
-    },
-    _mouseMoveHandler: function(a) {
-        var b = Gallery;
-        if (b.isMouseDown) {
-            var c = b.oldNavItemPos + (a.pageX - b.startX);
-            c = c < b._navItemStartPos ? b._navItemStartPos : c, $(b.navMenuItem).css("left", c + "px");
-        }
-    },
-    _deactivateNavigation: function() {
-        var a = Gallery;
-        a.navMenuItem.removeEventListener("mousedown", a._mouseDownHandler), document.body.removeEventListener("mouseup", a._mouseUpHandler), 
-        document.body.removeEventListener("mousemove", a._mouseMoveHandler), $(".menu-item").eq(3).on("click", function() {
-            events.emit("itemClicked", $(this).index());
-        });
-    },
-    _makeHTML: function() {
-        var a = Gallery, b = $("<div class='image-wrapper'>"), c = $("<div class='scene-images-container'></div>"), d = $("<div class='portrait-images-container'></div>");
-        $.each(a._sceneImages, function(a, b) {
-            var d = $("<div class='scene-div-" + a + "'>");
-            d.append(b.getThumb()), c.append(d);
-        }), $.each(a._portraitImages, function(a, b) {
-            var c = $("<div class='portrait-div-" + a + "'>");
-            c.append(b.getThumb()), d.append(c);
-        }), b.append(c), b.append(d), b.append($("<div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/>")), 
-        Gallery.html = b;
-    },
-    _addSceneImage: function(a, b) {
-        var c = Gallery, d = c._sceneImages.length + 1;
-        c._sceneImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
-    },
-    _addPortraitImage: function(a, b) {
-        var c = Gallery, d = c._portraitImages.length + 1;
-        c._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
-    },
-    _imageClickHandler: function(a) {
-        var b = Gallery, c = $(this).closest("div");
-        b._presentedImageIndex = c.index();
-        var d = c[0].className;
-        "sce" == d.substring(0, 3) ? b._presentSceneImage(b._presentedImageIndex) : b._presentPortraitImage(b._presentedImageIndex), 
-        $(".arrow-right").click(b._arrowRightClickHandler.bind(this)), $(".arrow-left").click(b._arrowLeftClickHandler.bind(this)), 
-        $(".close-icon").on("click", b._closeImage);
-    },
-    _presentSceneImage: function(a) {
-        $(".overlay").remove();
-        var b = document.createElement("div");
-        b.className = "overlay";
-        var c = document.createElement("div");
-        c.className = "presentation";
-        var d = new Image(), e = $(".scene-images-container>div").eq(a).find("img")[0];
-        console.log(e), d.src = e.src, d.className = e.className, $image = $(d);
-        var f = new Image();
-        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
-        var g = new Image();
-        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
-        var h = new Image();
-        h.src = "icons/close-icon.svg", h.className = "close-icon", c.appendChild($image[0]), 
-        b.appendChild(c), b.appendChild(h), b.appendChild(f), b.appendChild(g), $("body").append(b);
-    },
-    _presentPortraitImage: function(a) {
-        $(".overlay").remove();
-        var b = document.createElement("div");
-        b.className = "overlay";
-        var c = document.createElement("div");
-        c.className = "presentation";
-        var d = new Image(), e = $(".scene-images-container>div").eq(a).find("img")[0];
-        d.src = e.src, d.className = e.className, $image = $(d);
-        var f = new Image();
-        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
-        var g = new Image();
-        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
-        var h = new Image();
-        h.src = "icons/close-icon.svg", h.className = "close-icon", c.appendChild($image[0]), 
-        b.appendChild(c), b.appendChild(h), b.appendChild(f), b.appendChild(g), $("body").append(b);
-    },
-    _closeImage: function() {
-        $(".overlay").remove();
-    },
-    _arrowLeftClickHandler: function() {
-        var a = $(this).closest("div").index();
-        a--, console.log(a), 0 > a && (a = $(this).closest("div").closest("div").children().length), 
-        Gallery._presentPortraitImage(a), self.currentIndex = a;
-    },
-    _arrowRightClickHandler: function() {
-        var a = $(this).closest("div").index();
-        a++, console.log(a), a > $(this).closest("div").closest("div").children().length && (a = 0), 
-        Gallery._presentPortraitImage(a), self.currentIndex = a;
-    }
 }, GalleryClass = function() {
     function a(a) {
         this._images = [], this._imageFilenames = [], this._sources = a, this._isMouseDown = !1, 
@@ -278,88 +84,7 @@ var Content = function(a, b, c) {
     },
     activate: function() {},
     deactivate: function() {}
-}, Item = function() {
-    function a(a, b, c, d, e, f, g, h) {
-        this._$obj = a, this._$svg = a.find("svg"), this._$text = a.find("text"), this._x = b, 
-        this._y = c, this._width = d, this._height = e, this._fontSize = f, this._opacity = g, 
-        this._browser = h, this._init();
-    }
-    return a.prototype._init = function() {
-        0 != this._$text.length && this._$text[0].setAttribute("textLength", 300);
-    }, a.prototype._render = function() {}, a.prototype._animateXY = function(a, b, c, d) {
-        var e = this;
-        d = d || 1.5, TweenMax.to(e._$obj, d, {
-            left: a,
-            top: b,
-            onComplete: c,
-            ease: Power1.easeInOut
-        });
-    }, a.prototype._animateWidth = function(a, b, c) {
-        var d = this;
-        return c = c || 1.5, -1 == a ? void TweenMax.to(d._$svg, c, {
-            width: 300,
-            onComplete: b,
-            ease: Power1.easeInOut
-        }) : (TweenMax.to(d._$svg, c, {
-            width: a,
-            onComplete: b,
-            ease: Power1.easeInOut
-        }), d._$text && TweenMax.to(d._$text, c, {
-            attr: {
-                textLength: a > 5 ? a - 5 : 0
-            },
-            ease: Power1.easeInOut
-        }), void (d._$obj.find("img") && TweenMax.to(d._$obj.find("img"), c, {
-            width: a,
-            ease: Power1.easeInOut
-        })));
-    }, a.prototype._animateHeight = function(a, b, c) {
-        var d = this;
-        c = c || 1.5, d._$svg.attr({
-            height: a
-        }), "Firefox" != this._browser && "Microsoft Internet Explorer" != this._browser && d._$text.attr({
-            y: a - 5
-        }), TweenMax.to(d._$svg, c, {
-            attr: {
-                height: a
-            },
-            onComplete: b
-        }), TweenMax.to(d._$text, c, {
-            y: a
-        });
-    }, a.prototype._animateFontSize = function(a, b, c) {
-        var d = this;
-        c = c || 1.5, void 0 != d._$text && (TweenMax.to(d._$obj, c, {
-            y: 7.5 * a,
-            onComplete: b,
-            ease: Back.easeInOut
-        }), TweenMax.to(d._$text, c, {
-            "font-size": 15 * a,
-            ease: Back.easeInOut
-        }));
-    }, a.prototype._animateOpacity = function(a, b, c) {
-        var d = this;
-        c = c || 1.5, TweenMax.to(d._$obj, c, {
-            opacity: a,
-            onComplete: b
-        });
-    }, a.prototype.setAnimationFunction = function(a, b) {}, a.prototype.stretch = function(a, b) {
-        this._width != a ? (this._width = a, this._animateWidth(a, b)) : b();
-    }, a.prototype.move = function(a, b, c) {
-        this._x != a || this._y != b ? (this._x = a, this._y = b, this._animateXY(a, b, c)) : c();
-    }, a.prototype.changeHeight = function(a, b) {
-        this._height != a ? (this._height = a, this._animateHeight(a, b)) : b();
-    }, a.prototype.changeFontSize = function(a, b) {
-        this._fontSize != a ? (this._fontSize = a, this._animateFontSize(a, b)) : b();
-    }, a.prototype.changeOpacity = function(a, b) {
-        this._opacity != a ? (this._opacity = a, this._animateOpacity(a, b)) : b();
-    }, a.prototype.render = function(a, b, c, d, e, f) {
-        var g = this;
-        this._x = a || this._x, this._y = b || this._y, this._width = c || this._width, 
-        this._height = d || this._height, this._fontSize = e || this._fontSize, this._opacity = f || this._opacity, 
-        this._animateXY(g._x, g._y, function() {}, .1);
-    }, a;
-}(), Kontakt = {
+}, Kontakt = {
     getMarkUp: function() {
         var a = "<div class='kontakt-wrapper'>";
         return a += $(".kontakt").html(), a += "</div>";
@@ -484,104 +209,58 @@ var Content = function(a, b, c) {
     }, d.prototype._calculatePositions = function() {
         var b = .22 * a.innerHeight, c = .09 * a.innerHeight, d = .4 * a.innerWidth, e = .29 * a.innerWidth;
         e = e > 300 ? 300 : e;
-        for (var f = 10, g = 10, h = .0063 * a.innerHeight, i = [], j = 0; 5 > j; j++) {
-            var k = [ 372, 190, 318, 304, 395 ][j];
-            i.push({
+        for (var f = 10, g = 10, h = .0063 * a.innerHeight, i = h / 5.5, j = [], k = 0; 5 > k; k++) {
+            var l = [ 372 * i, 190 * i, 318 * i, 304 * i, 395 * i ][k];
+            j.push({
                 x: d,
-                y: b + j * c,
-                width: k,
+                y: b + k * c,
+                width: l,
                 height: c,
                 fontSize: h,
                 opacity: .5
             });
         }
-        i.push({
+        j.push({
             x: f,
             y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), i.push({
+        }), j.push({
             x: -130,
             y: b + 2.65 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), i.push({
+        }), j.push({
             x: d - 140,
             y: b - 104,
             width: 350,
             height: 128,
             fontSize: h / 2.2,
             opacity: 1
-        }), i.push({
+        }), j.push({
             x: d - 140,
             y: b - 66,
             width: 150,
             height: 128,
             fontSize: h / 2.2,
             opacity: 1
-        }), this.mc.addState("home", new State("home", i));
-        var l = [];
-        this.mc.removeState("agenda"), l.push({
+        }), this.mc.addState("home", new State("home", j));
+        var m = [];
+        this.mc.removeState("agenda"), m.push({
             x: 50,
             y: b,
-            width: e,
+            width: 372 * i,
             height: c,
             fontSize: h - .5,
             opacity: 1
         });
-        for (var j = 1; 5 > j; j++) l.push({
+        for (var k = 1; 5 > k; k++) m.push({
             x: 10,
-            y: b + j * c,
-            width: e,
-            height: c,
-            fontSize: h - 2,
-            opacity: .5
-        });
-        l.push({
-            x: f,
-            y: g,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), l.push({
-            x: -130,
-            y: b + 2.65 * c,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), l.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), l.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("agenda", new State("agenda", l));
-        var m = [];
-        this.mc.removeState("vita");
-        for (var j = 0; 5 > j; j++) 1 == j ? m.push({
-            x: .3 * a.innerWidth,
-            y: b + j * c,
-            width: e,
-            height: c,
-            fontSize: h - .5,
-            opacity: 1
-        }) : m.push({
-            x: 10,
-            y: b + j * c,
+            y: b + k * c,
             width: e,
             height: c,
             fontSize: h - 2,
@@ -615,19 +294,19 @@ var Content = function(a, b, c) {
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("vita", new State("vita", m));
+        }), this.mc.addState("agenda", new State("agenda", m));
         var n = [];
-        this.mc.removeState("hören");
-        for (var j = 0; 5 > j; j++) 2 == j ? n.push({
-            x: 74,
-            y: b + j * c,
-            width: e,
+        this.mc.removeState("vita");
+        for (var k = 0; 5 > k; k++) 1 == k ? n.push({
+            x: .3 * a.innerWidth,
+            y: b + k * c,
+            width: 190 * i,
             height: c,
             fontSize: h - .5,
             opacity: 1
         }) : n.push({
             x: 10,
-            y: b + j * c,
+            y: b + k * c,
             width: e,
             height: c,
             fontSize: h - 2,
@@ -641,17 +320,10 @@ var Content = function(a, b, c) {
             fontSize: 0,
             opacity: 1
         }), n.push({
-            x: 5,
+            x: -130,
             y: b + 2.65 * c,
-            width: a.innerHeight / 14,
-            height: a.innerHeight / 14,
-            fontSize: 0,
-            opacity: 1
-        }), n.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
+            width: 64,
+            height: 64,
             fontSize: 0,
             opacity: 0
         }), n.push({
@@ -661,19 +333,26 @@ var Content = function(a, b, c) {
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("hören", new State("hören", n));
+        }), n.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("vita", new State("vita", n));
         var o = [];
-        this.mc.removeState("sehen");
-        for (var j = 0; 5 > j; j++) 3 == j ? o.push({
-            x: 50,
-            y: b + j * c,
-            width: e,
+        this.mc.removeState("hören");
+        for (var k = 0; 5 > k; k++) 2 == k ? o.push({
+            x: 74,
+            y: b + k * c,
+            width: 318 * i,
             height: c,
             fontSize: h - .5,
             opacity: 1
         }) : o.push({
             x: 10,
-            y: b + j * c,
+            y: b + k * c,
             width: e,
             height: c,
             fontSize: h - 2,
@@ -687,37 +366,39 @@ var Content = function(a, b, c) {
             fontSize: 0,
             opacity: 1
         }), o.push({
-            x: -130,
+            x: 5,
             y: b + 2.65 * c,
-            width: 64,
-            height: 64,
+            width: a.innerHeight / 14,
+            height: a.innerHeight / 14,
+            fontSize: 0,
+            opacity: 1
+        }), o.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
             fontSize: 0,
             opacity: 0
         }), o.push({
             x: d - 50,
             y: b - 30,
-            width: 0,
-            height: 0,
+            width: 128,
+            height: 128,
             fontSize: 0,
             opacity: 0
-        }), o.push({
-            x: d - 50,
-            y: b - 30,
-            width: 0,
-            height: 0,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("sehen", new State("sehen", o));
-        for (var p = [], j = 0; 5 > j; j++) 4 == j ? p.push({
-            x: .25 * a.innerWidth,
-            y: b + j * c,
-            width: e + 20,
+        }), this.mc.addState("hören", new State("hören", o));
+        var p = [];
+        this.mc.removeState("sehen");
+        for (var k = 0; 5 > k; k++) 3 == k ? p.push({
+            x: 50,
+            y: b + k * c,
+            width: 304 * i,
             height: c,
             fontSize: h - .5,
             opacity: 1
         }) : p.push({
             x: 10,
-            y: b + j * c,
+            y: b + k * c,
             width: e,
             height: c,
             fontSize: h - 2,
@@ -740,18 +421,62 @@ var Content = function(a, b, c) {
         }), p.push({
             x: d - 50,
             y: b - 30,
-            width: 128,
-            height: 128,
+            width: 0,
+            height: 0,
             fontSize: 0,
             opacity: 0
         }), p.push({
+            x: d - 50,
+            y: b - 30,
+            width: 0,
+            height: 0,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("sehen", new State("sehen", p));
+        for (var q = [], k = 0; 5 > k; k++) 4 == k ? q.push({
+            x: .25 * a.innerWidth,
+            y: b + k * c,
+            width: 395 * i,
+            height: c,
+            fontSize: h - .5,
+            opacity: 1
+        }) : q.push({
+            x: 10,
+            y: b + k * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
+            opacity: .5
+        });
+        q.push({
+            x: f,
+            y: g,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), q.push({
+            x: -130,
+            y: b + 2.65 * c,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), q.push({
             x: d - 50,
             y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("kontakt", new State("kontakt", p));
+        }), q.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("kontakt", new State("kontakt", q));
     }, d.prototype._detectBrowser = function() {
         var a, b, c, d = (navigator.appVersion, navigator.userAgent), e = navigator.appName, f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10);
         -1 != (b = d.indexOf("Opera")) && (e = "Opera", f = d.substring(b + 6), -1 != (b = d.indexOf("Version")) && (f = d.substring(b + 8))), 
@@ -1062,6 +787,224 @@ var Content = function(a, b, c) {
         var a = AudioPlayer;
         a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
     }
+}, Gallery = {
+    html: "",
+    isOrientationChecked: !1,
+    _sceneImageNames: {
+        "0": {
+            thumb: "aschenputtel_hut.png",
+            big: "aschenputtel_hut.png"
+        },
+        "1": {
+            thumb: "aschenputtel_kleider.png",
+            big: "aschenputtel_kleider.png"
+        },
+        "2": {
+            thumb: "aschenputtel_lachend.png",
+            big: "aschenputtel_lachend.png"
+        },
+        "3": {
+            thumb: "gisela_abteil.png",
+            big: "gisela_abteil.png"
+        },
+        "4": {
+            thumb: "gisela_gold.png",
+            big: "gisela_gold.png"
+        },
+        "5": {
+            thumb: "judy_punch.jpeg",
+            big: "judy_punch.jpeg"
+        },
+        "6": {
+            thumb: "papagena_ei.png",
+            big: "papagena_ei.png"
+        },
+        "7": {
+            thumb: "what_what.jpg",
+            big: "what_what.jpg"
+        },
+        "8": {
+            thumb: "gisela_abteil.png",
+            big: "gisela_abteil.png"
+        },
+        "9": {
+            thumb: "gisela_gold.png",
+            big: "gisela_gold.png"
+        },
+        "10": {
+            thumb: "judy_punch.jpeg",
+            big: "judy_punch.jpeg"
+        },
+        "11": {
+            thumb: "papagena_ei.png",
+            big: "papagena_ei.png"
+        },
+        "12": {
+            thumb: "what_what.jpg",
+            big: "what_what.jpg"
+        }
+    },
+    _portraitImageNames: {
+        "0": {
+            thumb: "portrait_1.jpg",
+            big: "portrait_1.jpg"
+        },
+        "1": {
+            thumb: "portrait_2.jpg",
+            big: "portrait_2.jpg"
+        },
+        "2": {
+            thumb: "portrait_2.jpg",
+            big: "portrait_2.jpg"
+        },
+        "3": {
+            thumb: "portrait_2.jpg",
+            big: "portrait_2.jpg"
+        }
+    },
+    _sceneImages: [],
+    _portraitImages: [],
+    _presentedImageIndex: -1,
+    init: function() {
+        var a = Gallery;
+        $.each(a._sceneImageNames, function(b, c) {
+            a._addSceneImage(c.thumb, c.big);
+        }), $.each(a._portraitImageNames, function(b, c) {
+            a._addPortraitImage(c.thumb, c.big);
+        }), a._makeHTML();
+    },
+    activate: function() {
+        var a = Gallery, b = .3 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
+        a._sceneMaxScrollWidth = c - .7 * window.innerWidth, a._portraitMaxScrollWidth = d - .7 * window.innerWidth, 
+        $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
+        a.isOrientationChecked || (a.isOrientationChecked = !0, $.each(a._sceneImages, function(a, b) {
+            var c = b.getThumb();
+            c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
+        }), $.each(a._portraitImages, function(a, b) {
+            var c = b.getThumb();
+            c.width > c.height ? $(c).addClass("landscape") : $(c).addClass("portrait");
+        })), $(".image-wrapper").find("img").click(a._imageClickHandler), a.navMenuItem = $(".sehen-kloetzchen")[0], 
+        a._activateNavigation();
+    },
+    deactivate: function() {
+        var a = Gallery;
+        a._deactivateNavigation(), a.isMouseDown = !1;
+    },
+    getMarkUp: function() {
+        $(".sehen").html();
+        return Gallery.html;
+    },
+    callback: function() {
+        self = Gallery, self.windowWidth = parseInt($(".sehen-scroll-div").css("width"), 10), 
+        newItemPos = 250, $(".sehen-kloetzchen").css("left", newItemPos);
+        var a = newItemPos / (self.windowWidth - 32);
+        $(".scene-images-container").animate({
+            left: -a * self._sceneMaxScrollWidth
+        }, 500), $(".portrait-images-container").animate({
+            left: -a * self._portraitMaxScrollWidth
+        }, 600);
+    },
+    _activateNavigation: function() {
+        var a = Gallery;
+        $(a.navMenuItem).off(), a.navMenuItem.addEventListener("mousedown", a._mouseDownHandler, !1), 
+        document.body.addEventListener("mouseup", a._mouseUpHandler, !1), document.body.addEventListener("mousemove", a._mouseMoveHandler, !1);
+    },
+    _mouseDownHandler: function(a) {
+        var b = Gallery;
+        b.oldNavItemPos = parseInt($(b.navMenuItem).css("left"), 10), b.startX = a.pageX, 
+        console.log(b.oldNavItemPos + " .. : .. " + b.windowWidth), b.isMouseDown = !0;
+    },
+    _mouseUpHandler: function() {
+        Gallery.isMouseDown = !1;
+    },
+    _mouseMoveHandler: function(a) {
+        var b = Gallery;
+        if (b.isMouseDown) {
+            var c = b.oldNavItemPos + (a.pageX - b.startX);
+            c = 0 > c ? 0 : c, c = c > b.windowWidth - 32 ? b.windowWidth - 32 : c, $(b.navMenuItem).css("left", c + "px");
+            var d = c / (b.windowWidth - 32);
+            $(".scene-images-container").css("left", -d * b._sceneMaxScrollWidth), $(".portrait-images-container").css("left", -d * b._portraitMaxScrollWidth);
+        }
+    },
+    _deactivateNavigation: function() {
+        var a = Gallery;
+        a.navMenuItem.removeEventListener("mousedown", a._mouseDownHandler), document.body.removeEventListener("mouseup", a._mouseUpHandler), 
+        document.body.removeEventListener("mousemove", a._mouseMoveHandler), $(".menu-item").eq(3).on("click", function() {
+            events.emit("itemClicked", $(this).index());
+        });
+    },
+    _makeHTML: function() {
+        var a = Gallery, b = $("<div class='image-wrapper'>"), c = $("<div class='scene-images-container'></div>"), d = $("<div class='portrait-images-container'></div>");
+        $.each(a._sceneImages, function(a, b) {
+            var d = $("<div class='scene-div-" + a + "'>");
+            d.append(b.getThumb()), c.append(d);
+        }), $.each(a._portraitImages, function(a, b) {
+            var c = $("<div class='portrait-div-" + a + "'>");
+            c.append(b.getThumb()), d.append(c);
+        }), b.append(c), b.append(d), b.append($("<div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/>")), 
+        Gallery.html = b;
+    },
+    _addSceneImage: function(a, b) {
+        var c = Gallery, d = c._sceneImages.length + 1;
+        c._sceneImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
+    },
+    _addPortraitImage: function(a, b) {
+        var c = Gallery, d = c._portraitImages.length + 1;
+        c._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
+    },
+    _imageClickHandler: function(a) {
+        var b = Gallery, c = $(this).closest("div");
+        b._presentedImageIndex = c.index();
+        var d = c[0].className;
+        "sce" == d.substring(0, 3) ? b._presentSceneImage(b._presentedImageIndex) : b._presentPortraitImage(b._presentedImageIndex), 
+        $(".arrow-right").click(b._arrowRightClickHandler.bind(this)), $(".arrow-left").click(b._arrowLeftClickHandler.bind(this)), 
+        $(".close-icon").on("click", b._closeImage);
+    },
+    _presentSceneImage: function(a) {
+        $(".overlay").remove();
+        var b = document.createElement("div");
+        b.className = "overlay";
+        var c = document.createElement("div");
+        c.className = "presentation";
+        var d = new Image(), e = $(".scene-images-container>div").eq(a).find("img")[0];
+        console.log(e), d.src = e.src, d.className = e.className, $image = $(d);
+        var f = new Image();
+        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
+        var g = new Image();
+        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
+        var h = new Image();
+        h.src = "icons/close-icon.svg", h.className = "close-icon", c.appendChild($image[0]), 
+        b.appendChild(c), b.appendChild(h), b.appendChild(f), b.appendChild(g), $("body").append(b);
+    },
+    _presentPortraitImage: function(a) {
+        $(".overlay").remove();
+        var b = document.createElement("div");
+        b.className = "overlay";
+        var c = document.createElement("div");
+        c.className = "presentation";
+        var d = new Image(), e = $(".scene-images-container>div").eq(a).find("img")[0];
+        d.src = e.src, d.className = e.className, $image = $(d);
+        var f = new Image();
+        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
+        var g = new Image();
+        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
+        var h = new Image();
+        h.src = "icons/close-icon.svg", h.className = "close-icon", c.appendChild($image[0]), 
+        b.appendChild(c), b.appendChild(h), b.appendChild(f), b.appendChild(g), $("body").append(b);
+    },
+    _closeImage: function() {
+        $(".overlay").remove();
+    },
+    _arrowLeftClickHandler: function() {
+        var a = $(this).closest("div").index();
+        a--, console.log(a), 0 > a && (a = $(this).closest("div").closest("div").children().length), 
+        Gallery._presentPortraitImage(a), self.currentIndex = a;
+    },
+    _arrowRightClickHandler: function() {
+        var a = $(this).closest("div").index();
+        a++, console.log(a), a > $(this).closest("div").closest("div").children().length && (a = 0), 
+        Gallery._presentPortraitImage(a), self.currentIndex = a;
+    }
 };
 
 $(function() {
@@ -1077,3 +1020,88 @@ $(function() {
         vc.clickHandler.bind(vc)("home");
     });
 });
+
+var Item = function() {
+    function a(a, b, c, d, e, f, g, h) {
+        this._$obj = a, this._$svg = a.find("svg"), this._$text = a.find("text"), this._x = b, 
+        this._y = c, this._width = d, this._height = e, this._fontSize = f, this._opacity = g, 
+        this._browser = h, this._init();
+    }
+    return a.prototype._init = function() {
+        0 != this._$text.length && this._$text[0].setAttribute("textLength", 300);
+    }, a.prototype._render = function() {}, a.prototype._animateXY = function(a, b, c, d) {
+        var e = this;
+        d = d || 1.5, TweenMax.to(e._$obj, d, {
+            left: a,
+            top: b,
+            onComplete: c,
+            ease: Power1.easeInOut
+        });
+    }, a.prototype._animateWidth = function(a, b, c) {
+        var d = this;
+        return c = c || 1.5, -1 == a ? void TweenMax.to(d._$svg, c, {
+            width: 300,
+            onComplete: b,
+            ease: Power1.easeInOut
+        }) : (TweenMax.to(d._$svg, c, {
+            width: a,
+            onComplete: b,
+            ease: Power1.easeInOut
+        }), d._$text && TweenMax.to(d._$text, c, {
+            attr: {
+                textLength: a > 5 ? a - 5 : 0
+            },
+            ease: Power1.easeInOut
+        }), void (d._$obj.find("img") && TweenMax.to(d._$obj.find("img"), c, {
+            width: a,
+            ease: Power1.easeInOut
+        })));
+    }, a.prototype._animateHeight = function(a, b, c) {
+        var d = this;
+        c = c || 1.5, d._$svg.attr({
+            height: a
+        }), "Firefox" != this._browser && "Microsoft Internet Explorer" != this._browser ? d._$text.attr({
+            y: a - 5
+        }) : d._$text.attr({
+            y: -10
+        }), TweenMax.to(d._$svg, c, {
+            attr: {
+                height: a
+            },
+            onComplete: b
+        }), TweenMax.to(d._$text, c, {
+            y: a
+        });
+    }, a.prototype._animateFontSize = function(a, b, c) {
+        var d = this;
+        c = c || 1.5, void 0 != d._$text && (TweenMax.to(d._$obj, c, {
+            y: 7.5 * a,
+            onComplete: b,
+            ease: Back.easeInOut
+        }), TweenMax.to(d._$text, c, {
+            "font-size": 15 * a,
+            ease: Back.easeInOut
+        }));
+    }, a.prototype._animateOpacity = function(a, b, c) {
+        var d = this;
+        c = c || 1.5, TweenMax.to(d._$obj, c, {
+            opacity: a,
+            onComplete: b
+        });
+    }, a.prototype.setAnimationFunction = function(a, b) {}, a.prototype.stretch = function(a, b) {
+        this._width != a ? (this._width = a, this._animateWidth(a, b)) : b();
+    }, a.prototype.move = function(a, b, c) {
+        this._x != a || this._y != b ? (this._x = a, this._y = b, this._animateXY(a, b, c)) : c();
+    }, a.prototype.changeHeight = function(a, b) {
+        this._height != a ? (this._height = a, this._animateHeight(a, b)) : b();
+    }, a.prototype.changeFontSize = function(a, b) {
+        this._fontSize != a ? (this._fontSize = a, this._animateFontSize(a, b)) : b();
+    }, a.prototype.changeOpacity = function(a, b) {
+        this._opacity != a ? (this._opacity = a, this._animateOpacity(a, b)) : b();
+    }, a.prototype.render = function(a, b, c, d, e, f) {
+        var g = this;
+        this._x = a || this._x, this._y = b || this._y, this._width = c || this._width, 
+        this._height = d || this._height, this._fontSize = e || this._fontSize, this._opacity = f || this._opacity, 
+        this._animateXY(g._x, g._y, function() {}, .1);
+    }, a;
+}();
