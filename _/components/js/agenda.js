@@ -116,7 +116,9 @@ var Agenda = {
 	activate: 	function () {
 		var self = Agenda;
 
+		self.navMenuItem = $(".kloetzchen")[0];
 		self.activateNavigation();
+
 
 	},
 
@@ -137,6 +139,10 @@ var Agenda = {
 		$(".event-image").click( function() {
 			$(this).toggleClass("scroll-out");
 		} );
+
+		self.scrollWidth = parseInt( $(".scroll-div").css("width"), 10);  // Breite des Scroll-Divs
+		self._maxScrollWidth = window.getComputedStyle( $(".agenda")[0], null )["width"];
+		self._maxScrollWidth = parseInt( self._maxScrollWidth, 10) - 0.7 * window.innerWidth;
 	},
 
 
@@ -145,13 +151,12 @@ var Agenda = {
 	activateNavigation: 	function() {
 		var self = Agenda;
 
-		var elements = document.getElementsByClassName('event');
 
-		for ( var index = 0; index < elements.length; index++ ) {
-			$(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
-			document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
-			document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
-		}
+		
+		$(".kloetzchen")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
+		document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
+		document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
+		
 
 	
 	},
@@ -178,56 +183,18 @@ var Agenda = {
 	
 	mouseDownHandler: function( event ) {
 		var self = Agenda;
-
-		if (!self.isMouseDown) {
-
-			self.isMouseDown = true;
-			self.lastT = $.now();
-
-			// change Icon
-			$(".agenda").css("cursor", "move");
-			
-			
-			self.draggedObject.domElement = $(this);
-			self.draggedObject.x = event.pageX;
-			self.draggedObject.y = event.pageY;
-
-			var oldLeftString = $('.agenda').css("left");
-			oldLeftString = oldLeftString.substring( 0 , oldLeftString.length - 2);
-			self.oldLeftPos = parseInt( oldLeftString );
-			self.leftPos = self.oldLeftPos;
-
-		}
+		
+		self.oldNavItemPos = parseInt( $(self.navMenuItem).css("left"), 10);
+		self.startX = event.pageX;
+	
+		console.log(self.oldNavItemPos + " .. : .. "+ self.scrollWidth);
+		self.isMouseDown = true;
 		
 	},
 	
 	mouseUpHandler: function(event) {
 		var self = Agenda;
-		self.scrollSpeed = 0;
-
 		self.isMouseDown = false;
-		clearInterval( self.animateHandler );
-
-		// change Icon back
-		$(".agenda").css("cursor", "auto");
-		
-		
-
-		function decelerateScrolling() {
-			Agenda.scrollSpeed *= Agenda.deceleration;
-			
-			var leftStr = $('.agenda').css("left");
-			var left = parseInt( leftStr.substring(0, leftStr.length - 2) );
-			left -= Agenda.scrollSpeed;
-			$('.agenda').css( "left", "" + left + "px" );
-
-			if ( Math.abs( Agenda.scrollSpeed ) < 3  ) {
-				clearInterval( Agenda.scrollHandler );
-				Agenda.scrolling = false;
-			}
-
-
-		}
 	},
 	
 	mouseMoveHandler: function( event ) {
@@ -235,25 +202,15 @@ var Agenda = {
 		var self = Agenda;
 
 
-		if (Agenda.isMouseDown) {
+	if ( self.isMouseDown ) {
+			var newItemPos = self.oldNavItemPos + ( event.pageX - self.startX );
+			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+
+			$(self.navMenuItem).css("left", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.scrollWidth - 48);
+			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth );
 			
-			var deltaX = Agenda.draggedObject.x - event.pageX;
-			Agenda.deltaT = $.now() - Agenda.lastT;
-			Agenda.lastT = $.now();
-
-			self.leftPos = self.oldLeftPos -  deltaX;
-
-			
-			if ( self.leftPos > 350 ) {
-				self.leftPos = 300;
-				Agenda.isMouseDown = false;
-			} else if ( self.leftPos < (-self.timelineLength)  ) {
-				self.leftPos = -self.timelineLength ;
-				Agenda.isMouseDown = false;
-			}
-			$(".agenda").css("left", self.leftPos + "px" );
-		
-
 
 		}
 

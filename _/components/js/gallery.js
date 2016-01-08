@@ -166,12 +166,12 @@ var Gallery = {
 
 	 self = Gallery;
 	
-		self.windowWidth = parseInt( $(".sehen-scroll-div").css("width"), 10);
+		self.scrollWidth = parseInt( $(".sehen-scroll-div").css("width"), 10);  // Breite des Scroll-Divs
 
-		newItemPos = 250;
+		newItemPos = 0;
 
 		$(".sehen-kloetzchen").css("left", newItemPos );
-		var scrollRatio = newItemPos/(self.windowWidth - 32);
+		var scrollRatio = newItemPos/(self.scrollWidth - 32);
 		$(".scene-images-container").animate( { "left": -scrollRatio * self._sceneMaxScrollWidth }, 500);
 		$(".portrait-images-container").animate( { "left": -scrollRatio * self._portraitMaxScrollWidth }, 600 );
 	},
@@ -193,7 +193,7 @@ var Gallery = {
 
 		self.oldNavItemPos = parseInt( $(self.navMenuItem).css("left"), 10);
 		self.startX = event.pageX;
-		console.log(self.oldNavItemPos + " .. : .. "+ self.windowWidth);
+		console.log(self.oldNavItemPos + " .. : .. "+ self.scrollWidth);
 		self.isMouseDown = true;
 	},
 
@@ -207,12 +207,14 @@ var Gallery = {
 		if ( self.isMouseDown ) {
 			var newItemPos = self.oldNavItemPos + ( event.pageX - self.startX );
 			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.windowWidth - 32) ? self.windowWidth - 32 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
 
 			$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.windowWidth - 32);
+			var scrollRatio = newItemPos/(self.scrollWidth - 48);
 			$(".scene-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
-			$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );
+			/*$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );*/
+			$(".portrait-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+
 
 		}
 	},

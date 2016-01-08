@@ -31,12 +31,40 @@
 
 	// Audio Daten ------------------------------------------------------------------------------
 	audioSources: [
-		{ komponist: "Johann Adolf Mozart", titel: "Eine kleine Osterandacht", src: "audio/audio.mp3" },
-		{ komponist: "Johann Rainer Mozart", titel: "Eine kleine Pfingstmusik", src: "audio/audio02.mp3" },
-		{ komponist: "Johann Adolf Meier", titel: "Eine kleine Osterandacht", src: "audio/audio03.mp3" },
-		{ komponist: "Klaus Adolf Mozart", titel: "Eine große Osterandacht", src: "audio/audio04.mp3" },
-		{ komponist: "Johann Gustav Schubert", titel: "Eine kleine Verandaschlacht", src: "audio/audio05.mp3" }
+		{ komponist: "Giovanni Battista Pergolesi", titel: "Salve Regina", src: "audio/salve_regina.mp3" },
+		{ komponist: "Martino Pesenti", titel: "Filli, Filli, non t'amo più", src: "audio/filli_filli.mp3" },
+		{ komponist: "GIOVANNI ANTONIO RIGATTI", titel: "O dolcezza incredibile d´amore", src: "audio/o_dolcezza_incredibile.mp3" },
+		{ komponist: "ARNOLD SCHÖNBERG", titel: "Erwartung", src: "audio/erwartung.wav" },
+		{ komponist: "SAMUEL BARBER", titel: "Nuvoletta", src: "audio/nuvoletta.wav" }
 	],
+
+	audioDescriptions: [
+		{ ort: "Dom zu Maria Saal, Kärnten", jahr: "2013",
+			beschreibung: "Livemitschnitt<br>Meine Seele preist den Herrn",
+			besetzung: [ "Roswitha Dokalik - Violine Leitung"],
+			disclaimer: "mit freundlicher Genehmigung von Stefan Schweiger" },
+		{
+			ort: "Rathaussaal St. Veit, Kärnten", jahr: "2013",
+			beschreibung: "Livemitschnitt<br>L´inatteso paesaggio della seconda prattica",
+			besetzung: [ "Franco Pavan - Theorbe, Leitung", "Trigonale 2013" ],
+			disclaimer: "mit freundlicher Genehmigung von Stefan&nbsp;Schweiger"
+		},
+		{
+			ort: "Rathaussaal St. Veit, Kärnten", jahr: "2013",
+			beschreibung: "Livemitschnitt<br>L´inatteso paesaggio della seconda prattica",
+			besetzung: [ "Franco Pavan - Theorbe, Leitung", "Ida Aldrian - Mezzosopran", "Trigonale 2013" ],
+			disclaimer: "mit freundlicher Genehmigung von Stefan&nbsp;Schweiger"
+		},
+		{
+			ort: "Berlin", jahr: "2015",
+			besetzung: [ "stefanpaul - Klavier" ]
+		},
+		{
+			ort: "Berlin", jahr: "2015",
+			besetzung: [ "stefanpaul - Klavier" ]
+		}
+	],
+
 	audioElements: [],
 	audioElementsLoaded: 	0,
 
@@ -401,9 +429,24 @@
 
 		$(".audio-info-box").remove();
 
+		var infos = self.audioDescriptions[ self.trackNumberPlaying ];
+
 		var box = document.createElement('div');
 		box.className = "audio-info-box";
-		box.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna Herfurtner</span><span class='besetzung'>Wiener Philharmoniker</span><span>Leitung: Sir Simon Rattle</span>";
+
+		$.each( infos, function( key, elem ) {
+			if ( key !== "besetzung" ) {
+				box.innerHTML += "<div class='" + key + "'>" + elem + "</div>";
+			}
+			else
+			{
+				$.each( elem, function (key, elem) {
+					box.innerHTML += "<div class='besetzung'>" + elem + "</div>";
+				});
+			}
+		});
+		
+
 
 
 		self.currentTrackDiv.append( box );

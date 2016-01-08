@@ -554,7 +554,7 @@ var Content = function(a, b, c) {
     },
     activate: function() {
         var a = Agenda;
-        a.activateNavigation();
+        a.navMenuItem = $(".kloetzchen")[0], a.activateNavigation();
     },
     deactivate: function() {
         Agenda.deactivateNavigation();
@@ -564,10 +564,11 @@ var Content = function(a, b, c) {
         a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
         $(".agenda").css("width", a.timelineLength + "px"), $(".event-image").click(function() {
             $(this).toggleClass("scroll-out");
-        });
+        }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
+        a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth;
     },
     activateNavigation: function() {
-        for (var a = document.getElementsByClassName("event"), b = 0; b < a.length; b++) $(".agenda")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
+        $(".kloetzchen")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
         document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
     },
     deactivateNavigation: function() {
@@ -581,24 +582,20 @@ var Content = function(a, b, c) {
     },
     mouseDownHandler: function(a) {
         var b = Agenda;
-        if (!b.isMouseDown) {
-            b.isMouseDown = !0, b.lastT = $.now(), $(".agenda").css("cursor", "move"), b.draggedObject.domElement = $(this), 
-            b.draggedObject.x = a.pageX, b.draggedObject.y = a.pageY;
-            var c = $(".agenda").css("left");
-            c = c.substring(0, c.length - 2), b.oldLeftPos = parseInt(c), b.leftPos = b.oldLeftPos;
-        }
+        b.oldNavItemPos = parseInt($(b.navMenuItem).css("left"), 10), b.startX = a.pageX, 
+        console.log(b.oldNavItemPos + " .. : .. " + b.scrollWidth), b.isMouseDown = !0;
     },
     mouseUpHandler: function(a) {
         var b = Agenda;
-        b.scrollSpeed = 0, b.isMouseDown = !1, clearInterval(b.animateHandler), $(".agenda").css("cursor", "auto");
+        b.isMouseDown = !1;
     },
     mouseMoveHandler: function(a) {
         var b = Agenda;
-        if (Agenda.isMouseDown) {
-            var c = Agenda.draggedObject.x - a.pageX;
-            Agenda.deltaT = $.now() - Agenda.lastT, Agenda.lastT = $.now(), b.leftPos = b.oldLeftPos - c, 
-            b.leftPos > 350 ? (b.leftPos = 300, Agenda.isMouseDown = !1) : b.leftPos < -b.timelineLength && (b.leftPos = -b.timelineLength, 
-            Agenda.isMouseDown = !1), $(".agenda").css("left", b.leftPos + "px");
+        if (b.isMouseDown) {
+            var c = b.oldNavItemPos + (a.pageX - b.startX);
+            c = 0 > c ? 0 : c, c = c > b.scrollWidth - 48 ? b.scrollWidth - 48 : c, $(b.navMenuItem).css("left", c + "px");
+            var d = c / (b.scrollWidth - 48);
+            $(".agenda").css("left", -d * b._maxScrollWidth + .3 * window.innerWidth);
         }
     }
 }, AudioPlayer = {
@@ -618,25 +615,52 @@ var Content = function(a, b, c) {
     navPerc: 0,
     windowWidth: 0,
     audioSources: [ {
-        komponist: "Johann Adolf Mozart",
-        titel: "Eine kleine Osterandacht",
-        src: "audio/audio.mp3"
+        komponist: "Giovanni Battista Pergolesi",
+        titel: "Salve Regina",
+        src: "audio/salve_regina.mp3"
     }, {
-        komponist: "Johann Rainer Mozart",
-        titel: "Eine kleine Pfingstmusik",
-        src: "audio/audio02.mp3"
+        komponist: "Martino Pesenti",
+        titel: "Filli, Filli, non t'amo più",
+        src: "audio/filli_filli.mp3"
     }, {
-        komponist: "Johann Adolf Meier",
-        titel: "Eine kleine Osterandacht",
-        src: "audio/audio03.mp3"
+        komponist: "GIOVANNI ANTONIO RIGATTI",
+        titel: "O dolcezza incredibile d´amore",
+        src: "audio/o_dolcezza_incredibile.mp3"
     }, {
-        komponist: "Klaus Adolf Mozart",
-        titel: "Eine große Osterandacht",
-        src: "audio/audio04.mp3"
+        komponist: "ARNOLD SCHÖNBERG",
+        titel: "Erwartung",
+        src: "audio/erwartung.wav"
     }, {
-        komponist: "Johann Gustav Schubert",
-        titel: "Eine kleine Verandaschlacht",
-        src: "audio/audio05.mp3"
+        komponist: "SAMUEL BARBER",
+        titel: "Nuvoletta",
+        src: "audio/nuvoletta.wav"
+    } ],
+    audioDescriptions: [ {
+        ort: "Dom zu Maria Saal, Kärnten",
+        jahr: "2013",
+        beschreibung: "Livemitschnitt<br>Meine Seele preist den Herrn",
+        besetzung: [ "Roswitha Dokalik - Violine Leitung" ],
+        disclaimer: "mit freundlicher Genehmigung von Stefan Schweiger"
+    }, {
+        ort: "Rathaussaal St. Veit, Kärnten",
+        jahr: "2013",
+        beschreibung: "Livemitschnitt<br>L´inatteso paesaggio della seconda prattica",
+        besetzung: [ "Franco Pavan - Theorbe, Leitung", "Trigonale 2013" ],
+        disclaimer: "mit freundlicher Genehmigung von Stefan&nbsp;Schweiger"
+    }, {
+        ort: "Rathaussaal St. Veit, Kärnten",
+        jahr: "2013",
+        beschreibung: "Livemitschnitt<br>L´inatteso paesaggio della seconda prattica",
+        besetzung: [ "Franco Pavan - Theorbe, Leitung", "Ida Aldrian - Mezzosopran", "Trigonale 2013" ],
+        disclaimer: "mit freundlicher Genehmigung von Stefan&nbsp;Schweiger"
+    }, {
+        ort: "Berlin",
+        jahr: "2015",
+        besetzung: [ "stefanpaul - Klavier" ]
+    }, {
+        ort: "Berlin",
+        jahr: "2015",
+        besetzung: [ "stefanpaul - Klavier" ]
     } ],
     audioElements: [],
     audioElementsLoaded: 0,
@@ -774,14 +798,17 @@ var Content = function(a, b, c) {
     createInfoBox: function() {
         var a = AudioPlayer;
         $(".audio-info-box").remove();
-        var b = document.createElement("div");
-        b.className = "audio-info-box", b.innerHTML = "<span class='ort'>Kärnten</span><span class='jahr'>2014</span><span class='besetzung'>Sopran: Hanna Herfurtner</span><span class='besetzung'>Wiener Philharmoniker</span><span>Leitung: Sir Simon Rattle</span>", 
-        a.currentTrackDiv.append(b);
-        var c = a.currentTrackDiv[0].getBoundingClientRect(), d = c.top + 16, e = $(".audio-info-box").css("height"), f = parseInt(e.substring(0, e.length - 2)) + 40;
+        var b = a.audioDescriptions[a.trackNumberPlaying], c = document.createElement("div");
+        c.className = "audio-info-box", $.each(b, function(a, b) {
+            "besetzung" !== a ? c.innerHTML += "<div class='" + a + "'>" + b + "</div>" : $.each(b, function(a, b) {
+                c.innerHTML += "<div class='besetzung'>" + b + "</div>";
+            });
+        }), a.currentTrackDiv.append(c);
+        var d = a.currentTrackDiv[0].getBoundingClientRect(), e = d.top + 16, f = $(".audio-info-box").css("height"), g = parseInt(f.substring(0, f.length - 2)) + 40;
         window.innerHeight;
-        parseInt(d + f) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - d - .05 * window.innerHeight), 
-        $(".time-box").css("top", d + 4 + "px")) : ($(".audio-info-box").css("top", d - .55 * window.innerHeight), 
-        $(".time-box").css("top", d - 16 + "px"));
+        parseInt(e + g) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - e - .05 * window.innerHeight), 
+        $(".time-box").css("top", e + 4 + "px")) : ($(".audio-info-box").css("top", e - .55 * window.innerHeight), 
+        $(".time-box").css("top", e - 16 + "px"));
     },
     audioReady: function() {
         var a = AudioPlayer;
@@ -895,9 +922,9 @@ var Content = function(a, b, c) {
         return Gallery.html;
     },
     callback: function() {
-        self = Gallery, self.windowWidth = parseInt($(".sehen-scroll-div").css("width"), 10), 
-        newItemPos = 250, $(".sehen-kloetzchen").css("left", newItemPos);
-        var a = newItemPos / (self.windowWidth - 32);
+        self = Gallery, self.scrollWidth = parseInt($(".sehen-scroll-div").css("width"), 10), 
+        newItemPos = 0, $(".sehen-kloetzchen").css("left", newItemPos);
+        var a = newItemPos / (self.scrollWidth - 32);
         $(".scene-images-container").animate({
             left: -a * self._sceneMaxScrollWidth
         }, 500), $(".portrait-images-container").animate({
@@ -912,7 +939,7 @@ var Content = function(a, b, c) {
     _mouseDownHandler: function(a) {
         var b = Gallery;
         b.oldNavItemPos = parseInt($(b.navMenuItem).css("left"), 10), b.startX = a.pageX, 
-        console.log(b.oldNavItemPos + " .. : .. " + b.windowWidth), b.isMouseDown = !0;
+        console.log(b.oldNavItemPos + " .. : .. " + b.scrollWidth), b.isMouseDown = !0;
     },
     _mouseUpHandler: function() {
         Gallery.isMouseDown = !1;
@@ -921,9 +948,9 @@ var Content = function(a, b, c) {
         var b = Gallery;
         if (b.isMouseDown) {
             var c = b.oldNavItemPos + (a.pageX - b.startX);
-            c = 0 > c ? 0 : c, c = c > b.windowWidth - 32 ? b.windowWidth - 32 : c, $(b.navMenuItem).css("left", c + "px");
-            var d = c / (b.windowWidth - 32);
-            $(".scene-images-container").css("left", -d * b._sceneMaxScrollWidth), $(".portrait-images-container").css("left", -d * b._portraitMaxScrollWidth);
+            c = 0 > c ? 0 : c, c = c > b.scrollWidth - 48 ? b.scrollWidth - 48 : c, $(b.navMenuItem).css("left", c + "px");
+            var d = c / (b.scrollWidth - 48);
+            $(".scene-images-container").css("left", -d * b._sceneMaxScrollWidth), $(".portrait-images-container").css("left", -d * b._sceneMaxScrollWidth);
         }
     },
     _deactivateNavigation: function() {
