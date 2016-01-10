@@ -232,6 +232,8 @@ var Gallery = {
 	_makeHTML: function() {
 		var self = Gallery;
 
+		var contentWrapper = $("<div class='gallery-content-wrapper'></div>");
+
 		var wrapper = $("<div class='image-wrapper'>");
 		var sceneImagesContainer = $("<div class='scene-images-container'></div>");
 		var portraitImagesContainer = $("<div class='portrait-images-container'></div>");
@@ -251,9 +253,11 @@ var Gallery = {
 		wrapper.append( sceneImagesContainer );
 		wrapper.append( portraitImagesContainer );
 
-		wrapper.append( $("<div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/>"));
 
-		Gallery.html = wrapper;
+		contentWrapper.append( wrapper );
+		contentWrapper.append( $("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/></div>"));
+
+		Gallery.html = contentWrapper;
 
 
 	},

@@ -53,13 +53,22 @@
 	z-index: -255;
 }
 
+.scroll-div-wrapper {
+	position: absolute;
+	top: 81%;
+	height: 5%;
+	left: 29%;
+	right: 0;
+
+}
+
 .scroll-div {
 	position: absolute;
-	top: 81.8%;
+	@include vertical-align(absolute);
 	height: 16px;
 	background-color: #fff;
-	left: 31%;
-	right: 2%;
+	left: 24px;
+	right: 24px;
 	@include background-image(linear-gradient(left, rgba(0,0,128,0.1) 5%,rgba(100,100,100,0.3) 80%));
 	border-radius: 20px;
 }
@@ -67,15 +76,15 @@
 .scroll-left {
 	position: absolute;
 	height: 32px;
-	top: 81%;
-	left: 29%;
+	left: 0;
+	@include vertical-align(absolute);
 }
 
 .scroll-right {
 	position: absolute;
 	height: 32px;
-	top: 81%;
 	right: 0;
+	@include vertical-align(absolute);
 }
 
 .kloetzchen {
@@ -236,31 +245,37 @@
 					width: auto;
 				}
 
+.sehen-scroll-div-wrapper {
+	position: absolute;
+	top: 91%;
+	height: 5%;
+	left: 30%;
+	right: 0;
+}
+
 .sehen-scroll-div {
-	position: fixed;
-	top: 89.8%;
+	position: absolute;
+	@include vertical-align(absolute);
 	height: 16px;
-	left: 32%;
-	right: 2%;
-
+	background-color: #fff;
+	left: 24px;
+	right: 24px;
 	@include background-image(linear-gradient(left, rgba(0,0,128,0.1) 5%,rgba(100,100,100,0.3) 80%));
-	border-radius: 16px;
-
-
+	border-radius: 20px;
 }
 
 .sehen-scroll-left {
-	position: fixed;
+		position: absolute;
 	height: 32px;
-	top: 89%;
-	left : 30%;
-	}
+	left: 0;
+	@include vertical-align(absolute);
+}
 
 .sehen-scroll-right {
-	position: fixed;
+	position: absolute;
 	height: 32px;
-	top: 89%;
 	right: 0;
+	@include vertical-align(absolute);
 }
 
 .sehen-kloetzchen {

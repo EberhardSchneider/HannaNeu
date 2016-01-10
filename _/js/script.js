@@ -544,7 +544,7 @@ var Content = function(a, b, c) {
                     }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
                     void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
                     c += "</div>";
-                }), c += "</div>", c += "<div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons/arrow-left.svg'/><img class='scroll-right' src='icons/arrow-right.svg'/>", 
+                }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons/arrow-left.svg'/><img class='scroll-right' src='icons/arrow-right.svg'/></div>", 
                 a.html = c;
             }
         });
@@ -961,14 +961,14 @@ var Content = function(a, b, c) {
         });
     },
     _makeHTML: function() {
-        var a = Gallery, b = $("<div class='image-wrapper'>"), c = $("<div class='scene-images-container'></div>"), d = $("<div class='portrait-images-container'></div>");
+        var a = Gallery, b = $("<div class='gallery-content-wrapper'></div>"), c = $("<div class='image-wrapper'>"), d = $("<div class='scene-images-container'></div>"), e = $("<div class='portrait-images-container'></div>");
         $.each(a._sceneImages, function(a, b) {
-            var d = $("<div class='scene-div-" + a + "'>");
-            d.append(b.getThumb()), c.append(d);
+            var c = $("<div class='scene-div-" + a + "'>");
+            c.append(b.getThumb()), d.append(c);
         }), $.each(a._portraitImages, function(a, b) {
             var c = $("<div class='portrait-div-" + a + "'>");
-            c.append(b.getThumb()), d.append(c);
-        }), b.append(c), b.append(d), b.append($("<div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/>")), 
+            c.append(b.getThumb()), e.append(c);
+        }), c.append(d), c.append(e), b.append(c), b.append($("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/></div>")), 
         Gallery.html = b;
     },
     _addSceneImage: function(a, b) {
