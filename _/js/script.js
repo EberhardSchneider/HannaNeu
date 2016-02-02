@@ -542,7 +542,7 @@ var Content = function(a, b, c) {
                 $.each(b, function(a, b) {
                     var d = "";
                     Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
-                        d += "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>";
+                        d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
                     }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
                     void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
                     c += "</div>";
@@ -563,7 +563,7 @@ var Content = function(a, b, c) {
     },
     callback: function() {
         var a = this;
-        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width, a.timelineLength = Agenda.numberOfEventboxes * a.eventBoxWidth, 
+        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1, a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), 
         $(".agenda").css("width", a.timelineLength + "px"), $(".event-image").click(function() {
             $(this).toggleClass("scroll-out");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
@@ -827,92 +827,92 @@ var Content = function(a, b, c) {
     isOrientationChecked: !1,
     _sceneImageNames: {
         "0": {
-            thumb: "aschenputtel_hut.png",
-            big: "aschenputtel_hut.png",
-            comment: "Copyright blablabla"
+            thumb: "orph_1_thb.jpg",
+            big: "orph_1.jpg",
+            comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "1": {
-            thumb: "aschenputtel_kleider.png",
-            big: "aschenputtel_kleider.png",
-            comment: "Copyright blablabla"
+            thumb: "orph_2_thb.jpg",
+            big: "orph_2.jpg",
+            comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "2": {
-            thumb: "aschenputtel_lachend.png",
-            big: "aschenputtel_lachend.png",
-            comment: "Copyright blablabla"
+            thumb: "orph_3_thb.jpg",
+            big: "orph_3.jpg",
+            comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "3": {
-            thumb: "gisela_abteil.png",
-            big: "gisela_abteil.png",
-            comment: "Copyright blablabla"
+            thumb: "papagena_ei_thb.jpg",
+            big: "papagena_ei.png",
+            comment: "Copyright FEHLT!!!"
         },
         "4": {
-            thumb: "gisela_gold.png",
-            big: "gisela_gold.png",
-            comment: "Copyright blablabla"
+            thumb: "ASCH_1_THB.jpg",
+            big: "ASCH_1.png",
+            comment: "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun"
         },
         "5": {
-            thumb: "judy_punch.jpeg",
-            big: "judy_punch.jpeg",
-            comment: "Copyright blablabla"
+            thumb: "ASCH_2_THB.jpg",
+            big: "ASCH_2.png",
+            comment: "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun"
         },
         "6": {
-            thumb: "papagena_ei.png",
-            big: "papagena_ei.png",
-            comment: "Copyright blablabla"
+            thumb: "ASCH_3_THB.jpg",
+            big: "ASCH_3.png",
+            comment: "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun"
         },
         "7": {
-            thumb: "what_what.jpg",
-            big: "what_what.jpg",
-            comment: "Copyright blablabla"
+            thumb: "GISELA_1_THB.JPG",
+            big: "GISELA_1.JPG",
+            comment: "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann"
         },
         "8": {
-            thumb: "gisela_abteil.png",
-            big: "gisela_abteil.png",
-            comment: "Copyright blablabla"
+            thumb: "GISELA_2_THB.JPG",
+            big: "GISELA_2.JPG",
+            comment: "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann"
         },
         "9": {
-            thumb: "gisela_gold.png",
-            big: "gisela_gold.png",
-            comment: "Copyright blablabla"
+            thumb: "GISELA_3_THB.JPG",
+            big: "GISELA_3.JPG",
+            comment: "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann"
         },
         "10": {
-            thumb: "judy_punch.jpeg",
-            big: "judy_punch.jpeg",
-            comment: "Copyright blablabla"
+            thumb: "GISELA_4_THB.JPG",
+            big: "GISELA_4.JPG",
+            comment: "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann"
         },
         "11": {
-            thumb: "papagena_ei.png",
-            big: "papagena_ei.png",
-            comment: "Copyright blablabla"
+            thumb: "JUDY_THB.JPEG",
+            big: "JUDY.JPEG",
+            comment: "STAATSOPER BERLIN: PUNCH AND JUDY (Birtwistle), Pretty Polly (Hanna Herfurtner);  2014 ⓒ Vincent Stefan"
         },
         "12": {
-            thumb: "what_what.jpg",
-            big: "what_what.jpg",
-            comment: "Copyright blablabla"
+            thumb: "WHAT_THB.jpg",
+            big: "WHAT.jpg",
+            comment: "Copyright FEHLT"
         }
     },
     _portraitImageNames: {
         "0": {
-            thumb: "portrait_1.jpg",
-            big: "portrait_1.jpg"
+            thumb: "PORTR_1_THB.jpg",
+            big: "PORTR_1.jpg",
+            comment: "Hanna Herfurtner 2011 Ⓒ Jörg Frank"
         },
         "1": {
-            thumb: "portrait_2.jpg",
-            big: "portrait_2.jpg"
+            thumb: "PORTR_2_THB.jpg",
+            big: "PORTR_2.jpg",
+            comment: "Hanna Herfurtner 2011 Ⓒ Jörg Frank"
         },
         "2": {
-            thumb: "portrait_2.jpg",
-            big: "portrait_2.jpg"
-        },
-        "3": {
-            thumb: "portrait_2.jpg",
-            big: "portrait_2.jpg"
+            thumb: "PORTR_3_THB.jpg",
+            big: "PORTR_3.jpg",
+            comment: "Hanna Herfurtner 2011 Ⓒ Jörg Frank"
         }
     },
     _sceneImages: [],
     _sceneImagesComments: [],
     _portraitImages: [],
+    _portraitImagesComments: [],
     _presentedImageIndex: -1,
     _isPresentedImageSceneImage: !1,
     init: function() {
@@ -920,7 +920,7 @@ var Content = function(a, b, c) {
         a._numberOfSceneImages = 0, $.each(a._sceneImageNames, function(b, c) {
             a._addSceneImage(c.thumb, c.big, c.comment), a._numberOfSceneImages++;
         }), a._numberOfPortraitImages = 0, $.each(a._portraitImageNames, function(b, c) {
-            a._addPortraitImage(c.thumb, c.big), a._numberOfPortraitImages++;
+            a._addPortraitImage(c.thumb, c.big, c.comment), a._numberOfPortraitImages++;
         }), a._makeHTML();
     },
     activate: function() {
@@ -1009,9 +1009,10 @@ var Content = function(a, b, c) {
         d._sceneImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + e, "big_" + e)), 
         d._sceneImagesComments.push(c);
     },
-    _addPortraitImage: function(a, b) {
-        var c = Gallery, d = c._portraitImages.length + 1;
-        c._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + d, "big_" + d));
+    _addPortraitImage: function(a, b, c) {
+        var d = Gallery, e = d._portraitImages.length + 1;
+        d._portraitImages.push(new Thumbnail("images/" + a, "images/" + b, "thumb_" + e, "big_" + e)), 
+        d._portraitImagesComments.push(c);
     },
     _imageClickHandler: function(a) {
         var b = Gallery, c = $(this).closest("div");
@@ -1029,17 +1030,17 @@ var Content = function(a, b, c) {
         var d = document.createElement("div");
         d.className = "presentation";
         var e = b._sceneImages[a].getBig();
+        $(".scene-images-container>div").eq(a).find("img")[0];
         $image = $(e);
         var f = new Image();
         f.src = "icons/arrow-left.svg", f.className = "arrow-left";
         var g = new Image();
         g.src = "icons/arrow-right.svg", g.className = "arrow-right";
         var h = new Image();
-        h.src = "icons/close-icon.svg", h.className = "close-icon";
+        h.src = "icons/close_24px.svg", h.className = "close-icon";
         var i = $("<div class='image-comment'>" + b._sceneImagesComments[a] + "</div>");
-        d.className += " " + e.className, e.className = "presented-image", d.appendChild($image[0]), 
-        d.appendChild(i[0]), c.appendChild(d), c.appendChild(h), c.appendChild(f), c.appendChild(g), 
-        b._isPresentedImageSceneImage = !0, $("body").append(c);
+        d.appendChild($image[0]), d.appendChild(i[0]), c.appendChild(d), c.appendChild(h), 
+        c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !0, $("body").append(c);
     },
     _presentPortraitImage: function(a) {
         var b = Gallery;
@@ -1055,8 +1056,12 @@ var Content = function(a, b, c) {
         var g = new Image();
         g.src = "icons/arrow-right.svg", g.className = "arrow-right";
         var h = new Image();
-        h.src = "icons/close-icon.svg", h.className = "close-icon", d.appendChild($image[0]), 
-        c.appendChild(d), c.appendChild(h), c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !1, 
+        h.src = "icons/close_24px.svg", h.className = "close-icon";
+        var i = new Image();
+        i.src = "icons/download_24px.svg", i.className = "download-icon";
+        var j = $("<div class='image-comment'>" + b._portraitImagesComments[a] + "</div>");
+        d.appendChild($image[0]), d.appendChild(j[0]), c.appendChild(d), c.appendChild(h), 
+        c.appendChild(i), c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !1, 
         $("body").append(c);
     },
     _closeImage: function() {

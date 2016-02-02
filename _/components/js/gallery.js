@@ -7,75 +7,76 @@ var Gallery = {
 	isOrientationChecked: false, // sind die img mit 'portrait' bzw. 'landscape' Klassen ausgestattet?
 
 	_sceneImageNames: {
-		"0": { "thumb": "aschenputtel_hut.png",
-					"big" : "aschenputtel_hut.png",
-					"comment": "Copyright blablabla" },
+		"0": { "thumb": "orph_1_thb.jpg",
+					"big" : "orph_1.jpg",
+					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"1": { "thumb": "aschenputtel_kleider.png",
-					"big" : "aschenputtel_kleider.png",
-					"comment": "Copyright blablabla" },
+		"1": { "thumb": "orph_2_thb.jpg",
+					"big" : "orph_2.jpg",
+					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"2": { "thumb": "aschenputtel_lachend.png",
-					"big" : "aschenputtel_lachend.png",
-					"comment": "Copyright blablabla" },
+		"2": { "thumb": "orph_3_thb.jpg",
+					"big" : "orph_3.jpg",
+					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"3": { "thumb": "gisela_abteil.png",
-					"big" : "gisela_abteil.png",
-					"comment": "Copyright blablabla" },
-
-		"4": { "thumb": "gisela_gold.png",
-					"big" : "gisela_gold.png",
-					"comment": "Copyright blablabla" },
-
-		"5": { "thumb": "judy_punch.jpeg",
-					"big" : "judy_punch.jpeg",
-					"comment": "Copyright blablabla"},
-
-		"6": { "thumb": "papagena_ei.png",
+		"3": { "thumb": "papagena_ei_thb.jpg",
 					"big" : "papagena_ei.png",
-					"comment": "Copyright blablabla" },
+					"comment": "Copyright FEHLT!!!" },
 
-		"7": { "thumb": "what_what.jpg",
-					"big" : "what_what.jpg",
-					"comment": "Copyright blablabla" },
+		"4": { "thumb": "ASCH_1_THB.jpg",
+					"big" : "ASCH_1.png",
+					"comment": "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun" },
 
-		"8": { "thumb": "gisela_abteil.png",
-					"big" : "gisela_abteil.png",
-					"comment": "Copyright blablabla" },
+		"5": { "thumb": "ASCH_2_THB.jpg",
+					"big" : "ASCH_2.png",
+					"comment": "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun"},
 
-		"9": { "thumb": "gisela_gold.png",
-					"big" : "gisela_gold.png",
-					"comment": "Copyright blablabla" },
+		"6": { "thumb": "ASCH_3_THB.jpg",
+					"big" : "ASCH_3.png",
+					"comment": "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun" },
 
-		"10": { "thumb": "judy_punch.jpeg",
-					"big" : "judy_punch.jpeg",
-					"comment": "Copyright blablabla" },
+		"7": { "thumb": "GISELA_1_THB.JPG",
+					"big" : "GISELA_1.JPG",
+					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
 
-		"11": { "thumb": "papagena_ei.png",
-					"big" : "papagena_ei.png",
-					"comment": "Copyright blablabla" },
+		"8": { "thumb": "GISELA_2_THB.JPG",
+					"big" : "GISELA_2.JPG",
+					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
 
-		"12": { "thumb": "what_what.jpg",
-					"big" : "what_what.jpg",
-					"comment": "Copyright blablabla" }
+		"9": { "thumb": "GISELA_3_THB.JPG",
+					"big" : "GISELA_3.JPG",
+					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
+
+		"10": {"thumb": "GISELA_4_THB.JPG",
+					"big" : "GISELA_4.JPG",
+					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
+
+		"11": { "thumb": "JUDY_THB.JPEG",
+					"big" : "JUDY.JPEG",
+					"comment": "STAATSOPER BERLIN: PUNCH AND JUDY (Birtwistle), Pretty Polly (Hanna Herfurtner);  2014 ⓒ Vincent Stefan" },
+
+		"12": { "thumb": "WHAT_THB.jpg",
+					"big" : "WHAT.jpg",
+					"comment": "Copyright FEHLT" }
 
 	},
 	_portraitImageNames: {
-		"0": { "thumb": "portrait_1.jpg",
-		"big": "portrait_1.jpg" },
+		"0": { "thumb": "PORTR_1_THB.jpg",
+		"big": "PORTR_1.jpg",
+		"comment": "Hanna Herfurtner 2011 Ⓒ Jörg Frank"  },
 
-		"1":	{ "thumb": "portrait_2.jpg",
-			"big": "portrait_2.jpg" },
+		"1":	{ "thumb": "PORTR_2_THB.jpg",
+		"big": "PORTR_2.jpg",
+		"comment": "Hanna Herfurtner 2011 Ⓒ Jörg Frank"  },
 
-				"2":	{ "thumb": "portrait_2.jpg",
-			"big": "portrait_2.jpg" },
-
-				"3":	{ "thumb": "portrait_2.jpg",
-			"big": "portrait_2.jpg" }
+				"2":	{ "thumb": "PORTR_3_THB.jpg",
+		"big": "PORTR_3.jpg",
+		"comment": "Hanna Herfurtner 2011 Ⓒ Jörg Frank"  }
 	},
 	_sceneImages: [],
 	_sceneImagesComments: [],
 	_portraitImages: [],
+	_portraitImagesComments: [],
 
 	_presentedImageIndex: -1,  // Index des Bildes, das gerade präsentiert wird
 	_isPresentedImageSceneImage: false,
@@ -91,7 +92,7 @@ var Gallery = {
 
 		self._numberOfPortraitImages = 0;
 		$.each( self._portraitImageNames, function( key, elem ) {
-			self._addPortraitImage( elem.thumb, elem.big );
+			self._addPortraitImage( elem.thumb, elem.big, elem.comment );
 			self._numberOfPortraitImages++;
 		});
 
@@ -308,12 +309,13 @@ var Gallery = {
 		self._sceneImagesComments.push( comment );
 	},
 
-		_addPortraitImage: function( sourceThumb, sourceBig ) {
+		_addPortraitImage: function( sourceThumb, sourceBig, comment ) {
 		var self = Gallery;
 		// add and Preload Image
 
 		var index = self._portraitImages.length + 1;
 		self._portraitImages.push( new Thumbnail( "images/"+sourceThumb, "images/"+sourceBig, "thumb_" + index, "big_"+index ));
+		self._portraitImagesComments.push( comment );
 	},
 
 	
@@ -354,11 +356,11 @@ var Gallery = {
 		presentation.className = "presentation";
 
 		var image = self._sceneImages[index].getBig();
-		/*var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];*/
+		var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];
 
-	/*	console.log(clickedImage);
-		image.src = clickedImage.src;
-		image.className = clickedImage.className;*/
+		/*console.log(clickedImage);*/
+		
+	
 		$image = $(image);
 
 
@@ -373,14 +375,14 @@ var Gallery = {
 
 
 		var closeIcon = new Image();
-		closeIcon.src = "icons/close-icon.svg";
+		closeIcon.src = "icons/close_24px.svg";
 		closeIcon.className = "close-icon";
 
 		var comment = $("<div class='image-comment'>" + self._sceneImagesComments[index] + "</div>");
 
-
-		presentation.className += " " + image.className;
-		image.className = "presented-image";
+/*
+		presentation.className += " " + image.className;*/
+		
 
 		presentation.appendChild( $image[0] );
 		presentation.appendChild( comment[0] );
@@ -426,13 +428,22 @@ var Gallery = {
 
 
 		var closeIcon = new Image();
-		closeIcon.src = "icons/close-icon.svg";
+		closeIcon.src = "icons/close_24px.svg";
 		closeIcon.className = "close-icon";
 
+		var downloadIcon = new Image();
+		downloadIcon.src = "icons/download_24px.svg";
+		downloadIcon.className = "download-icon";
+
+		var comment = $("<div class='image-comment'>" + self._portraitImagesComments[index] + "</div>");
+
 		presentation.appendChild( $image[0] );
+		presentation.appendChild( comment[0] );
+
 
 		overlay.appendChild( presentation );
 		overlay.appendChild( closeIcon );
+		overlay.appendChild( downloadIcon );
 		overlay.appendChild( arrowLeft );
 		overlay.appendChild( arrowRight );
 

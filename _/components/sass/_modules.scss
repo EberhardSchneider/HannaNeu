@@ -76,6 +76,8 @@
 	height: 100%;
 	width: 260px;
 	float: left;
+	padding-left: 15px;
+	padding-right: 15px;
 
 	font-size: 120%;
 
@@ -99,6 +101,7 @@
 		font-size: 95%;
 		text-align: center;
 		font-weight: bold;
+		padding-bottom: 2px;
 		border-bottom: solid black 2px;
 	}
 
@@ -119,16 +122,26 @@
 
 	.besetzung {
 		
-		font-size: 70%;
-		margin-left: 25px;
+		font-size: 75%;
+		margin-left: 13px;
+		margin-right: 13px;
 
 		.zeile {
-			padding-top: 2px;
+			padding-top: 4px;
+			padding-bottom: 4px;
+		}
+
+		.rolle {
+			left: 0;
 		}
 		
 		.darsteller {
 			float: right;
-			margin-right: 25px;
+		}
+
+		.one-line {
+			text-align: center;
+			margin: auto;
 		}
 	}
 }
@@ -306,7 +319,7 @@
 		left: 3%;
 		bottom: 3%;
 		right: 3%;
-		background-color: rgba( 0, 0, 0, 0.8);
+		background-color: rgba( 0, 0, 0, 0.85);
 		/* border-radius: 20px; */
 
 		z-index: 255;
@@ -316,33 +329,36 @@
 
 
 		.presentation {
-			position: absolute;
+			
+			width: 60%;
+			height: 80%;
+			@include centerer;
 			
 
 			.image-comment {
 				color: white;
-				position: absolute;
+				position: fixed;
+				bottom: -60px;
+				width: 160%;
+				left: -30%;
+				text-align: center;
 			}
 
 			.portrait {
-				
-				width: 40%;
-				
-				height: 80%;
+				position: fixed;
+				width: auto;
+				height: 100%;
 				@include centerer;
 			}
 
 			.landscape {
-				height: 40%;
-				width: 80%;
+				position: fixed;
+				height: auto;
+				width: 100%;
 				@include vertical-align();
 			}
 			
-			display: block;
-    		left: 20%;
-    		top: 20%;
-
-    		@include border-radius( 10px );
+			
 
     		z-index: 200;
 		}
@@ -355,17 +371,23 @@
 			position: fixed;
 			top: 10%;
 			right: 10%;
-			width: 48px;
-			background-color: black;
+			background-color: #fff;
+			height: 9%;
+
+			img {
+				height: 9%;
+			}
 
 			&:hover {
-				background-color: #333;
+				background-color: #ddd;
 			}
 
 			img {
 				fill: white;
 				position: relative;
 			}
+
+			border-radius: 100%;
 		}
 
 		.arrow-left {
@@ -395,6 +417,22 @@
 			background-color: #fff;
 
 			border-radius: 100%;
+		}
+
+		.download-icon {
+			position: fixed;
+			bottom: 10%;
+			left: 10%;
+			background-color: #fff;
+			height: 5%;
+
+			img {
+				height: 5%;
+			}
+
+				&:hover {
+				background-color: #ddd;
+			}
 		}
 }
 
@@ -441,7 +479,7 @@
 		>div {
 			position: relative;
 			display: inline-block;
-			width: 33%;
+			width: 27%;
 			height: 100%;
 			overflow: hidden;
 			float: left;

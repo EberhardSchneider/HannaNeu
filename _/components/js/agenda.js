@@ -72,7 +72,12 @@ var Agenda = {
 				Agenda.numberOfEventboxes++;
 
 				$.each( elem.besetzung, function( rolle, darsteller ) { 
-					besetzung += "<div class='zeile'><span class='rolle'>"+ rolle +":</span><span class='darsteller'>"+ darsteller +"</span></div>";
+					if ( rolle.substring(0, 1) != "-" ) {			
+						besetzung += "<div class='zeile'><span class='rolle'>"+ rolle +":</span><span class='darsteller'>"+ darsteller +"</span></div>";
+					}
+					else {		// if rolle == "-", there is only one line which has to be centered, stored in "darsteller"
+						besetzung+="<div class='zeile'><div class = 'one-line'>" + darsteller + "</div></div>";
+					}
 				});
 
 				html += '<div class="event">
@@ -132,8 +137,8 @@ var Agenda = {
 	callback: function() {
 		var self = this;
 
-		self.eventBoxWidth = $(".event")[0].getBoundingClientRect().width;
-		self.timelineLength = Agenda.numberOfEventboxes * self.eventBoxWidth;
+		self.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1;
+		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
 		$(".agenda").css("width", self.timelineLength + "px");
 
 		$(".event-image").click( function() {

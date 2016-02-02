@@ -450,6 +450,8 @@ img {
   height: 100%;
   width: 260px;
   float: left;
+  padding-left: 15px;
+  padding-right: 15px;
   font-size: 120%;
   border: solid 2px transparent;
   margin-right: 28px;
@@ -458,23 +460,24 @@ img {
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none; }
-/* line 93, ../components/sass/_modules.scss */
+/* line 95, ../components/sass/_modules.scss */
 .event .komponist {
   font-size: 80%;
   text-align: center; }
-/* line 98, ../components/sass/_modules.scss */
+/* line 100, ../components/sass/_modules.scss */
 .event .title {
   font-size: 95%;
   text-align: center;
   font-weight: bold;
+  padding-bottom: 2px;
   border-bottom: solid black 2px; }
-/* line 105, ../components/sass/_modules.scss */
+/* line 108, ../components/sass/_modules.scss */
 .event .ort {
   font-size: 80%;
   opacity: .8;
   text-align: center;
   padding-top: 2px; }
-/* line 112, ../components/sass/_modules.scss */
+/* line 115, ../components/sass/_modules.scss */
 .event .datum {
   font-weight: bold;
   font-size: 95%;
@@ -484,37 +487,45 @@ img {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
-/* line 120, ../components/sass/_modules.scss */
+/* line 123, ../components/sass/_modules.scss */
 .event .besetzung {
-  font-size: 70%;
-  margin-left: 25px; }
-/* line 125, ../components/sass/_modules.scss */
-.event .besetzung .zeile {
-  padding-top: 2px; }
+  font-size: 75%;
+  margin-left: 13px;
+  margin-right: 13px; }
 /* line 129, ../components/sass/_modules.scss */
+.event .besetzung .zeile {
+  padding-top: 4px;
+  padding-bottom: 4px; }
+/* line 134, ../components/sass/_modules.scss */
+.event .besetzung .rolle {
+  left: 0; }
+/* line 138, ../components/sass/_modules.scss */
 .event .besetzung .darsteller {
-  float: right;
-  margin-right: 25px; }
+  float: right; }
+/* line 142, ../components/sass/_modules.scss */
+.event .besetzung .one-line {
+  text-align: center;
+  margin: auto; }
 
-/* line 137, ../components/sass/_modules.scss */
+/* line 150, ../components/sass/_modules.scss */
 .event-up {
   display: block;
   height: 14%;
   width: 100%; }
 
-/* line 143, ../components/sass/_modules.scss */
+/* line 156, ../components/sass/_modules.scss */
 .event-date {
   display: block;
   height: 15%;
   width: 100%; }
 
-/* line 149, ../components/sass/_modules.scss */
+/* line 162, ../components/sass/_modules.scss */
 .event-low {
   display: block;
   height: 50%;
   width: 100%; }
 
-/* line 159, ../components/sass/_modules.scss */
+/* line 172, ../components/sass/_modules.scss */
 .vita-image {
   position: relative;
   display: block;
@@ -522,12 +533,12 @@ img {
   width: 100%;
   top: 0;
   margin-bottom: 9%; }
-/* line 169, ../components/sass/_modules.scss */
+/* line 182, ../components/sass/_modules.scss */
 .vita-image img {
   height: 100%;
   width: auto; }
 
-/* line 174, ../components/sass/_modules.scss */
+/* line 187, ../components/sass/_modules.scss */
 .vita-text {
   position: relative;
   height: 45%;
@@ -536,11 +547,11 @@ img {
   text-align: justify;
   overflow: hidden;
   font-size: 80%; }
-/* line 183, ../components/sass/_modules.scss */
+/* line 196, ../components/sass/_modules.scss */
 .vita-text p {
   margin-bottom: 15px; }
 
-/* line 195, ../components/sass/_modules.scss */
+/* line 208, ../components/sass/_modules.scss */
 .audio-track {
   -moz-user-select: -moz-none;
   -ms-user-select: none;
@@ -549,46 +560,46 @@ img {
   margin-bottom: 35px;
   width: 100%;
   z-index: 255; }
-/* line 203, ../components/sass/_modules.scss */
+/* line 216, ../components/sass/_modules.scss */
 .audio-track:hover {
   cursor: pointer;
   background-color: rgba(240, 240, 240, 0.8); }
 
-/* line 212, ../components/sass/_modules.scss */
+/* line 225, ../components/sass/_modules.scss */
 .selected .audio-komponist {
   border-bottom: solid 1px black; }
 
-/* line 217, ../components/sass/_modules.scss */
+/* line 230, ../components/sass/_modules.scss */
 .audio-komponist {
   border-bottom: solid 1px transparent;
   width: 100%; }
 
-/* line 222, ../components/sass/_modules.scss */
+/* line 235, ../components/sass/_modules.scss */
 .time-box {
   position: absolute;
   right: 5px;
   font-weight: bold; }
 
-/* line 230, ../components/sass/_modules.scss */
+/* line 243, ../components/sass/_modules.scss */
 .play-button {
   position: absolute;
   left: -64px;
   z-index: 255;
   opacity: 0;
   width: 64px; }
-/* line 237, ../components/sass/_modules.scss */
+/* line 250, ../components/sass/_modules.scss */
 .play-button img {
   width: 64px;
   color: black; }
-/* line 242, ../components/sass/_modules.scss */
+/* line 255, ../components/sass/_modules.scss */
 .play-button:hover {
   cursor: pointer; }
 
-/* line 247, ../components/sass/_modules.scss */
+/* line 260, ../components/sass/_modules.scss */
 .nav-audio {
   cursor: ew-resize !important; }
 
-/* line 251, ../components/sass/_modules.scss */
+/* line 264, ../components/sass/_modules.scss */
 .audio-info-box {
   position: absolute;
   right: 5px;
@@ -597,35 +608,35 @@ img {
   font-size: 90%;
   display: inline-block;
   /* border: solid black 2px; */ }
-/* line 264, ../components/sass/_modules.scss */
+/* line 277, ../components/sass/_modules.scss */
 .audio-info-box .ort {
   width: 80%;
   display: inline-block; }
-/* line 268, ../components/sass/_modules.scss */
+/* line 281, ../components/sass/_modules.scss */
 .audio-info-box span {
   display: inline-block; }
-/* line 269, ../components/sass/_modules.scss */
+/* line 282, ../components/sass/_modules.scss */
 .audio-info-box .jahr {
   float: right;
   display: inline-block; }
-/* line 274, ../components/sass/_modules.scss */
+/* line 287, ../components/sass/_modules.scss */
 .audio-info-box .beschreibung {
   margin-top: 5%;
   margin-bottom: 30px; }
-/* line 278, ../components/sass/_modules.scss */
+/* line 291, ../components/sass/_modules.scss */
 .audio-info-box .besetzung {
   display: block; }
 
-/* line 284, ../components/sass/_modules.scss */
+/* line 297, ../components/sass/_modules.scss */
 .disclaimer {
   margin-top: 5%;
   width: 80%; }
 
-/* line 292, ../components/sass/_modules.scss */
+/* line 305, ../components/sass/_modules.scss */
 .gallery {
   width: 500%;
   height: 340px; }
-/* line 295, ../components/sass/_modules.scss */
+/* line 308, ../components/sass/_modules.scss */
 .gallery img {
   -moz-user-select: -moz-none;
   -ms-user-select: none;
@@ -633,65 +644,74 @@ img {
   user-select: none;
   z-index: -255; }
 
-/* line 303, ../components/sass/_modules.scss */
+/* line 316, ../components/sass/_modules.scss */
 .overlay {
   position: fixed;
   top: 3%;
   left: 3%;
   bottom: 3%;
   right: 3%;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.85);
   /* border-radius: 20px; */
   z-index: 255; }
-/* line 318, ../components/sass/_modules.scss */
+/* line 331, ../components/sass/_modules.scss */
 .overlay .presentation {
-  position: absolute;
-  display: block;
-  left: 20%;
-  top: 20%;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  z-index: 200; }
-/* line 322, ../components/sass/_modules.scss */
-.overlay .presentation .image-comment {
-  color: white;
-  position: absolute; }
-/* line 327, ../components/sass/_modules.scss */
-.overlay .presentation .portrait {
-  width: 40%;
+  width: 60%;
   height: 80%;
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200; }
+/* line 338, ../components/sass/_modules.scss */
+.overlay .presentation .image-comment {
+  color: white;
+  position: fixed;
+  bottom: -60px;
+  width: 160%;
+  left: -30%;
+  text-align: center; }
+/* line 347, ../components/sass/_modules.scss */
+.overlay .presentation .portrait {
+  position: fixed;
+  width: auto;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%); }
-/* line 335, ../components/sass/_modules.scss */
+/* line 354, ../components/sass/_modules.scss */
 .overlay .presentation .landscape {
-  height: 40%;
-  width: 80%;
+  position: fixed;
+  height: auto;
+  width: 100%;
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
-/* line 350, ../components/sass/_modules.scss */
+/* line 366, ../components/sass/_modules.scss */
 .overlay .presented-image {
   width: 100%; }
-/* line 354, ../components/sass/_modules.scss */
+/* line 370, ../components/sass/_modules.scss */
 .overlay .close-icon {
   position: fixed;
   top: 10%;
   right: 10%;
-  width: 48px;
-  background-color: black; }
-/* line 361, ../components/sass/_modules.scss */
+  background-color: #fff;
+  height: 9%;
+  border-radius: 100%; }
+/* line 377, ../components/sass/_modules.scss */
+.overlay .close-icon img {
+  height: 9%; }
+/* line 381, ../components/sass/_modules.scss */
 .overlay .close-icon:hover {
-  background-color: #333; }
-/* line 365, ../components/sass/_modules.scss */
+  background-color: #ddd; }
+/* line 385, ../components/sass/_modules.scss */
 .overlay .close-icon img {
   fill: white;
   position: relative; }
-/* line 371, ../components/sass/_modules.scss */
+/* line 393, ../components/sass/_modules.scss */
 .overlay .arrow-left {
   position: absolute;
   left: 5%;
@@ -699,10 +719,10 @@ img {
   height: 15%;
   background-color: #fff;
   border-radius: 100%; }
-/* line 377, ../components/sass/_modules.scss */
+/* line 399, ../components/sass/_modules.scss */
 .overlay .arrow-left img {
   height: 15%; }
-/* line 385, ../components/sass/_modules.scss */
+/* line 407, ../components/sass/_modules.scss */
 .overlay .arrow-right {
   position: absolute;
   right: 5%;
@@ -710,11 +730,24 @@ img {
   height: 15%;
   background-color: #fff;
   border-radius: 100%; }
-/* line 391, ../components/sass/_modules.scss */
+/* line 413, ../components/sass/_modules.scss */
 .overlay .arrow-right img {
   height: 15%; }
+/* line 422, ../components/sass/_modules.scss */
+.overlay .download-icon {
+  position: fixed;
+  bottom: 10%;
+  left: 10%;
+  background-color: #fff;
+  height: 5%; }
+/* line 429, ../components/sass/_modules.scss */
+.overlay .download-icon img {
+  height: 5%; }
+/* line 433, ../components/sass/_modules.scss */
+.overlay .download-icon:hover {
+  background-color: #ddd; }
 
-/* line 404, ../components/sass/_modules.scss */
+/* line 442, ../components/sass/_modules.scss */
 .kontakt-wrapper {
   position: absolute;
   top: 0;
@@ -722,16 +755,16 @@ img {
   right: 0;
   bottom: 0;
   padding: 5px; }
-/* line 413, ../components/sass/_modules.scss */
+/* line 451, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0; }
-/* line 419, ../components/sass/_modules.scss */
+/* line 457, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image img {
   height: 100%; }
-/* line 422, ../components/sass/_modules.scss */
+/* line 460, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-schablone {
   position: absolute;
   width: 150%;
@@ -740,7 +773,7 @@ img {
   left: 0;
   height: 70px;
   background-color: #fff; }
-/* line 432, ../components/sass/_modules.scss */
+/* line 470, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-text {
   padding: 1%;
   position: absolute;
@@ -749,11 +782,11 @@ img {
   left: 0;
   right: 0;
   font-size: 100%; }
-/* line 441, ../components/sass/_modules.scss */
+/* line 479, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-text > div {
   position: relative;
   display: inline-block;
-  width: 33%;
+  width: 27%;
   height: 100%;
   overflow: hidden;
   float: left; }
