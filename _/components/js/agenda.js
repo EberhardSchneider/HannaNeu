@@ -153,9 +153,11 @@ var Agenda = {
 
 
 		
-		$(".kloetzchen")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
+		$(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
 		document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
 		document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
+
+
 		
 
 	
@@ -183,13 +185,28 @@ var Agenda = {
 	
 	mouseDownHandler: function( event ) {
 		var self = Agenda;
-		
-		self.oldNavItemPos = parseInt( $(self.navMenuItem).css("left"), 10);
+
+		var scrollDivRect = $(".scroll-div")[0].getBoundingClientRect();
+		var scrollDivX = scrollDivRect.left;
+		var kloetzchenX = parseInt( $(self.navMenuItem).css("left"),10 );
+
+		var clickX = event.pageX - scrollDivX;
+		clickX = ( clickX < 24 ) ? 24 : clickX;
+
+		self.oldNavItemPos = parseInt( kloetzchenX, 10);
 		self.startX = event.pageX;
 	
-		console.log(self.oldNavItemPos + " .. : .. "+ self.scrollWidth);
 		self.isMouseDown = true;
+
+		if ( (clickX < kloetzchenX) || (clickX > kloetzchenX )) {
+			$(self.navMenuItem).css({left: clickX -24});
+			self.oldNavItemPos = clickX - 24;
+
+			var scrollRatio = clickX/(self.scrollWidth - 48);
+			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth );
+		}
 		
+			
 	},
 	
 	mouseUpHandler: function(event) {

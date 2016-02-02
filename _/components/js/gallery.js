@@ -4,46 +4,60 @@ var Gallery = {
 
 	html: "",
 
-	isOrientationChecked: false,
+	isOrientationChecked: false, // sind die img mit 'portrait' bzw. 'landscape' Klassen ausgestattet?
 
 	_sceneImageNames: {
 		"0": { "thumb": "aschenputtel_hut.png",
-					"big" : "aschenputtel_hut.png" },
+					"big" : "aschenputtel_hut.png",
+					"comment": "Copyright blablabla" },
 
 		"1": { "thumb": "aschenputtel_kleider.png",
-					"big" : "aschenputtel_kleider.png" },
+					"big" : "aschenputtel_kleider.png",
+					"comment": "Copyright blablabla" },
 
 		"2": { "thumb": "aschenputtel_lachend.png",
-					"big" : "aschenputtel_lachend.png" },
+					"big" : "aschenputtel_lachend.png",
+					"comment": "Copyright blablabla" },
 
 		"3": { "thumb": "gisela_abteil.png",
-					"big" : "gisela_abteil.png" },
+					"big" : "gisela_abteil.png",
+					"comment": "Copyright blablabla" },
 
 		"4": { "thumb": "gisela_gold.png",
-					"big" : "gisela_gold.png" },
+					"big" : "gisela_gold.png",
+					"comment": "Copyright blablabla" },
 
 		"5": { "thumb": "judy_punch.jpeg",
-					"big" : "judy_punch.jpeg" },
+					"big" : "judy_punch.jpeg",
+					"comment": "Copyright blablabla"},
 
 		"6": { "thumb": "papagena_ei.png",
-					"big" : "papagena_ei.png" },
+					"big" : "papagena_ei.png",
+					"comment": "Copyright blablabla" },
 
 		"7": { "thumb": "what_what.jpg",
-					"big" : "what_what.jpg" },
+					"big" : "what_what.jpg",
+					"comment": "Copyright blablabla" },
+
 		"8": { "thumb": "gisela_abteil.png",
-					"big" : "gisela_abteil.png" },
+					"big" : "gisela_abteil.png",
+					"comment": "Copyright blablabla" },
 
 		"9": { "thumb": "gisela_gold.png",
-					"big" : "gisela_gold.png" },
+					"big" : "gisela_gold.png",
+					"comment": "Copyright blablabla" },
 
 		"10": { "thumb": "judy_punch.jpeg",
-					"big" : "judy_punch.jpeg" },
+					"big" : "judy_punch.jpeg",
+					"comment": "Copyright blablabla" },
 
 		"11": { "thumb": "papagena_ei.png",
-					"big" : "papagena_ei.png" },
+					"big" : "papagena_ei.png",
+					"comment": "Copyright blablabla" },
 
 		"12": { "thumb": "what_what.jpg",
-					"big" : "what_what.jpg" }
+					"big" : "what_what.jpg",
+					"comment": "Copyright blablabla" }
 
 	},
 	_portraitImageNames: {
@@ -60,20 +74,27 @@ var Gallery = {
 			"big": "portrait_2.jpg" }
 	},
 	_sceneImages: [],
+	_sceneImagesComments: [],
 	_portraitImages: [],
 
 	_presentedImageIndex: -1,  // Index des Bildes, das gerade präsentiert wird
+	_isPresentedImageSceneImage: false,
 
 	init: function() {
 		var self = Gallery;
 
-
+		self._numberOfSceneImages = 0;
 		$.each( self._sceneImageNames, function( key, elem ) {
-			self._addSceneImage( elem.thumb, elem.big );
+			self._addSceneImage( elem.thumb, elem.big, elem.comment );
+			self._numberOfSceneImages++;
 		});
+
+		self._numberOfPortraitImages = 0;
 		$.each( self._portraitImageNames, function( key, elem ) {
 			self._addPortraitImage( elem.thumb, elem.big );
+			self._numberOfPortraitImages++;
 		});
+
 
 		self._makeHTML();
 
@@ -83,7 +104,7 @@ var Gallery = {
 	activate: function() {
 		var self = Gallery;
 
-		// give img containers the right width
+		// give img containers the correct width
 
 		var imgWidth = 0.3 * window.innerHeight;
 
@@ -91,7 +112,7 @@ var Gallery = {
 		var portraitImagesContainerWidth = imgWidth * self._portraitImages.length + 1;
 
 		
-		
+		// jeweils der maximale Wert für left
 		self._sceneMaxScrollWidth = (sceneImagesContainerWidth - 0.7 * window.innerWidth);
 		self._portraitMaxScrollWidth = (portraitImagesContainerWidth - 0.7 * window.innerWidth);
 
@@ -108,9 +129,11 @@ var Gallery = {
 					var image = elem.getThumb();
 					if (image.width > image.height ) {
 						$(image).addClass("landscape");
+						elem.setBigClass("landscape");
 					} else
 					{
 						$(image).addClass("portrait");
+						elem.setBigClass("portrait");
 					}
 			});
 
@@ -118,9 +141,11 @@ var Gallery = {
 					var image = elem.getThumb();
 					if (image.width > image.height ) {
 						$(image).addClass("landscape");
+						elem.setBigClass("landscape");
 					} else
 					{
 						$(image).addClass("portrait");
+						elem.setBigClass("portrait");
 					}
 			});
 
@@ -133,27 +158,22 @@ var Gallery = {
 
 	self.navMenuItem = $(".sehen-kloetzchen")[0];
 
-	
-
-	
-
 	self._activateNavigation();
 
 
 		
 	},
 
+	
 	deactivate: function() {
 		var self = Gallery;
 
 		self._deactivateNavigation();
-		
-
-
 		self.isMouseDown = false;
 		
 	},
 
+	
 	getMarkUp: function() {
 		var self = Gallery;
 		
@@ -162,6 +182,7 @@ var Gallery = {
 		return Gallery.html;
 	},
 
+	
 	callback: function() {
 
 	 self = Gallery;
@@ -170,7 +191,7 @@ var Gallery = {
 
 		newItemPos = 0;
 
-		$(".sehen-kloetzchen").css("left", newItemPos );
+		$(".sehen-kloetzchen").animate(  {"left": newItemPos}, 400 );
 		var scrollRatio = newItemPos/(self.scrollWidth - 32);
 		$(".scene-images-container").animate( { "left": -scrollRatio * self._sceneMaxScrollWidth }, 500);
 		$(".portrait-images-container").animate( { "left": -scrollRatio * self._portraitMaxScrollWidth }, 600 );
@@ -181,7 +202,7 @@ var Gallery = {
 		// unbind onclick event for menu managment
 		$(self.navMenuItem).off();
 
-		self.navMenuItem.addEventListener("mousedown", self._mouseDownHandler, false );
+		$(".sehen-scroll-div")[0].addEventListener("mousedown", self._mouseDownHandler, false );
 		document.body.addEventListener("mouseup", self._mouseUpHandler, false );
 		document.body.addEventListener("mousemove", self._mouseMoveHandler, false );
 
@@ -191,10 +212,26 @@ var Gallery = {
 	_mouseDownHandler: function( event ) {
 		var self = Gallery;
 
-		self.oldNavItemPos = parseInt( $(self.navMenuItem).css("left"), 10);
+		var scrollDivRect = $(".sehen-scroll-div")[0].getBoundingClientRect();
+		var scrollDivX = scrollDivRect.left;
+		var kloetzchenX = parseInt( $(self.navMenuItem).css("left"),10 );
+
+		var clickX = event.pageX - scrollDivX;
+		clickX = ( clickX < 24 ) ? 24 : clickX;
+
+		self.oldNavItemPos = kloetzchenX;
 		self.startX = event.pageX;
-		console.log(self.oldNavItemPos + " .. : .. "+ self.scrollWidth);
 		self.isMouseDown = true;
+
+		if ( (clickX < kloetzchenX) || (clickX > kloetzchenX )) {
+			$(self.navMenuItem).css({left: clickX -24});
+			self.oldNavItemPos = clickX - 24;
+
+			var scrollRatio = clickX/(self.scrollWidth - 48);
+			$(".scene-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+			/*$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );*/
+			$(".portrait-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+		}
 	},
 
 	_mouseUpHandler: function() {
@@ -262,12 +299,13 @@ var Gallery = {
 
 	},
 
-	_addSceneImage: function( sourceThumb, sourceBig ) {
+	_addSceneImage: function( sourceThumb, sourceBig, comment ) {
 		var self = Gallery;
 		// add and Preload Image
 
 		var index = self._sceneImages.length + 1;
 		self._sceneImages.push( new Thumbnail( "images/"+sourceThumb, "images/"+sourceBig, "thumb_" + index, "big_"+index ));
+		self._sceneImagesComments.push( comment );
 	},
 
 		_addPortraitImage: function( sourceThumb, sourceBig ) {
@@ -278,6 +316,7 @@ var Gallery = {
 		self._portraitImages.push( new Thumbnail( "images/"+sourceThumb, "images/"+sourceBig, "thumb_" + index, "big_"+index ));
 	},
 
+	
 	_imageClickHandler: function( $img ) {
 		var self = Gallery;
 
@@ -293,14 +332,15 @@ var Gallery = {
 		}
 		
 
-		$(".arrow-right").click( self._arrowRightClickHandler.bind(this) );
-		$(".arrow-left").click( self._arrowLeftClickHandler.bind(this) );
+		$(".arrow-right").click( self._arrowRightClickHandler.bind(self) );
+		$(".arrow-left").click( self._arrowLeftClickHandler.bind(self) );
 
 
 		// close Icon eventListener
 		$(".close-icon").on("click", self._closeImage );
 	},
 
+	
 	_presentSceneImage: function( index ) {
 		var self = Gallery;
 		
@@ -313,11 +353,12 @@ var Gallery = {
 		var presentation = document.createElement("div");
 		presentation.className = "presentation";
 
-		var image = new Image();
-		var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];
-		console.log(clickedImage);
+		var image = self._sceneImages[index].getBig();
+		/*var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];*/
+
+	/*	console.log(clickedImage);
 		image.src = clickedImage.src;
-		image.className = clickedImage.className;
+		image.className = clickedImage.className;*/
 		$image = $(image);
 
 
@@ -335,12 +376,23 @@ var Gallery = {
 		closeIcon.src = "icons/close-icon.svg";
 		closeIcon.className = "close-icon";
 
+		var comment = $("<div class='image-comment'>" + self._sceneImagesComments[index] + "</div>");
+
+
+		presentation.className += " " + image.className;
+		image.className = "presented-image";
+
 		presentation.appendChild( $image[0] );
+		presentation.appendChild( comment[0] );
+
+		
 
 		overlay.appendChild( presentation );
 		overlay.appendChild( closeIcon );
 		overlay.appendChild( arrowLeft );
 		overlay.appendChild( arrowRight );
+
+		self._isPresentedImageSceneImage = true;
 
 		$("body").append( overlay );
 
@@ -357,10 +409,10 @@ var Gallery = {
 		var presentation = document.createElement("div");
 		presentation.className = "presentation";
 
-		var image = new Image();
-		var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];
+		var image = self._portraitImages[index].getBig();
+		/*var clickedImage = $(".portrait-images-container>div").eq(index).find("img")[0];
 		image.src = clickedImage.src;
-		image.className = clickedImage.className;
+		image.className = clickedImage.className;*/
 		$image = $(image);
 
 		var arrowLeft = new Image();
@@ -384,6 +436,9 @@ var Gallery = {
 		overlay.appendChild( arrowLeft );
 		overlay.appendChild( arrowRight );
 
+		self._isPresentedImageSceneImage = false;
+
+
 		$("body").append( overlay );
 
 	},
@@ -393,29 +448,57 @@ var Gallery = {
 	},
 
 	_arrowLeftClickHandler: function() {
-		var currentIndex = $(this).closest("div").index();
+
+		var self = Gallery;
+		var currentIndex = self._presentedImageIndex;
 		currentIndex--;
-		console.log(currentIndex);
-		if ( currentIndex < 0 ) {
-			currentIndex = $(this).closest("div").closest("div").children().length;
+
+		
+
+		if ( self._isPresentedImageSceneImage) {
+			if ( currentIndex < 0 ) {
+			currentIndex = self._numberOfSceneImages-1;
+			}
+		 	self._presentSceneImage( currentIndex );
+		} else {
+			if ( currentIndex < 0 ) {
+			currentIndex = self._numberOfPortraitImages-1;
+			}
+			self._presentPortraitImage( currentIndex );
 		}
 
-		Gallery._presentPortraitImage( currentIndex );
-		self.currentIndex = currentIndex;
+		$(".arrow-right").click( self._arrowRightClickHandler.bind(self) );
+		$(".arrow-left").click( self._arrowLeftClickHandler.bind(self) );
+		// close Icon eventListener
+		$(".close-icon").on("click", self._closeImage );
+
+		self._presentedImageIndex = currentIndex;
 
 	},
 
 	_arrowRightClickHandler: function() {
-		var currentIndex = $(this).closest("div").index();
+		var self = Gallery;
+		var currentIndex = self._presentedImageIndex;
 		currentIndex++;
-		console.log(currentIndex);
-		if ( currentIndex > $(this).closest("div").closest("div").children().length ) {
-			currentIndex = 0;
-		}
-	
 
-	Gallery._presentPortraitImage( currentIndex );
-	self.currentIndex = currentIndex;
+		if (self._isPresentedImageSceneImage) {
+			if ( currentIndex >= (self._numberOfSceneImages) ) {
+				currentIndex = 0;
+			}
+			Gallery._presentSceneImage( currentIndex );
+		} else {
+			if ( currentIndex >= (self._numberOfPortraitImages) ) {
+				currentIndex = 0;
+			}
+			Gallery._presentPortraitImage( currentIndex );
+		}
+
+		$(".arrow-right").click( self._arrowRightClickHandler.bind(self) );
+		$(".arrow-left").click( self._arrowLeftClickHandler.bind(self) );
+		// close Icon eventListener
+		$(".close-icon").on("click", self._closeImage );
+
+	self._presentedImageIndex = currentIndex;
 	} // _arrowRightClickHandler
 
 };

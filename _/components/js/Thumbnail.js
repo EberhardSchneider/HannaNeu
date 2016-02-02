@@ -50,5 +50,10 @@ var Thumbnail = (function() {
 		return this.thumb_img.width;
 	};
 
+	Thumbnail.prototype.setBigClass = function( className ) {
+		this.bigClass = className;
+		this.big_img.className = className;
+	};
+
 	return Thumbnail;
 })();

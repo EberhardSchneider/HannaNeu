@@ -448,11 +448,11 @@ img {
 .event {
   position: relative;
   height: 100%;
-  width: 240px;
+  width: 260px;
   float: left;
   font-size: 120%;
   border: solid 2px transparent;
-  margin-right: 48px;
+  margin-right: 28px;
   background-color: #fff;
   -moz-user-select: -moz-none;
   -ms-user-select: none;
@@ -486,7 +486,7 @@ img {
   transform: translateY(-50%); }
 /* line 120, ../components/sass/_modules.scss */
 .event .besetzung {
-  font-size: 80%;
+  font-size: 70%;
   margin-left: 25px; }
 /* line 125, ../components/sass/_modules.scss */
 .event .besetzung .zeile {
@@ -610,22 +610,22 @@ img {
   display: inline-block; }
 /* line 274, ../components/sass/_modules.scss */
 .audio-info-box .beschreibung {
-  margin-top: 5%; }
-/* line 277, ../components/sass/_modules.scss */
+  margin-top: 5%;
+  margin-bottom: 30px; }
+/* line 278, ../components/sass/_modules.scss */
 .audio-info-box .besetzung {
-  display: block;
-  padding-top: 30px; }
+  display: block; }
 
-/* line 283, ../components/sass/_modules.scss */
+/* line 284, ../components/sass/_modules.scss */
 .disclaimer {
   margin-top: 5%;
   width: 80%; }
 
-/* line 291, ../components/sass/_modules.scss */
+/* line 292, ../components/sass/_modules.scss */
 .gallery {
   width: 500%;
   height: 340px; }
-/* line 294, ../components/sass/_modules.scss */
+/* line 295, ../components/sass/_modules.scss */
 .gallery img {
   -moz-user-select: -moz-none;
   -ms-user-select: none;
@@ -633,7 +633,7 @@ img {
   user-select: none;
   z-index: -255; }
 
-/* line 302, ../components/sass/_modules.scss */
+/* line 303, ../components/sass/_modules.scss */
 .overlay {
   position: fixed;
   top: 3%;
@@ -643,11 +643,9 @@ img {
   background-color: rgba(0, 0, 0, 0.8);
   /* border-radius: 20px; */
   z-index: 255; }
-/* line 314, ../components/sass/_modules.scss */
+/* line 318, ../components/sass/_modules.scss */
 .overlay .presentation {
   position: absolute;
-  width: 60%;
-  height: 60%;
   display: block;
   left: 20%;
   top: 20%;
@@ -655,40 +653,45 @@ img {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   z-index: 200; }
-/* line 319, ../components/sass/_modules.scss */
+/* line 322, ../components/sass/_modules.scss */
+.overlay .presentation .image-comment {
+  color: white;
+  position: absolute; }
+/* line 327, ../components/sass/_modules.scss */
 .overlay .presentation .portrait {
-  height: 160%;
-  width: auto;
-  margin-left: 20%;
-  position: relative;
+  width: 40%;
+  height: 80%;
+  position: absolute;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%); }
-/* line 326, ../components/sass/_modules.scss */
+  left: 50%;
+  transform: translate(-50%, -50%); }
+/* line 335, ../components/sass/_modules.scss */
 .overlay .presentation .landscape {
-  width: 100%;
-  height: auto;
+  height: 40%;
+  width: 80%;
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
-/* line 341, ../components/sass/_modules.scss */
+/* line 350, ../components/sass/_modules.scss */
+.overlay .presented-image {
+  width: 100%; }
+/* line 354, ../components/sass/_modules.scss */
 .overlay .close-icon {
   position: fixed;
   top: 10%;
   right: 10%;
   width: 48px;
   background-color: black; }
-/* line 348, ../components/sass/_modules.scss */
+/* line 361, ../components/sass/_modules.scss */
 .overlay .close-icon:hover {
   background-color: #333; }
-/* line 352, ../components/sass/_modules.scss */
+/* line 365, ../components/sass/_modules.scss */
 .overlay .close-icon img {
-  width: 64px;
-  fill: white; }
-/* line 358, ../components/sass/_modules.scss */
+  fill: white;
+  position: relative; }
+/* line 371, ../components/sass/_modules.scss */
 .overlay .arrow-left {
   position: absolute;
   left: 5%;
@@ -696,10 +699,10 @@ img {
   height: 15%;
   background-color: #fff;
   border-radius: 100%; }
-/* line 364, ../components/sass/_modules.scss */
+/* line 377, ../components/sass/_modules.scss */
 .overlay .arrow-left img {
   height: 15%; }
-/* line 372, ../components/sass/_modules.scss */
+/* line 385, ../components/sass/_modules.scss */
 .overlay .arrow-right {
   position: absolute;
   right: 5%;
@@ -707,11 +710,11 @@ img {
   height: 15%;
   background-color: #fff;
   border-radius: 100%; }
-/* line 378, ../components/sass/_modules.scss */
+/* line 391, ../components/sass/_modules.scss */
 .overlay .arrow-right img {
   height: 15%; }
 
-/* line 391, ../components/sass/_modules.scss */
+/* line 404, ../components/sass/_modules.scss */
 .kontakt-wrapper {
   position: absolute;
   top: 0;
@@ -719,16 +722,16 @@ img {
   right: 0;
   bottom: 0;
   padding: 5px; }
-/* line 400, ../components/sass/_modules.scss */
+/* line 413, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0; }
-/* line 406, ../components/sass/_modules.scss */
+/* line 419, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image img {
   height: 100%; }
-/* line 409, ../components/sass/_modules.scss */
+/* line 422, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-schablone {
   position: absolute;
   width: 150%;
@@ -737,7 +740,7 @@ img {
   left: 0;
   height: 70px;
   background-color: #fff; }
-/* line 419, ../components/sass/_modules.scss */
+/* line 432, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-text {
   padding: 1%;
   position: absolute;
@@ -746,7 +749,7 @@ img {
   left: 0;
   right: 0;
   font-size: 100%; }
-/* line 428, ../components/sass/_modules.scss */
+/* line 441, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-text > div {
   position: relative;
   display: inline-block;
