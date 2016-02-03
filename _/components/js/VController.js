@@ -77,6 +77,10 @@ var VController = (function(window, document, undefined) {
 
 		// home-State
 
+		var screenRatio = parseInt(window.innerWidth, 10) / parseInt(window.innerHeight, 10);
+		console.log("ScreenR: " + screenRatio);
+
+
 		var menuTop = window.innerHeight * 0.22;
 		var menuItemHeight = window.innerHeight * 0.09;
 		var menuLeft = window.innerWidth * 0.4;
@@ -87,6 +91,13 @@ var VController = (function(window, document, undefined) {
 
 		var homeFontSize = window.innerHeight * 0.0063;
 		var menuLengthRatio = homeFontSize/5.5;
+
+		var menuX = 10;
+
+		if (screenRatio > (15/9) ) {
+			menuX += (screenRatio - (15/9)) * parseInt( window.innerHeight, 10) / 10;
+			console.log("X-Pos: " + menuX);
+		}
 		
 		var homeState = [];
 		for (var i = 0; i<5; i++ ) {
@@ -104,9 +115,9 @@ var VController = (function(window, document, undefined) {
 		var agendaState = [];
 		
 		this.mc.removeState("agenda");
-		agendaState.push({ x: 50, y: menuTop, width: 372 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+		agendaState.push({ x: menuX + 40, y: menuTop, width: 372 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 		for (var i = 1; i < 5; i++ ) {
-			agendaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
+			agendaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 		}
 		agendaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		agendaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
@@ -126,7 +137,7 @@ var VController = (function(window, document, undefined) {
 			if ( i == 1 ) {
 				vitaState.push({ x: 0.3 * window.innerWidth , y: menuTop + i*menuItemHeight, width: 190 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			vitaState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
+			vitaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		vitaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
@@ -142,9 +153,9 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("hören");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 2 ) {
-				hoerenState.push({ x: 74, y: menuTop  + i*menuItemHeight, width: 318 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				hoerenState.push({ x: menuX + 64, y: menuTop  + i*menuItemHeight, width: 318 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			hoerenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
+			hoerenState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		hoerenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
@@ -160,9 +171,9 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("sehen");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 3 ) {
-				sehenState.push({ x: 50, y: menuTop  + i*menuItemHeight, width: 304 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				sehenState.push({ x: menuX + 40, y: menuTop  + i*menuItemHeight, width: 304 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			sehenState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
+			sehenState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		sehenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
@@ -179,7 +190,7 @@ var VController = (function(window, document, undefined) {
 			if ( i == 4 ) {
 				kontaktState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: 395 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
-			kontaktState.push( { x: 10, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
+			kontaktState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		kontaktState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button

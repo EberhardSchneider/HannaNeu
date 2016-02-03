@@ -30,12 +30,14 @@
 
 
 .content {
-	position: absolute;
+	position: relative;
 	display: inline-block;
 	/* max-width: 1600px; */
 	width: 100vw;
+	max-width: 1700px;
 	height: 100vh;
-
+	@include centerer;
+	
 	z-index: -255;
 	overflow: hidden;
 }

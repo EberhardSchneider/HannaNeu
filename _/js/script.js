@@ -209,276 +209,280 @@ var Content = function(a, b, c) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        var b = .22 * a.innerHeight, c = .09 * a.innerHeight, d = .4 * a.innerWidth, e = .29 * a.innerWidth;
-        e = e > 300 ? 300 : e;
-        for (var f = 10, g = 10, h = .0063 * a.innerHeight, i = h / 5.5, j = [], k = 0; 5 > k; k++) {
-            var l = [ 372 * i, 190 * i, 318 * i, 304 * i, 395 * i ][k];
-            j.push({
-                x: d,
-                y: b + k * c,
-                width: l,
-                height: c,
-                fontSize: h,
+        var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10);
+        console.log("ScreenR: " + b);
+        var c = .22 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
+        f = f > 300 ? 300 : f;
+        var g = 10, h = 10, i = .0063 * a.innerHeight, j = i / 5.5, k = 10;
+        b > 15 / 9 && (k += (b - 15 / 9) * parseInt(a.innerHeight, 10) / 10, console.log("X-Pos: " + k));
+        for (var l = [], m = 0; 5 > m; m++) {
+            var n = [ 372 * j, 190 * j, 318 * j, 304 * j, 395 * j ][m];
+            l.push({
+                x: e,
+                y: c + m * d,
+                width: n,
+                height: d,
+                fontSize: i,
                 opacity: .5
             });
         }
-        j.push({
-            x: f,
-            y: g,
+        l.push({
+            x: g,
+            y: h,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), j.push({
+        }), l.push({
             x: -130,
-            y: b + 2.65 * c,
+            y: c + 2.65 * d,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), j.push({
-            x: d - 140,
-            y: b - 104,
+        }), l.push({
+            x: e - 140,
+            y: c - 104,
             width: 350,
             height: 128,
-            fontSize: h / 2.2,
+            fontSize: i / 2.2,
             opacity: 1
-        }), j.push({
-            x: d - 140,
-            y: b - 66,
+        }), l.push({
+            x: e - 140,
+            y: c - 66,
             width: 150,
             height: 128,
-            fontSize: h / 2.2,
+            fontSize: i / 2.2,
             opacity: 1
-        }), this.mc.addState("home", new State("home", j));
-        var m = [];
-        this.mc.removeState("agenda"), m.push({
-            x: 50,
-            y: b,
-            width: 372 * i,
-            height: c,
-            fontSize: h - .5,
-            opacity: 1
-        });
-        for (var k = 1; 5 > k; k++) m.push({
-            x: 10,
-            y: b + k * c,
-            width: e,
-            height: c,
-            fontSize: h - 2,
-            opacity: .5
-        });
-        m.push({
-            x: f,
-            y: g,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), m.push({
-            x: -130,
-            y: b + 2.65 * c,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), m.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), m.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("agenda", new State("agenda", m));
-        var n = [];
-        this.mc.removeState("vita");
-        for (var k = 0; 5 > k; k++) 1 == k ? n.push({
-            x: .3 * a.innerWidth,
-            y: b + k * c,
-            width: 190 * i,
-            height: c,
-            fontSize: h - .5,
-            opacity: 1
-        }) : n.push({
-            x: 10,
-            y: b + k * c,
-            width: e,
-            height: c,
-            fontSize: h - 2,
-            opacity: .5
-        });
-        n.push({
-            x: f,
-            y: g,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), n.push({
-            x: -130,
-            y: b + 2.65 * c,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), n.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), n.push({
-            x: d - 50,
-            y: b - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("vita", new State("vita", n));
+        }), this.mc.addState("home", new State("home", l));
         var o = [];
-        this.mc.removeState("hören");
-        for (var k = 0; 5 > k; k++) 2 == k ? o.push({
-            x: 74,
-            y: b + k * c,
-            width: 318 * i,
-            height: c,
-            fontSize: h - .5,
+        this.mc.removeState("agenda"), o.push({
+            x: k + 40,
+            y: c,
+            width: 372 * j,
+            height: d,
+            fontSize: i - .5,
             opacity: 1
-        }) : o.push({
-            x: 10,
-            y: b + k * c,
-            width: e,
-            height: c,
-            fontSize: h - 2,
+        });
+        for (var m = 1; 5 > m; m++) o.push({
+            x: k,
+            y: c + m * d,
+            width: f,
+            height: d,
+            fontSize: i - 2,
             opacity: .5
         });
         o.push({
-            x: f,
-            y: g,
+            x: g,
+            y: h,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
         }), o.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), o.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), o.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("agenda", new State("agenda", o));
+        var p = [];
+        this.mc.removeState("vita");
+        for (var m = 0; 5 > m; m++) 1 == m ? p.push({
+            x: .3 * a.innerWidth,
+            y: c + m * d,
+            width: 190 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        }) : p.push({
+            x: k,
+            y: c + m * d,
+            width: f,
+            height: d,
+            fontSize: i - 2,
+            opacity: .5
+        });
+        p.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), p.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), p.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), p.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("vita", new State("vita", p));
+        var q = [];
+        this.mc.removeState("hören");
+        for (var m = 0; 5 > m; m++) 2 == m ? q.push({
+            x: k + 64,
+            y: c + m * d,
+            width: 318 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        }) : q.push({
+            x: k,
+            y: c + m * d,
+            width: f,
+            height: d,
+            fontSize: i - 2,
+            opacity: .5
+        });
+        q.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), q.push({
             x: 5,
-            y: b + 2.65 * c,
+            y: c + 2.65 * d,
             width: a.innerHeight / 14,
             height: a.innerHeight / 14,
             fontSize: 0,
             opacity: 1
-        }), o.push({
-            x: d - 50,
-            y: b - 30,
+        }), q.push({
+            x: e - 50,
+            y: c - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), o.push({
-            x: d - 50,
-            y: b - 30,
+        }), q.push({
+            x: e - 50,
+            y: c - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("hören", new State("hören", o));
-        var p = [];
+        }), this.mc.addState("hören", new State("hören", q));
+        var r = [];
         this.mc.removeState("sehen");
-        for (var k = 0; 5 > k; k++) 3 == k ? p.push({
-            x: 50,
-            y: b + k * c,
-            width: 304 * i,
-            height: c,
-            fontSize: h - .5,
+        for (var m = 0; 5 > m; m++) 3 == m ? r.push({
+            x: k + 40,
+            y: c + m * d,
+            width: 304 * j,
+            height: d,
+            fontSize: i - .5,
             opacity: 1
-        }) : p.push({
-            x: 10,
-            y: b + k * c,
-            width: e,
-            height: c,
-            fontSize: h - 2,
+        }) : r.push({
+            x: k,
+            y: c + m * d,
+            width: f,
+            height: d,
+            fontSize: i - 2,
             opacity: .5
         });
-        p.push({
-            x: f,
-            y: g,
+        r.push({
+            x: g,
+            y: h,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
-        }), p.push({
+        }), r.push({
             x: -130,
-            y: b + 2.65 * c,
+            y: c + 2.65 * d,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), p.push({
-            x: d - 50,
-            y: b - 30,
+        }), r.push({
+            x: e - 50,
+            y: c - 30,
             width: 0,
             height: 0,
             fontSize: 0,
             opacity: 0
-        }), p.push({
-            x: d - 50,
-            y: b - 30,
+        }), r.push({
+            x: e - 50,
+            y: c - 30,
             width: 0,
             height: 0,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("sehen", new State("sehen", p));
-        for (var q = [], k = 0; 5 > k; k++) 4 == k ? q.push({
+        }), this.mc.addState("sehen", new State("sehen", r));
+        for (var s = [], m = 0; 5 > m; m++) 4 == m ? s.push({
             x: .25 * a.innerWidth,
-            y: b + k * c,
-            width: 395 * i,
-            height: c,
-            fontSize: h - .5,
+            y: c + m * d,
+            width: 395 * j,
+            height: d,
+            fontSize: i - .5,
             opacity: 1
-        }) : q.push({
-            x: 10,
-            y: b + k * c,
-            width: e,
-            height: c,
-            fontSize: h - 2,
+        }) : s.push({
+            x: k,
+            y: c + m * d,
+            width: f,
+            height: d,
+            fontSize: i - 2,
             opacity: .5
         });
-        q.push({
-            x: f,
-            y: g,
+        s.push({
+            x: g,
+            y: h,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
-        }), q.push({
+        }), s.push({
             x: -130,
-            y: b + 2.65 * c,
+            y: c + 2.65 * d,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), q.push({
-            x: d - 50,
-            y: b - 30,
+        }), s.push({
+            x: e - 50,
+            y: c - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), q.push({
-            x: d - 50,
-            y: b - 30,
+        }), s.push({
+            x: e - 50,
+            y: c - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("kontakt", new State("kontakt", q));
+        }), this.mc.addState("kontakt", new State("kontakt", s));
     }, d.prototype._detectBrowser = function() {
         var a, b, c, d = (navigator.appVersion, navigator.userAgent), e = navigator.appName, f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10);
         -1 != (b = d.indexOf("Opera")) && (e = "Opera", f = d.substring(b + 6), -1 != (b = d.indexOf("Version")) && (f = d.substring(b + 8))), 
