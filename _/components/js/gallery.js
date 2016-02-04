@@ -7,16 +7,16 @@ var Gallery = {
 	isOrientationChecked: false, // sind die img mit 'portrait' bzw. 'landscape' Klassen ausgestattet?
 
 	_sceneImageNames: {
-		"0": { "thumb": "orph_1_thb.jpg",
-					"big" : "orph_1.jpg",
+		"0": { "thumb": "ORPH_1_THB.jpg",
+					"big" : "ORPH_1",
 					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"1": { "thumb": "orph_2_thb.jpg",
-					"big" : "orph_2.jpg",
+		"1": { "thumb": "ORPH_2_THB.jpg",
+					"big" : "ORPH_2.jpg",
 					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"2": { "thumb": "orph_3_thb.jpg",
-					"big" : "orph_3.jpg",
+		"2": { "thumb": "ORPH_3_THB.jpg",
+					"big" : "ORPH_3.jpg",
 					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
 		"3": { "thumb": "papagena_ei_thb.jpg",
@@ -51,8 +51,8 @@ var Gallery = {
 					"big" : "GISELA_4.JPG",
 					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
 
-		"11": { "thumb": "JUDY_THB.JPEG",
-					"big" : "JUDY.JPEG",
+		"11": { "thumb": "JUDY_THB.jpeg",
+					"big" : "JUDY.jpeg",
 					"comment": "STAATSOPER BERLIN: PUNCH AND JUDY (Birtwistle), Pretty Polly (Hanna Herfurtner);  2014 ⓒ Vincent Stefan" },
 
 		"12": { "thumb": "WHAT_THB.jpg",
@@ -293,7 +293,7 @@ var Gallery = {
 
 
 		contentWrapper.append( wrapper );
-		contentWrapper.append( $("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/></div>"));
+		contentWrapper.append( $("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='/icons_e/arrow-left.svg'/><img class='sehen-scroll-right' src='icons_e/arrow-right.svg'/></div>"));
 
 		Gallery.html = contentWrapper;
 
@@ -365,17 +365,17 @@ var Gallery = {
 
 
 		var arrowLeft = new Image();
-		arrowLeft.src = "icons/arrow-left.svg";
+		arrowLeft.src = "icons_e/arrow-left.svg";
 		arrowLeft.className = "arrow-left";
 
 		var arrowRight = new Image();
-		arrowRight.src = "icons/arrow-right.svg";
+		arrowRight.src = "icons_e/arrow-right.svg";
 		arrowRight.className = "arrow-right";
 
 
 
 		var closeIcon = new Image();
-		closeIcon.src = "icons/close_24px.svg";
+		closeIcon.src = "icons_e/close_24px.svg";
 		closeIcon.className = "close-icon";
 
 		var comment = $("<div class='image-comment'>" + self._sceneImagesComments[index] + "</div>");
@@ -418,22 +418,26 @@ var Gallery = {
 		$image = $(image);
 
 		var arrowLeft = new Image();
-		arrowLeft.src = "icons/arrow-left.svg";
+		arrowLeft.src = "icons_e/arrow-left.svg";
 		arrowLeft.className = "arrow-left";
 
 		var arrowRight = new Image();
-		arrowRight.src = "icons/arrow-right.svg";
+		arrowRight.src = "icons_e/arrow-right.svg";
 		arrowRight.className = "arrow-right";
 
 
 
 		var closeIcon = new Image();
-		closeIcon.src = "icons/close_24px.svg";
+		closeIcon.src = "icons_e/close_24px.svg";
 		closeIcon.className = "close-icon";
 
 		var downloadIcon = new Image();
-		downloadIcon.src = "icons/download_24px.svg";
+		downloadIcon.src = "icons_e/download_24px.svg";
 		downloadIcon.className = "download-icon";
+
+		var downloadLink = $("<a src = 'portait1.jpg' download = '" + [ "images/PORTR_1_FULL.jpg", "images/PORTR_2_FULL.jpg", "images/PORTR_3_FULL.jpg" ] [ index ] + "' class='download-icon'></a> ")[0];
+
+		downloadLink.appendChild( downloadIcon );
 
 		var comment = $("<div class='image-comment'>" + self._portraitImagesComments[index] + "</div>");
 
@@ -443,7 +447,7 @@ var Gallery = {
 
 		overlay.appendChild( presentation );
 		overlay.appendChild( closeIcon );
-		overlay.appendChild( downloadIcon );
+		overlay.appendChild( downloadLink );
 		overlay.appendChild( arrowLeft );
 		overlay.appendChild( arrowRight );
 
@@ -457,6 +461,8 @@ var Gallery = {
 	_closeImage: function() {
 		$(".overlay").remove();
 	},
+
+
 
 	_arrowLeftClickHandler: function() {
 

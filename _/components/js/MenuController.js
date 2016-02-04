@@ -18,10 +18,10 @@ var MenuController = (function(window, document, undefined) {
 			self._items.push( new Item( $(value), 0, 0, 0, 0, 0, 1, browser));
 		});
 
-		this._isMenuAnimating;
+		this._isMenuAnimating = false;
 
 		events.on("stateChanges", function() { self._isMenuAnimating = true;});
-		events.on("stateChanged", function() { self._isMenuAnimating = false;});
+		events.on("stateChanged", function() { });
 
 	}
 
@@ -45,8 +45,12 @@ var MenuController = (function(window, document, undefined) {
 		var self = this;
 
 		self._propertiesAnimated--;
-		if (self._propertiesAnimated === 0 ) {
+		if (self._propertiesAnimated <= 0 ) {
 			events.emit("stateChanged");
+			setTimeout( function() {
+				self._isMenuAnimating = false;
+			 	self._propertiesAnimated = 0;},  250 );	
+			 
 		}
 	};
 
@@ -83,10 +87,11 @@ var MenuController = (function(window, document, undefined) {
 		
 		var self = this;
 
-		if (this._isMenuAnimating === true) {
+		/*if (this._-imating === true) {
+			console.log("...Animating... cant do it!!! ");
 			return;
 		}
-
+*/
 
 		var newState = self._menuStates.getState( stateName );
 

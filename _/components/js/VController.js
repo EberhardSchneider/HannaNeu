@@ -42,7 +42,7 @@ var VController = (function(window, document, undefined) {
 
 		self.cc.addContent("agenda", new Content( Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda)));
 		self.cc.addContent("vita", new Content( Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita)));
-		self.cc.addContent("hören", new Content( AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer)));
+		self.cc.addContent("hören", new Content( AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer)));
 		self.cc.addContent("sehen", new Content( Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery)));
 		self.cc.addContent("kontakt", new Content( Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt)));
 		self.cc.addContent("home", new Content( Home.getMarkUp, Home.activate, Home.deactivate) );
@@ -279,14 +279,16 @@ var VController = (function(window, document, undefined) {
 	// public --------------------------------------------------------------------------------------------------------
 
 	VController.prototype.clickHandler = function( index ) {
-		if ( index == "home" ) {
-			this.mc.gotoState( "home" );
-			index = -1;
-		} else {
-			this.mc.gotoState( this._menuItems[ index ]);
-		}
-
-		this._manageContent( index );
+		if ( !this.mc._isMenuAnimating )	{
+			if ( index == "home" ) {
+				this.mc.gotoState( "home" );
+				index = -1;
+			} else {
+				this.mc.gotoState( this._menuItems[ index ]);
+			}
+			
+			this._manageContent( index );
+		} else console.log("Click blocked");
 	};
 
 

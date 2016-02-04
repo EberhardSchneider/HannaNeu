@@ -105,11 +105,9 @@ var Content = function(a, b, c) {
         this._menuStates = new MenuStates(), this._items = [], this._currentState = "", 
         this._propertiesAnimated = 0, a.each(function(a, d) {
             c._items.push(new Item($(d), 0, 0, 0, 0, 0, 1, b));
-        }), this._isMenuAnimating, events.on("stateChanges", function() {
+        }), this._isMenuAnimating = !1, events.on("stateChanges", function() {
             c._isMenuAnimating = !0;
-        }), events.on("stateChanged", function() {
-            c._isMenuAnimating = !1;
-        });
+        }), events.on("stateChanged", function() {});
     }
     return d.prototype.render = function() {
         var a = this, b = this._currentState;
@@ -118,7 +116,10 @@ var Content = function(a, b, c) {
         });
     }, d.prototype._propertiesAnimationHandler = function() {
         var a = this;
-        a._propertiesAnimated--, 0 === a._propertiesAnimated && events.emit("stateChanged");
+        a._propertiesAnimated--, a._propertiesAnimated <= 0 && (events.emit("stateChanged"), 
+        setTimeout(function() {
+            a._isMenuAnimating = !1, a._propertiesAnimated = 0;
+        }, 250));
     }, d.prototype.addState = function(a, b) {
         var d = this;
         console.log(a + ": " + d._menuStates.getState(a)), d._menuStates.getState(a) !== c ? (d._currentState.getName().trim() == a.trim() && (d._currentState = b), 
@@ -128,17 +129,13 @@ var Content = function(a, b, c) {
     }, d.prototype.getCurrentStateName = function() {
         return "" !== this._currentState ? this._currentState.getName() : void 0;
     }, d.prototype.gotoState = function(a) {
-        var b = this;
-        if (this._isMenuAnimating !== !0) {
-            var d = b._menuStates.getState(a);
-            if (d === c) return void console.log("MenuController: State '" + a + "' doesn't exist.");
-            if (d == b._currentState) return void (b._isMenuAnimating = !1);
-            events.emit("stateChanges"), b._items.forEach(function(a, c) {
-                b._propertiesAnimated += 5, a.move(d.x[c], d.y[c], b._propertiesAnimationHandler.bind(b)), 
-                a.stretch(d.width[c], b._propertiesAnimationHandler.bind(b)), a.changeHeight(d.height[c], b._propertiesAnimationHandler.bind(b)), 
-                a.changeFontSize(d.fontSize[c], b._propertiesAnimationHandler.bind(b)), a.changeOpacity(d.opacity[c], b._propertiesAnimationHandler.bind(b));
-            }), this._currentState = d;
-        }
+        var b = this, d = b._menuStates.getState(a);
+        return d === c ? void console.log("MenuController: State '" + a + "' doesn't exist.") : d == b._currentState ? void (b._isMenuAnimating = !1) : (events.emit("stateChanges"), 
+        b._items.forEach(function(a, c) {
+            b._propertiesAnimated += 5, a.move(d.x[c], d.y[c], b._propertiesAnimationHandler.bind(b)), 
+            a.stretch(d.width[c], b._propertiesAnimationHandler.bind(b)), a.changeHeight(d.height[c], b._propertiesAnimationHandler.bind(b)), 
+            a.changeFontSize(d.fontSize[c], b._propertiesAnimationHandler.bind(b)), a.changeOpacity(d.opacity[c], b._propertiesAnimationHandler.bind(b));
+        }), void (this._currentState = d));
     }, d;
 }(window, document), State = function() {
     function a(a, b) {
@@ -198,7 +195,7 @@ var Content = function(a, b, c) {
             $(this) !== c && ($(this)[0].setAttribute("textLength", 372), $(this)[0].setAttribute("y", 0));
         }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
         a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita))), 
-        a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer))), 
+        a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
         a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
         a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
         a.cc.addContent("home", new Content(Home.getMarkUp, Home.activate, Home.deactivate)), 
@@ -497,8 +494,8 @@ var Content = function(a, b, c) {
         isNaN(g) && (f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10)), 
         this._browser = e;
     }, d.prototype.clickHandler = function(a) {
-        "home" == a ? (this.mc.gotoState("home"), a = -1) : this.mc.gotoState(this._menuItems[a]), 
-        this._manageContent(a);
+        this.mc._isMenuAnimating ? console.log("Click blocked") : ("home" == a ? (this.mc.gotoState("home"), 
+        a = -1) : this.mc.gotoState(this._menuItems[a]), this._manageContent(a));
     }, d;
 }(window, document), Vita = {
     getMarkUp: function() {
@@ -550,7 +547,7 @@ var Content = function(a, b, c) {
                     }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
                     void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
                     c += "</div>";
-                }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons/arrow-left.svg'/><img class='scroll-right' src='icons/arrow-right.svg'/></div>", 
+                }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons_e/arrow-left.svg'/><img class='scroll-right' src='icons_e/arrow-right.svg'/></div>", 
                 a.html = c;
             }
         });
@@ -571,7 +568,13 @@ var Content = function(a, b, c) {
         $(".agenda").css("width", a.timelineLength + "px"), $(".event-image").click(function() {
             $(this).toggleClass("scroll-out");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
-        a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth;
+        a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth, $(a.navMenuItem).animate({
+            left: "400px"
+        }, 500);
+        var b = 400 / (a.scrollWidth - 48);
+        $(".agenda").animate({
+            left: -b * a._maxScrollWidth + .3 * window.innerWidth
+        }, 500);
     },
     activateNavigation: function() {
         $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
@@ -629,23 +632,23 @@ var Content = function(a, b, c) {
     audioSources: [ {
         komponist: "Giovanni Battista Pergolesi",
         titel: "Salve Regina",
-        src: "audio/salve_regina.mp3"
+        src: "audio/Salve_Regina.mp3"
     }, {
         komponist: "Martino Pesenti",
         titel: "Filli, Filli, non t'amo più",
-        src: "audio/filli_filli.mp3"
+        src: "audio/Filli_Filli.mp3"
     }, {
         komponist: "GIOVANNI ANTONIO RIGATTI",
         titel: "O dolcezza incredibile d´amore",
-        src: "audio/o_dolcezza_incredibile.mp3"
+        src: "audio/O_dolcezza_incredibile.mp3"
     }, {
         komponist: "ARNOLD SCHÖNBERG",
         titel: "Erwartung",
-        src: "audio/erwartung.wav"
+        src: "audio/Erwartung.wav"
     }, {
-        komponist: "SAMUEL BARBER",
-        titel: "Nuvoletta",
-        src: "audio/nuvoletta.wav"
+        komponist: "ERNEST CHAUSSON",
+        titel: "Sérénade",
+        src: "audio/Chausson_Serenade.mp3"
     } ],
     audioDescriptions: [ {
         ort: "Dom zu Maria Saal, Kärnten",
@@ -670,16 +673,17 @@ var Content = function(a, b, c) {
         jahr: "2015",
         besetzung: [ "stefanpaul - Klavier" ]
     }, {
-        ort: "Berlin",
-        jahr: "2015",
-        besetzung: [ "stefanpaul - Klavier" ]
+        ort: "Tokio",
+        jahr: "2012",
+        beschreibung: 'Livemitschnitt<br>"The Art of Colratura"<br>Musashino Cultural Hall',
+        besetzung: [ "Masahiro Saitoh - Klavier" ]
     } ],
     audioElements: [],
     audioElementsLoaded: 0,
     init: function() {
         var a = AudioPlayer;
-        a.pauseIcon.src || (a.pauseIcon = new Image(), a.playIcon = new Image(), a.pauseIcon.src = "icons/pause-icon.svg", 
-        a.playIcon.src = "icons/play-icon.svg", a.playIcon.className = "play-button-img", 
+        a.pauseIcon.src || (a.pauseIcon = new Image(), a.playIcon = new Image(), a.pauseIcon.src = "icons_e/pause-icon.svg", 
+        a.playIcon.src = "icons_e/play-icon.svg", a.playIcon.className = "play-button-img", 
         a.pauseIcon.className = "play-button-img", a.audioSources.forEach(function(b, c) {
             a.audioElements[c] = new Audio(), a.audioElements[c].src = b.src, a.audioElements[c].titel = b.titel, 
             a.audioElements[c].komponist = b.komponist.toUpperCase(), a.audioElements[c].addEventListener("canplaythrough", a.audioReady, !1);
@@ -703,6 +707,10 @@ var Content = function(a, b, c) {
         }), $(".audio").children().each(function(b, c) {
             c.addEventListener("click", a.audioClicked, !1);
         });
+    },
+    callback: function() {
+        var a = this;
+        a._itemStartPos = parseInt($(a.audioMenuItem).css("left")), console.log("Item Startpos: " + a._itemStartPos);
     },
     deactivate: function() {
         AudioPlayer.stopCurrentPlaying(), AudioPlayer.clearAudioNavigation(), $(".menu-item").eq(2).on("click", function() {
@@ -777,7 +785,7 @@ var Content = function(a, b, c) {
     mouseMoveHandler: function(a) {
         var b = AudioPlayer;
         if (b.isMouseDown) {
-            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - 74) / (window.innerWidth - b.audioMenuItemWidth - 60);
+            var c = a.pageX - b.startX, d = b.oldItemPos + c, e = 100 * (d - b._itemStartPos) / (window.innerWidth - b.audioMenuItemWidth - 60);
             e = e > 100 ? 100 : e, e = 0 > e ? 0 : e, b.navPerc = e;
             var f = b.audioElements[b.trackNumberPlaying];
             f.currentTime = b.navPerc * f.duration / 100, b.navigationUpdate(), b.timeUpdate();
@@ -786,7 +794,7 @@ var Content = function(a, b, c) {
     navigationUpdate: function() {
         var a = AudioPlayer, b = a.audioElements[a.trackNumberPlaying], c = b.currentTime / b.duration;
         b.duration - b.currentTime < 1 && !a.isMouseDown && a.playNextTrack();
-        var d = c * (window.innerWidth - a.audioMenuItemWidth - 60) + 74;
+        var d = c * (window.innerWidth - a.audioMenuItemWidth - 60) + a._itemStartPos;
         $(a.audioMenuItem).css("left", d + "px");
     },
     timeUpdate: function() {
@@ -831,18 +839,18 @@ var Content = function(a, b, c) {
     isOrientationChecked: !1,
     _sceneImageNames: {
         "0": {
-            thumb: "orph_1_thb.jpg",
-            big: "orph_1.jpg",
+            thumb: "ORPH_1_THB.jpg",
+            big: "ORPH_1",
             comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "1": {
-            thumb: "orph_2_thb.jpg",
-            big: "orph_2.jpg",
+            thumb: "ORPH_2_THB.jpg",
+            big: "ORPH_2.jpg",
             comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "2": {
-            thumb: "orph_3_thb.jpg",
-            big: "orph_3.jpg",
+            thumb: "ORPH_3_THB.jpg",
+            big: "ORPH_3.jpg",
             comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "3": {
@@ -886,8 +894,8 @@ var Content = function(a, b, c) {
             comment: "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann"
         },
         "11": {
-            thumb: "JUDY_THB.JPEG",
-            big: "JUDY.JPEG",
+            thumb: "JUDY_THB.jpeg",
+            big: "JUDY.jpeg",
             comment: "STAATSOPER BERLIN: PUNCH AND JUDY (Birtwistle), Pretty Polly (Hanna Herfurtner);  2014 ⓒ Vincent Stefan"
         },
         "12": {
@@ -1005,7 +1013,7 @@ var Content = function(a, b, c) {
         }), $.each(a._portraitImages, function(a, b) {
             var c = $("<div class='portrait-div-" + a + "'>");
             c.append(b.getThumb()), e.append(c);
-        }), c.append(d), c.append(e), b.append(c), b.append($("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='icons/arrow-left.svg'/><img class='sehen-scroll-right' src='icons/arrow-right.svg'/></div>")), 
+        }), c.append(d), c.append(e), b.append(c), b.append($("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='/icons_e/arrow-left.svg'/><img class='sehen-scroll-right' src='icons_e/arrow-right.svg'/></div>")), 
         Gallery.html = b;
     },
     _addSceneImage: function(a, b, c) {
@@ -1037,11 +1045,11 @@ var Content = function(a, b, c) {
         $(".scene-images-container>div").eq(a).find("img")[0];
         $image = $(e);
         var f = new Image();
-        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
+        f.src = "icons_e/arrow-left.svg", f.className = "arrow-left";
         var g = new Image();
-        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
+        g.src = "icons_e/arrow-right.svg", g.className = "arrow-right";
         var h = new Image();
-        h.src = "icons/close_24px.svg", h.className = "close-icon";
+        h.src = "icons_e/close_24px.svg", h.className = "close-icon";
         var i = $("<div class='image-comment'>" + b._sceneImagesComments[a] + "</div>");
         d.appendChild($image[0]), d.appendChild(i[0]), c.appendChild(d), c.appendChild(h), 
         c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !0, $("body").append(c);
@@ -1056,16 +1064,18 @@ var Content = function(a, b, c) {
         var e = b._portraitImages[a].getBig();
         $image = $(e);
         var f = new Image();
-        f.src = "icons/arrow-left.svg", f.className = "arrow-left";
+        f.src = "icons_e/arrow-left.svg", f.className = "arrow-left";
         var g = new Image();
-        g.src = "icons/arrow-right.svg", g.className = "arrow-right";
+        g.src = "icons_e/arrow-right.svg", g.className = "arrow-right";
         var h = new Image();
-        h.src = "icons/close_24px.svg", h.className = "close-icon";
+        h.src = "icons_e/close_24px.svg", h.className = "close-icon";
         var i = new Image();
-        i.src = "icons/download_24px.svg", i.className = "download-icon";
-        var j = $("<div class='image-comment'>" + b._portraitImagesComments[a] + "</div>");
-        d.appendChild($image[0]), d.appendChild(j[0]), c.appendChild(d), c.appendChild(h), 
-        c.appendChild(i), c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !1, 
+        i.src = "icons_e/download_24px.svg", i.className = "download-icon";
+        var j = $("<a src = 'portait1.jpg' download = '" + [ "images/PORTR_1_FULL.jpg", "images/PORTR_2_FULL.jpg", "images/PORTR_3_FULL.jpg" ][a] + "' class='download-icon'></a> ")[0];
+        j.appendChild(i);
+        var k = $("<div class='image-comment'>" + b._portraitImagesComments[a] + "</div>");
+        d.appendChild($image[0]), d.appendChild(k[0]), c.appendChild(d), c.appendChild(h), 
+        c.appendChild(j), c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !1, 
         $("body").append(c);
     },
     _closeImage: function() {

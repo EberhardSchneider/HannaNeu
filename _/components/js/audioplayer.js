@@ -31,11 +31,11 @@
 
 	// Audio Daten ------------------------------------------------------------------------------
 	audioSources: [
-		{ komponist: "Giovanni Battista Pergolesi", titel: "Salve Regina", src: "audio/salve_regina.mp3" },
-		{ komponist: "Martino Pesenti", titel: "Filli, Filli, non t'amo più", src: "audio/filli_filli.mp3" },
-		{ komponist: "GIOVANNI ANTONIO RIGATTI", titel: "O dolcezza incredibile d´amore", src: "audio/o_dolcezza_incredibile.mp3" },
-		{ komponist: "ARNOLD SCHÖNBERG", titel: "Erwartung", src: "audio/erwartung.wav" },
-		{ komponist: "SAMUEL BARBER", titel: "Nuvoletta", src: "audio/nuvoletta.wav" }
+		{ komponist: "Giovanni Battista Pergolesi", titel: "Salve Regina", src: "audio/Salve_Regina.mp3" },
+		{ komponist: "Martino Pesenti", titel: "Filli, Filli, non t'amo più", src: "audio/Filli_Filli.mp3" },
+		{ komponist: "GIOVANNI ANTONIO RIGATTI", titel: "O dolcezza incredibile d´amore", src: "audio/O_dolcezza_incredibile.mp3" },
+		{ komponist: "ARNOLD SCHÖNBERG", titel: "Erwartung", src: "audio/Erwartung.wav" },
+		{ komponist: "ERNEST CHAUSSON", titel: "Sérénade", src: "audio/Chausson_Serenade.mp3" }
 	],
 
 	audioDescriptions: [
@@ -60,8 +60,9 @@
 			besetzung: [ "stefanpaul - Klavier" ]
 		},
 		{
-			ort: "Berlin", jahr: "2015",
-			besetzung: [ "stefanpaul - Klavier" ]
+			ort: "Tokio", jahr: "2012",
+			beschreibung: 'Livemitschnitt<br>"The Art of Colratura"<br>Musashino Cultural Hall',
+			besetzung: [ "Masahiro Saitoh - Klavier" ]
 		}
 	],
 
@@ -78,8 +79,8 @@
 		{	
 			self.pauseIcon = new Image();
 			self.playIcon = new Image();
-			self.pauseIcon.src = "icons/pause-icon.svg";
-			self.playIcon.src = "icons/play-icon.svg";
+			self.pauseIcon.src = "icons_e/pause-icon.svg";
+			self.playIcon.src = "icons_e/play-icon.svg";
 			self.playIcon.className = "play-button-img";
 			self.pauseIcon.className = "play-button-img";
 		
@@ -139,6 +140,14 @@
 
 			$(".audio").children().each(function( index, elem ){ elem.addEventListener("click", self.audioClicked, false ); });	
 
+
+	},
+
+	callback: 	function() {
+			var self = this;
+
+			self._itemStartPos = parseInt( $(self.audioMenuItem).css("left") );
+			console.log("Item Startpos: " + self._itemStartPos);
 	},
 
 	deactivate: function() {
@@ -341,7 +350,7 @@
 
 			
 			
-			var perc = ( (newLeft - 74) * 100 / ( window.innerWidth - self.audioMenuItemWidth - 60)  );
+			var perc = ( (newLeft - self._itemStartPos) * 100 / ( window.innerWidth - self.audioMenuItemWidth - 60)  );
 			perc = ( perc > 100 ) ? 100 : perc;
 			perc = ( perc < 0 ) ? 0 : perc;
 
@@ -375,7 +384,7 @@
 		}
 
 
-		var leftPosMenuItem = perc * ( window.innerWidth - self.audioMenuItemWidth - 60) + 74;
+		var leftPosMenuItem = perc * ( window.innerWidth - self.audioMenuItemWidth - 60) + self._itemStartPos;
 		
 		$(  self.audioMenuItem ).css("left", leftPosMenuItem + "px"  );
 	},

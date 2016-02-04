@@ -102,7 +102,7 @@ var Agenda = {
 
 			html += "</div>";
 
-			html += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons/arrow-left.svg'/><img class='scroll-right' src='icons/arrow-right.svg'/></div>";
+			html += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons_e/arrow-left.svg'/><img class='scroll-right' src='icons_e/arrow-right.svg'/></div>";
 			self.html = html;
 
 
@@ -137,7 +137,7 @@ var Agenda = {
 	callback: function() {
 		var self = this;
 
-		self.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1;
+		self.eventBoxWidth = $(".event")[0].getBoundingClientRect()["width"] + 1;
 		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
 		$(".agenda").css("width", self.timelineLength + "px");
 
@@ -146,8 +146,16 @@ var Agenda = {
 		} );
 
 		self.scrollWidth = parseInt( $(".scroll-div").css("width"), 10);  // Breite des Scroll-Divs
-		self._maxScrollWidth = window.getComputedStyle( $(".agenda")[0], null )["width"];
+		self._maxScrollWidth = window.getComputedStyle( $(".agenda")[0], null ).width;
 		self._maxScrollWidth = parseInt( self._maxScrollWidth, 10) - 0.7 * window.innerWidth;
+
+		// set right Event in place
+
+			$(self.navMenuItem).animate( {"left": 400 + "px"}, 500);
+			var scrollRatio = 400/(self.scrollWidth - 48);
+			$(".agenda").animate( { "left": -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth }, 500);
+
+
 	},
 
 
