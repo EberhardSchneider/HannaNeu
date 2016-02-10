@@ -90,15 +90,24 @@ var Content = function(a, b, c) {
         return a += $(".kontakt").html(), a += "</div>";
     },
     activate: function() {
-        var a = parseInt($(".menu-item").eq(4).css("top"), 10), b = $(".menu-item")[4].getBoundingClientRect().height;
+        var a = Kontakt, b = parseInt($(".menu-item").eq(4).css("top"), 10), c = $(".menu-item")[4].getBoundingClientRect().height;
         $(".kontakt-schablone").css({
-            height: b + 20 + "px",
-            top: 1.08 * a - 10 + "px",
+            height: c + 20 + "px",
+            top: 1.08 * b - 10 + "px",
             display: "none"
-        }), $(".kontakt-schablone").fadeIn(0);
+        }), $(".kontakt-schablone").fadeIn(0), $(".impressum-link")[0].addEventListener("click", a.showImpressum), 
+        a.closeIcon = new Image(), a.closeIcon.src = "icons_e/close_24px.svg", a.closeIcon.className = "close-icon";
     },
     deactivate: function() {},
-    callback: function() {}
+    callback: function() {},
+    showImpressum: function() {
+        var a = Kontakt, b = $("<div class = 'impressum-overlay'></div>");
+        b.append(a.closeIcon);
+        var c = $("<div class='impressum'></div>");
+        c.append($(".impressum-text").html()), b.append(c), $("body").append(b), $(".close-icon")[0].addEventListener("click", function() {
+            $(".impressum-overlay").remove();
+        });
+    }
 }, MenuController = function(a, b, c) {
     function d(a, b) {
         var c = this;
@@ -161,7 +170,7 @@ var Content = function(a, b, c) {
 }(window, document), Thumbnail = function() {
     function a(a, b, c, d) {
         this.sourceThumb = a, this.sourceBig = b, this.thumbClass = c, this.bigClass = d, 
-        this.thumb_img = void 0, this.big_img = void 0, this._loadThumb(), this._loadBig();
+        this.thumb_img = void 0, this.big_img = void 0, this._loadThumb();
     }
     return a.prototype._loadThumb = function() {
         var a = this;
@@ -178,7 +187,7 @@ var Content = function(a, b, c) {
     }, a.prototype.getWidth = function() {
         return this.thumb_img.width;
     }, a.prototype.setBigClass = function(a) {
-        this.bigClass = a, this.big_img.className = a;
+        this.bigClass = a;
     }, a;
 }(), VController = function(a, b, c) {
     function d() {
@@ -194,7 +203,7 @@ var Content = function(a, b, c) {
         AudioPlayer.init(), b.find("text").each(function() {
             $(this) !== c && ($(this)[0].setAttribute("textLength", 372), $(this)[0].setAttribute("y", 0));
         }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
-        a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita))), 
+        a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita))), 
         a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
         a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
         a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
@@ -206,21 +215,19 @@ var Content = function(a, b, c) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10);
-        console.log("ScreenR: " + b);
-        var c = .22 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
+        var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), c = .22 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
         f = f > 300 ? 300 : f;
-        var g = 10, h = 10, i = .0063 * a.innerHeight, j = i / 5.5, k = 10;
-        b > 15 / 9 && (k += (b - 15 / 9) * parseInt(a.innerHeight, 10) / 10, console.log("X-Pos: " + k));
+        var g = 10, h = 10, i = .0062 * a.innerHeight, j = i / 5.5, k = 10;
+        b > 15 / 9 && (k += (b - 15 / 9) * parseInt(a.innerHeight, 10) / 10);
         for (var l = [], m = 0; 5 > m; m++) {
-            var n = [ 372 * j, 190 * j, 318 * j, 304 * j, 395 * j ][m];
+            var n = [ 372 * j, 210 * j, 318 * j, 304 * j, 395 * j ][m];
             l.push({
                 x: e,
                 y: c + m * d,
                 width: n,
                 height: d,
                 fontSize: i,
-                opacity: .5
+                opacity: .1
             });
         }
         l.push({
@@ -238,16 +245,16 @@ var Content = function(a, b, c) {
             fontSize: 0,
             opacity: 0
         }), l.push({
-            x: e - 140,
-            y: c - 104,
-            width: 350,
+            x: e - 130,
+            y: c - 85,
+            width: 310,
             height: 128,
             fontSize: i / 2.2,
             opacity: 1
         }), l.push({
-            x: e - 140,
-            y: c - 66,
-            width: 150,
+            x: e - 130,
+            y: c - 48,
+            width: 130,
             height: 128,
             fontSize: i / 2.2,
             opacity: 1
@@ -301,7 +308,7 @@ var Content = function(a, b, c) {
         var p = [];
         this.mc.removeState("vita");
         for (var m = 0; 5 > m; m++) 1 == m ? p.push({
-            x: .3 * a.innerWidth,
+            x: .3 * a.innerWidth + k - 10,
             y: c + m * d,
             width: 190 * j,
             height: d,
@@ -393,7 +400,7 @@ var Content = function(a, b, c) {
         var r = [];
         this.mc.removeState("sehen");
         for (var m = 0; 5 > m; m++) 3 == m ? r.push({
-            x: k + 40,
+            x: .25 * a.innerWidth,
             y: c + m * d,
             width: 304 * j,
             height: d,
@@ -502,8 +509,52 @@ var Content = function(a, b, c) {
         var a = "<div class='vita-wrapper'>";
         return a += $(".vita").html(), a += "</div>";
     },
-    activate: function() {},
-    deactivate: function() {}
+    activate: function() {
+    },
+    deactivate: function() {},
+    callback: function() {
+        var a = Vita, b = $(".vita-image>img")[0].getBoundingClientRect(), c = parseInt(b.width, 10) + parseInt(b.left, 10);
+        c > window.innerWidth ? window.innerWidth : c;
+        a.scrollHeight = parseInt($(".vita-scroll-div").css("height"), 10), a._maxScrollHeight = window.getComputedStyle($(".vita-text")[0], null).height, 
+        a._maxScrollHeight = parseInt(a._maxScrollHeight, 10) - .5 * window.innerHeight, 
+        console.log("Height Vita-Text: " + window.getComputedStyle($(".vita-text")[0], null).height), 
+        console.log("_MaxScrollHeight: " + a._maxScrollHeight), a.activateNavigation();
+    },
+    activateNavigation: function() {
+        var a = Vita;
+        $(".vita-scroll-div")[0].addEventListener("mousedown", Vita.mouseDownHandler, !1), 
+        document.body.addEventListener("mouseup", Vita.mouseUpHandler, !1), document.body.addEventListener("mousemove", Vita.mouseMoveHandler, !1), 
+        a.navMenuItem = $(".vita-kloetzchen")[0];
+    },
+    deactivateNavigation: function() {
+        var a = Vita;
+        $(".vita-text")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
+        document.body.removeEventListener("mouesemove", a.mosueMoveHandler);
+    },
+    mouseDownHandler: function(a) {
+        var b = Vita, c = $(".vita-scroll-div")[0].getBoundingClientRect(), d = c.top, e = parseInt($(b.navMenuItem).css("top"), 10), f = a.pageY - d;
+        if (console.log(b._maxScrollHeight), b.oldNavItemPos = parseInt(e, 10), b.startY = a.pageY, 
+        b.isMouseDown = !0, e > f || f > e) {
+            $(".vita-kloetzchen").css({
+                top: f - 24
+            }), b.oldNavItemPos = f - 24;
+            var g = f / (b.scrollHeight - 48);
+            $(".vita-txt").css("top", -g * b._maxScrollHeight), console.log(-g * b._maxScrollHeight);
+        }
+    },
+    mouseUpHandler: function(a) {
+        var b = Vita;
+        b.isMouseDown = !1;
+    },
+    mouseMoveHandler: function(a) {
+        var b = Vita;
+        if (b.isMouseDown) {
+            var c = b.oldNavItemPos + (a.pageY - b.startY);
+            c = 0 > c ? 0 : c, c = c > b.scrollHeight - 48 ? b.scrollHeight - 48 : c, $(b.navMenuItem).css("top", c + "px");
+            var d = c / (b.scrollHeight - 48);
+            $(".vita-text").css("top", -d * b._maxScrollHeight);
+        }
+    }
 }, Agenda = {
     container: {
         css: {
@@ -547,7 +598,7 @@ var Content = function(a, b, c) {
                     }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
                     void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
                     c += "</div>";
-                }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons_e/arrow-left.svg'/><img class='scroll-right' src='icons_e/arrow-right.svg'/></div>", 
+                }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div><div class='strich'></div></div></div>", 
                 a.html = c;
             }
         });
@@ -569,12 +620,12 @@ var Content = function(a, b, c) {
             $(this).toggleClass("scroll-out");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
         a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth, $(a.navMenuItem).animate({
-            left: "400px"
-        }, 500);
-        var b = 400 / (a.scrollWidth - 48);
+            left: "150px"
+        }, 700);
+        var b = 150 / (a.scrollWidth - 48);
         $(".agenda").animate({
             left: -b * a._maxScrollWidth + .3 * window.innerWidth
-        }, 500);
+        }, 700);
     },
     activateNavigation: function() {
         $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
@@ -722,7 +773,7 @@ var Content = function(a, b, c) {
     },
     playButtonClickHandler: function() {
         var a = AudioPlayer;
-        a.isAudioPlaying ? (a.stopCurrentPlaying(), $(".play-button").empty().append(a.playIcon)) : (a.pauseIcon.style.width = a.playIcon.width + "px", 
+        a.isMouseDown = !1, a.isAudioPlaying ? a.stopCurrentPlaying() : (a.pauseIcon.style.width = a.playIcon.width + "px", 
         $(".play-button").empty().append(a.pauseIcon), -1 == a.trackNumberPlaying ? a.playTrack(0) : a.playTrack(a.trackNumberPlaying));
     },
     stopCurrentPlaying: function() {
@@ -744,7 +795,7 @@ var Content = function(a, b, c) {
     },
     playTrack: function(a) {
         var b = AudioPlayer;
-        b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.isAudioPlaying && b.stopCurrentPlaying(), 
+        return b.isMouseDown = !1, $(b.audioMenuItem).stop(), b.trackNumberPlaying == a && b.isAudioPlaying ? void b.stopCurrentPlaying() : (b.isAudioPlaying && b.stopCurrentPlaying(), 
         $(b.audioMenuItem).addClass("nav-audio"), b.isAudioPlaying = !0, b.currentTrackDiv = $(".audio-track").eq(a), 
         a != b.trackNumberPlaying && (b.audioElements[a].currentTime = 0), b.trackNumberPlaying = a, 
         b.pauseIcon.style.width !== b.playIcon.style.width && (b.pauseIcon.style.width = b.playIcon.width + "px"), 
@@ -752,7 +803,7 @@ var Content = function(a, b, c) {
         b.currentTrackDiv.addClass("selected"), clearInterval(b.timeUpdateHandler), clearInterval(b.navigationUpdateHandler), 
         b.timeUpdateHandler = setInterval(b.timeUpdate, 1e3), b.navigationUpdateHandler = setInterval(b.navigationUpdate, 30), 
         b.audioElements[a].play(), b.createTime(), b.createInfoBox(), b.initAudioNavigation(), 
-        b.timeUpdate();
+        void b.timeUpdate());
     },
     audioClicked: function() {
         var a = AudioPlayer;
@@ -826,7 +877,7 @@ var Content = function(a, b, c) {
         }), a.currentTrackDiv.append(c);
         var d = a.currentTrackDiv[0].getBoundingClientRect(), e = d.top + 16, f = $(".audio-info-box").css("height"), g = parseInt(f.substring(0, f.length - 2)) + 40;
         window.innerHeight;
-        parseInt(e + g) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - e - .05 * window.innerHeight), 
+        parseInt(e + g) > window.innerHeight ? ($(".audio-info-box").css("bottom", window.innerHeight - e), 
         $(".time-box").css("top", e + 4 + "px")) : ($(".audio-info-box").css("top", e - .55 * window.innerHeight), 
         $(".time-box").css("top", e - 16 + "px"));
     },
@@ -840,7 +891,7 @@ var Content = function(a, b, c) {
     _sceneImageNames: {
         "0": {
             thumb: "ORPH_1_THB.jpg",
-            big: "ORPH_1",
+            big: "ORPH_1.jpg",
             comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "1": {
@@ -939,7 +990,12 @@ var Content = function(a, b, c) {
         var a = Gallery, b = .3 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
         a._sceneMaxScrollWidth = c - .7 * window.innerWidth, a._portraitMaxScrollWidth = d - .7 * window.innerWidth, 
         $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
-        a.isOrientationChecked || (a.isOrientationChecked = !0, $.each(a._sceneImages, function(a, b) {
+        a.arrowLeft = new Image(), a.arrowLeft.src = "icons_e/arrow-left.svg", a.arrowLeft.className = "arrow-left", 
+        a.arrowRight = new Image(), a.arrowRight.src = "icons_e/arrow-right.svg", a.arrowRight.className = "arrow-right", 
+        a.closeIcon = new Image(), a.closeIcon.src = "icons_e/close_24px.svg", a.closeIcon.className = "close-icon", 
+        a.downloadIcon = new Image(), a.downloadIcon.src = "icons_e/download_24px.svg", 
+        a.downloadIcon.className = "download-icon", a.isOrientationChecked || (a.isOrientationChecked = !0, 
+        $.each(a._sceneImages, function(a, b) {
             var c = b.getThumb();
             c.width > c.height ? ($(c).addClass("landscape"), b.setBigClass("landscape")) : ($(c).addClass("portrait"), 
             b.setBigClass("portrait"));
@@ -962,13 +1018,13 @@ var Content = function(a, b, c) {
         self = Gallery, self.scrollWidth = parseInt($(".sehen-scroll-div").css("width"), 10), 
         newItemPos = 0, $(".sehen-kloetzchen").animate({
             left: newItemPos
-        }, 400);
+        }, 500);
         var a = newItemPos / (self.scrollWidth - 32);
         $(".scene-images-container").animate({
             left: -a * self._sceneMaxScrollWidth
         }, 500), $(".portrait-images-container").animate({
             left: -a * self._portraitMaxScrollWidth
-        }, 600);
+        }, 500);
     },
     _activateNavigation: function() {
         var a = Gallery;
@@ -1013,7 +1069,7 @@ var Content = function(a, b, c) {
         }), $.each(a._portraitImages, function(a, b) {
             var c = $("<div class='portrait-div-" + a + "'>");
             c.append(b.getThumb()), e.append(c);
-        }), c.append(d), c.append(e), b.append(c), b.append($("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='/icons_e/arrow-left.svg'/><img class='sehen-scroll-right' src='icons_e/arrow-right.svg'/></div>")), 
+        }), c.append(d), c.append(e), b.append(c), b.append($("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='strich'></div><div class='sehen-kloetzchen'></div></div></div>")), 
         Gallery.html = b;
     },
     _addSceneImage: function(a, b, c) {
@@ -1040,19 +1096,15 @@ var Content = function(a, b, c) {
         var c = document.createElement("div");
         c.className = "overlay";
         var d = document.createElement("div");
-        d.className = "presentation";
+        d.className = "presentation", b._sceneImages[a]._loadBig();
         var e = b._sceneImages[a].getBig();
+        e.className = b._sceneImages[a].bigClass;
         $(".scene-images-container>div").eq(a).find("img")[0];
         $image = $(e);
-        var f = new Image();
-        f.src = "icons_e/arrow-left.svg", f.className = "arrow-left";
-        var g = new Image();
-        g.src = "icons_e/arrow-right.svg", g.className = "arrow-right";
-        var h = new Image();
-        h.src = "icons_e/close_24px.svg", h.className = "close-icon";
-        var i = $("<div class='image-comment'>" + b._sceneImagesComments[a] + "</div>");
-        d.appendChild($image[0]), d.appendChild(i[0]), c.appendChild(d), c.appendChild(h), 
-        c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !0, $("body").append(c);
+        var f = $("<div class='image-comment'>" + b._sceneImagesComments[a] + "</div>");
+        d.appendChild($image[0]), d.appendChild(f[0]), c.appendChild(d), c.appendChild(b.closeIcon), 
+        c.appendChild(b.arrowLeft), c.appendChild(b.arrowRight), b._isPresentedImageSceneImage = !0, 
+        $("body").append(c);
     },
     _presentPortraitImage: function(a) {
         var b = Gallery;
@@ -1060,22 +1112,14 @@ var Content = function(a, b, c) {
         var c = document.createElement("div");
         c.className = "overlay";
         var d = document.createElement("div");
-        d.className = "presentation";
+        d.className = "presentation", b._portraitImages[a]._loadBig();
         var e = b._portraitImages[a].getBig();
-        $image = $(e);
-        var f = new Image();
-        f.src = "icons_e/arrow-left.svg", f.className = "arrow-left";
-        var g = new Image();
-        g.src = "icons_e/arrow-right.svg", g.className = "arrow-right";
-        var h = new Image();
-        h.src = "icons_e/close_24px.svg", h.className = "close-icon";
-        var i = new Image();
-        i.src = "icons_e/download_24px.svg", i.className = "download-icon";
-        var j = $("<a src = 'portait1.jpg' download = '" + [ "images/PORTR_1_FULL.jpg", "images/PORTR_2_FULL.jpg", "images/PORTR_3_FULL.jpg" ][a] + "' class='download-icon'></a> ")[0];
-        j.appendChild(i);
-        var k = $("<div class='image-comment'>" + b._portraitImagesComments[a] + "</div>");
-        d.appendChild($image[0]), d.appendChild(k[0]), c.appendChild(d), c.appendChild(h), 
-        c.appendChild(j), c.appendChild(f), c.appendChild(g), b._isPresentedImageSceneImage = !1, 
+        e.className = b._portraitImages[a].bigClass, $image = $(e);
+        var f = $("<a src = 'portait1.jpg' download = '" + [ "images/PORTR_1_FULL.jpg", "images/PORTR_2_FULL.jpg", "images/PORTR_3_FULL.jpg" ][a] + "' class='download-icon'></a> ")[0];
+        f.appendChild(b.downloadIcon);
+        var g = $("<div class='image-comment'>" + b._portraitImagesComments[a] + "</div>");
+        d.appendChild($image[0]), d.appendChild(g[0]), c.appendChild(d), c.appendChild(b.closeIcon), 
+        c.appendChild(f), c.appendChild(b.arrowLeft), c.appendChild(b.arrowRight), b._isPresentedImageSceneImage = !1, 
         $("body").append(c);
     },
     _closeImage: function() {

@@ -8,7 +8,7 @@ var Gallery = {
 
 	_sceneImageNames: {
 		"0": { "thumb": "ORPH_1_THB.jpg",
-					"big" : "ORPH_1",
+					"big" : "ORPH_1.jpg",
 					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
 		"1": { "thumb": "ORPH_2_THB.jpg",
@@ -120,6 +120,24 @@ var Gallery = {
 		$(".scene-images-container").css("width", sceneImagesContainerWidth);
 		$(".portrait-images-container").css("width", portraitImagesContainerWidth);
 
+		self.arrowLeft = new Image();
+		self.arrowLeft.src = "icons_e/arrow-left.svg";
+		self.arrowLeft.className = "arrow-left";
+
+		self.arrowRight = new Image();
+		self.arrowRight.src = "icons_e/arrow-right.svg";
+		self.arrowRight.className = "arrow-right";
+
+
+
+		self.closeIcon = new Image();
+		self.closeIcon.src = "icons_e/close_24px.svg";
+		self.closeIcon.className = "close-icon";
+
+		self.downloadIcon = new Image();
+		self.downloadIcon.src = "icons_e/download_24px.svg";
+		self.downloadIcon.className = "download-icon";
+
 
 
 		// add orientation classes to images
@@ -190,12 +208,12 @@ var Gallery = {
 	
 		self.scrollWidth = parseInt( $(".sehen-scroll-div").css("width"), 10);  // Breite des Scroll-Divs
 
-		newItemPos = 0;
+		newItemPos = 00;
 
-		$(".sehen-kloetzchen").animate(  {"left": newItemPos}, 400 );
+		$(".sehen-kloetzchen").animate(  {"left": newItemPos}, 500 );
 		var scrollRatio = newItemPos/(self.scrollWidth - 32);
 		$(".scene-images-container").animate( { "left": -scrollRatio * self._sceneMaxScrollWidth }, 500);
-		$(".portrait-images-container").animate( { "left": -scrollRatio * self._portraitMaxScrollWidth }, 600 );
+		$(".portrait-images-container").animate( { "left": -scrollRatio * self._portraitMaxScrollWidth }, 500 );
 	},
 
 	_activateNavigation: function() {
@@ -293,7 +311,7 @@ var Gallery = {
 
 
 		contentWrapper.append( wrapper );
-		contentWrapper.append( $("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='sehen-kloetzchen'></div></div><img class='sehen-scroll-left' src='/icons_e/arrow-left.svg'/><img class='sehen-scroll-right' src='icons_e/arrow-right.svg'/></div>"));
+		contentWrapper.append( $("<div class='sehen-scroll-div-wrapper'><div class='sehen-scroll-div'><div class='strich'></div><div class='sehen-kloetzchen'></div></div></div>"));
 
 		Gallery.html = contentWrapper;
 
@@ -355,7 +373,10 @@ var Gallery = {
 		var presentation = document.createElement("div");
 		presentation.className = "presentation";
 
+		self._sceneImages[index]._loadBig();
 		var image = self._sceneImages[index].getBig();
+		image.className = self._sceneImages[index].bigClass;
+
 		var clickedImage = $(".scene-images-container>div").eq(index).find("img")[0];
 
 		/*console.log(clickedImage);*/
@@ -363,20 +384,6 @@ var Gallery = {
 	
 		$image = $(image);
 
-
-		var arrowLeft = new Image();
-		arrowLeft.src = "icons_e/arrow-left.svg";
-		arrowLeft.className = "arrow-left";
-
-		var arrowRight = new Image();
-		arrowRight.src = "icons_e/arrow-right.svg";
-		arrowRight.className = "arrow-right";
-
-
-
-		var closeIcon = new Image();
-		closeIcon.src = "icons_e/close_24px.svg";
-		closeIcon.className = "close-icon";
 
 		var comment = $("<div class='image-comment'>" + self._sceneImagesComments[index] + "</div>");
 
@@ -390,9 +397,9 @@ var Gallery = {
 		
 
 		overlay.appendChild( presentation );
-		overlay.appendChild( closeIcon );
-		overlay.appendChild( arrowLeft );
-		overlay.appendChild( arrowRight );
+		overlay.appendChild( self.closeIcon );
+		overlay.appendChild( self.arrowLeft );
+		overlay.appendChild( self.arrowRight );
 
 		self._isPresentedImageSceneImage = true;
 
@@ -411,33 +418,18 @@ var Gallery = {
 		var presentation = document.createElement("div");
 		presentation.className = "presentation";
 
+		self._portraitImages[index]._loadBig();
 		var image = self._portraitImages[index].getBig();
+		image.className = self._portraitImages[index].bigClass;
 		/*var clickedImage = $(".portrait-images-container>div").eq(index).find("img")[0];
 		image.src = clickedImage.src;
 		image.className = clickedImage.className;*/
 		$image = $(image);
 
-		var arrowLeft = new Image();
-		arrowLeft.src = "icons_e/arrow-left.svg";
-		arrowLeft.className = "arrow-left";
-
-		var arrowRight = new Image();
-		arrowRight.src = "icons_e/arrow-right.svg";
-		arrowRight.className = "arrow-right";
-
-
-
-		var closeIcon = new Image();
-		closeIcon.src = "icons_e/close_24px.svg";
-		closeIcon.className = "close-icon";
-
-		var downloadIcon = new Image();
-		downloadIcon.src = "icons_e/download_24px.svg";
-		downloadIcon.className = "download-icon";
 
 		var downloadLink = $("<a src = 'portait1.jpg' download = '" + [ "images/PORTR_1_FULL.jpg", "images/PORTR_2_FULL.jpg", "images/PORTR_3_FULL.jpg" ] [ index ] + "' class='download-icon'></a> ")[0];
 
-		downloadLink.appendChild( downloadIcon );
+		downloadLink.appendChild( self.downloadIcon );
 
 		var comment = $("<div class='image-comment'>" + self._portraitImagesComments[index] + "</div>");
 
@@ -446,10 +438,10 @@ var Gallery = {
 
 
 		overlay.appendChild( presentation );
-		overlay.appendChild( closeIcon );
+		overlay.appendChild( self.closeIcon );
 		overlay.appendChild( downloadLink );
-		overlay.appendChild( arrowLeft );
-		overlay.appendChild( arrowRight );
+		overlay.appendChild( self.arrowLeft );
+		overlay.appendChild( self.arrowRight );
 
 		self._isPresentedImageSceneImage = false;
 

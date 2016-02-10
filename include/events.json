@@ -10,7 +10,7 @@
 		"Piano":	"stefanpaul",
 		"Kontrabass": "Dietmar Gräther",
 		"Schlagwerk":	"Kasia Kadlubowksa"
-		} 
+		}
 	},
 	"1":{ 
 	"title": 			"DAS TAGEBUCH DER ANNE FRANK",
@@ -23,7 +23,8 @@
 		"Piano":	"stefanpaul",
 		"Kontrabass": "Dietmar Gräther",
 		"Schlagwerk":	"Kasia Kadlubowksa"
-		} 
+		},
+		"image":	"images/anne-frank.jpg"
 	} 
 	,
 	"2":{ 
@@ -42,9 +43,23 @@
 		"-2":				"Wiener Singakademie, Chor"
 		} 
 	},
+
 	"3":{ 
+	"title": 			"HIMMLISCHES JERUSALEM",
+	"komponist": 		"Rossi/de Victoria/de Sumaya",
+	"ort":				"Friedenskirche, Köln Ehrenfeld",
+	"datum":			"10. März 2016",
+	"besetzung":		{
+		"Musikalische Leitung":	"Michael Alexander Willens",
+		
+		"-1":			"Kölner Akademie"
+		}
+	},
+
+
+	"4":{ 
 	"title": 			"MESSIAH",
-	"komponist": 		"Händel",
+	"komponist": 		"<br>Händel",
 	"ort":				"Kloster Neuburg",
 	"datum":			"19. März 2016",
 	"besetzung":		{
@@ -57,10 +72,12 @@
 		"-2":			"Bachconsort Wien"
 	}
 	},
+
+
 	
-	"4":{ 
+	"5":{ 
 	"title": 			"JOHANNESPASSION",
-	"komponist": 		"Bach",
+	"komponist": 		"<br>Bach",
 	"ort":				"St. Johannes, München",
 	"datum":			"25. März 2016, 14:00",
 	"besetzung":		{
@@ -73,10 +90,29 @@
 		"-1":				"Seraphin-Ensemble München",
 		"-2":				"Kantatenchor München"
 		}
-	} 
-	,"5":{ 
+	},
+	"6":{ 
+	"title": 			"JOHANNESPASSION",
+	"komponist": 		"<br>Bach",
+	"ort":				"St. Johannes, München",
+	"datum":			"25. März 2016, 16:00",
+	"besetzung":		{
+		"Dirigat":	"Andreas Hantke",
+		"Sopran":		"Hanna Herfurtner",
+		"Alt":			"Franziska Rabl",
+		"Tenor":		"Maximilian Kiener",
+		"Bass I":			"Manuel Kundinger",
+		"Bass II":	"Daniel Hinterberger",
+		"-1":				"Seraphin-Ensemble München",
+		"-2":				"Kantatenchor München"
+		}
+	},
+
+
+
+	"8":{ 
 	"title": 			"MESSIAH",
-	"komponist": 		"Händel",
+	"komponist": 		"<br>Händel",
 	"ort":				"Heilig Kreuz, Augsburg",
 	"datum":			"23. April 2016",
 	"besetzung":		{
@@ -87,11 +123,26 @@
 		"Bass":	"Christian Schnmidt",
 		"-1":			"Augsburger Vokalensemble",
 		"-2":			"Oberbayrisches Barockorchester"
-	}
-	} 
-	,"6":{ 
+		}
+	},
+	"7":{ 
+	"title": 			"IL TRIONFO DEL TEMPO",
+	"komponist": 		"<br>Händel",
+	"ort":				"Annenkirche, Dresden",
+	"datum":			"10. April 2016",
+	"besetzung":		{
+		"Musikalische Leitung":	"Jörn Andresen",
+		"Bellezza":	"N.N.",
+		"Piacere":		"Hanna Herfurtner",
+		"Disinganno":	"Yosemeh Adjei",
+		"Tempo":	"Robert Sellier",
+		"-1":			"Batzdorfer Hofkapelle",
+		"-2":			"Sinfonieorchester Dresden"
+		}
+	},
+	"9":{ 
 	"title": 			"DIE WALKÜRE",
-	"komponist": 		"Wagner",
+	"komponist": 		"<br>Wagner",
 	"ort":				"Oper Frankfurt",
 	"datum":			"08. Mai 2016",
 	"besetzung":		{
@@ -113,10 +164,10 @@
 		"Rossweiße":	"Judita Nagyová",
 		"-1":	"Frankfurter Opern- und Museumsorchester"
 		}
-	} 
-	,"7":{ 
+	},
+	"11":{ 
 	"title": 			"DIE WALKÜRE",
-	"komponist": 		"Wagner",
+	"komponist": 		"<br>Wagner",
 	"ort":				"Oper Frankfurt",
 	"datum":			"10. Juli 2016",
 	"besetzung":		{
@@ -138,5 +189,43 @@
 		"Rossweiße":	"Judita Nagyová",
 		"-1":	"Frankfurter Opern- und Museumsorchester"
 		}
-	} 
+	},
+	"10":{ 
+	"title": 			"IL RITORNO DI TOBIA",
+	"komponist": 		"<br>Haydn",
+	"ort":				"St. Elisabethkirche, Berlin",
+	"datum":			"4. Juni 2016",
+	"besetzung":		{
+		"Musikalische Leitung":	"Kai-Uwe Jirka",
+		
+		
+		"-1":			"Sing-Akademie Berlin",
+		"-2":			"Kammerakademie Potsdam"
+		}
+	},
+
+	"12":{ 
+	"title": 			"HYMNEN AN DIE NACHT",
+	"komponist": 		"<br>Kirsch",
+	"ort":				"Paul-Gerhard-Kirche, München",
+	"datum":			"23. Oktober 2016",
+	"besetzung":		{
+		"Dirigat":	"Ilse Krüger-Kreile",
+		
+		"-1":			"Paul-Gerhard-Chor München"
+		}
+	},
+
+	"13":{ 
+	"title": 			"WEIHNACHTSORATORIUM IV-VI",
+	"komponist": 		"Bach",
+	"ort":				"Kreuzkirche Dresden",
+	"datum":			"7. Januar 2017",
+	"besetzung":		{
+		"Dirigat":	"Roderich Kreile",
+		
+		"-1":			"Dresdner Kreuzchor",
+		"-2": "Dresdner Philharmonie"
+		}
+	}
 }

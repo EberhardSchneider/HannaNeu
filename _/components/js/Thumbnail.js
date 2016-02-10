@@ -10,7 +10,7 @@ var Thumbnail = (function() {
 		this.big_img = undefined;
 
 		this._loadThumb();
-		this._loadBig();
+		/*this._loadBig();*/ // Hier noch nicht laden, erst wenn angefordert
 	}
 
 
@@ -52,7 +52,7 @@ var Thumbnail = (function() {
 
 	Thumbnail.prototype.setBigClass = function( className ) {
 		this.bigClass = className;
-		this.big_img.className = className;
+		/*this.big_img.className = className;*/ // das erst später!!!
 	};
 
 	return Thumbnail;

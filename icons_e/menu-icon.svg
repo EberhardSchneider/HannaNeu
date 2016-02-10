@@ -1,114 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64"
-   height="64"
-   id="svg4260"
-   version="1.1"
-   inkscape:version="0.91 r13725"
-   viewBox="0 0 64 64"
-   sodipodi:docname="menu-icon.svg">
-  <defs
-     id="defs4262" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="1.9445436"
-     inkscape:cx="-23.210783"
-     inkscape:cy="17.909327"
-     inkscape:current-layer="g4310"
-     showgrid="true"
-     inkscape:document-units="px"
-     inkscape:grid-bbox="true"
-     inkscape:window-width="1858"
-     inkscape:window-height="1056"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
-  <metadata
-     id="metadata4265">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     id="layer1"
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer">
-    <g
-       id="g4296"
-       transform="matrix(0.18935554,0,0,0.22695217,25.790023,23.689105)">
-      <g
-         id="g4310">
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="-127.4212"
-           y="-48.716934"
-           id="text3372"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan3374"
-             x="-127.4212"
-             y="-48.716934">Hanna Herfurtner</tspan><tspan
-             sodipodi:role="line"
-             x="-127.4212"
-             y="1.2830658"
-             id="tspan4326">Sopran</tspan></text>
-        <rect
-           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.97551239px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           id="rect3386"
-           width="188.94775"
-           height="12.704167"
-           x="-1.0177271"
-           y="-30.157745" />
-        <rect
-           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.97551239px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           id="rect3386-9"
-           width="188.94775"
-           height="12.704167"
-           x="-1.0941432"
-           y="3.0914161" />
-        <rect
-           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.97551239px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           id="rect3386-9-2"
-           width="188.94775"
-           height="12.704167"
-           x="-1.0023158"
-           y="36.859764" />
-        <rect
-           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.97551239px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           id="rect3386-9-1"
-           width="188.94775"
-           height="12.704167"
-           x="-0.92284793"
-           y="70.023788" />
-        <rect
-           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.97551239px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           id="rect3386-9-6"
-           width="188.94775"
-           height="12.704167"
-           x="-0.96960086"
-           y="103.25938" />
-      </g>
-    </g>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" x="0px" y="0px"
+	 width="176.852px" height="110.667px" viewBox="0 0 176.852 110.667" enable-background="new 0 0 176.852 110.667"
+	 xml:space="preserve">
+<text transform="matrix(1 0 0 1 0 14.4355)" font-family="'TimesNewRomanPSMT'" font-size="20">Hanna Herfurtner</text>
+<rect x="61.651" y="21.467" width="115.201" height="8.641"/>
+<rect x="61.651" y="41.607" width="115.201" height="8.64"/>
+<rect x="61.651" y="61.747" width="115.201" height="8.64"/>
+<rect x="61.651" y="81.887" width="115.201" height="8.641"/>
+<rect x="61.651" y="102.027" width="115.201" height="8.64"/>
+<text transform="matrix(1 0 0 1 0 30.9033)"><tspan x="0" y="0" font-family="'TimesNewRomanPSMT'" font-size="20">S</tspan><tspan x="11.083" y="0" font-family="'TimesNewRomanPSMT'" font-size="20">o</tspan><tspan x="21.023" y="0" font-family="'TimesNewRomanPSMT'" font-size="20">p</tspan><tspan x="30.983" y="0" font-family="'TimesNewRomanPSMT'" font-size="20">r</tspan><tspan x="37.583" y="0" font-family="'TimesNewRomanPSMT'" font-size="20">a</tspan><tspan x="46.42" y="0" font-family="'TimesNewRomanPSMT'" font-size="20">n</tspan></text>
 </svg>

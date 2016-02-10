@@ -41,7 +41,7 @@ var VController = (function(window, document, undefined) {
 		// Content Managment ------------------------------------------------------------------------------------------
 
 		self.cc.addContent("agenda", new Content( Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda)));
-		self.cc.addContent("vita", new Content( Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita)));
+		self.cc.addContent("vita", new Content( Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita)));
 		self.cc.addContent("hören", new Content( AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer)));
 		self.cc.addContent("sehen", new Content( Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery)));
 		self.cc.addContent("kontakt", new Content( Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt)));
@@ -78,7 +78,6 @@ var VController = (function(window, document, undefined) {
 		// home-State
 
 		var screenRatio = parseInt(window.innerWidth, 10) / parseInt(window.innerHeight, 10);
-		console.log("ScreenR: " + screenRatio);
 
 
 		var menuTop = window.innerHeight * 0.22;
@@ -89,25 +88,24 @@ var VController = (function(window, document, undefined) {
 		var homeButtonX = 10;
 		var homeButtonY = 10;
 
-		var homeFontSize = window.innerHeight * 0.0063;
+		var homeFontSize = window.innerHeight * 0.0062;
 		var menuLengthRatio = homeFontSize/5.5;
 
 		var menuX = 10;
 
 		if (screenRatio > (15/9) ) {
 			menuX += (screenRatio - (15/9)) * parseInt( window.innerHeight, 10) / 10;
-			console.log("X-Pos: " + menuX);
 		}
 		
 		var homeState = [];
 		for (var i = 0; i<5; i++ ) {
-			var w = [372 * menuLengthRatio, 190 * menuLengthRatio, 318 * menuLengthRatio, 304 * menuLengthRatio, 395 * menuLengthRatio][i];
-			homeState.push( { x: menuLeft, y: menuTop + i*menuItemHeight, width: w , height: menuItemHeight, fontSize: homeFontSize, opacity: 0.5 });
+			var w = [372 * menuLengthRatio, 210 * menuLengthRatio, 318 * menuLengthRatio, 304 * menuLengthRatio, 395 * menuLengthRatio][i];
+			homeState.push( { x: menuLeft, y: menuTop + i*menuItemHeight, width: w , height: menuItemHeight, fontSize: homeFontSize, opacity: 0.1 });
 		}
 		homeState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 0 });  // home-button
 		homeState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		homeState.push( { x: menuLeft - 140, y: menuTop - 104, width: 350, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-name
-		homeState.push( { x: menuLeft - 140, y: menuTop - 66, width: 150, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-sopran
+		homeState.push( { x: menuLeft - 130, y: menuTop - 85, width: 310, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-name
+		homeState.push( { x: menuLeft - 130, y: menuTop - 48, width: 130, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-sopran
 		this.mc.addState("home", new State( "home", homeState) );
 
 		// agenda-State
@@ -135,7 +133,7 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("vita");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 1 ) {
-				vitaState.push({ x: 0.3 * window.innerWidth , y: menuTop + i*menuItemHeight, width: 190 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				vitaState.push({ x: 0.3 * window.innerWidth + menuX - 10, y: menuTop + i*menuItemHeight, width: 190 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
 			vitaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
@@ -171,7 +169,7 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("sehen");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 3 ) {
-				sehenState.push({ x: menuX + 40, y: menuTop  + i*menuItemHeight, width: 304 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				sehenState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: 304 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
 			sehenState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}

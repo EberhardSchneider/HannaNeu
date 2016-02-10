@@ -11,21 +11,26 @@ body {
 
 .menu-item {
 	position: absolute !important;
-	z-index: 100;
+	z-index: 206;
 	@include user-select( none );
+	opacity: 0.1;
 	background-color: rgba( 0,0,0,0 );
 	text-decoration: none;
+
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
 
 	&:hover {
 		cursor: pointer;
 		opacity: 1 !important;
 	}
+	
 
 }
 
-svg  {
+/* svg  {
 	alignment-baseline: baseline;
-}
+} */
 
 .hover-black {
 	

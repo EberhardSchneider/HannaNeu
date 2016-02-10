@@ -169,9 +169,10 @@
 	playButtonClickHandler: function() {
 		var self = AudioPlayer;
 
+		self.isMouseDown = false;
+
 		if ( self.isAudioPlaying ) {
 			self.stopCurrentPlaying();
-			$(".play-button").empty().append(self.playIcon);
 		} else {
 			self.pauseIcon.style.width = self.playIcon.width + "px"; // make pause icon same size as play icon
 
@@ -237,6 +238,12 @@
 		// jede Animation zur Sicherheit stoppen und Audio
 		$( self.audioMenuItem ).stop();
 
+		if (( self.trackNumberPlaying == trackToPlay) && self.isAudioPlaying ) {
+			// User clicked on running track -> STOP
+			self.stopCurrentPlaying();
+			return;
+		}
+
 		if (self.isAudioPlaying) {   // laufenden Track stoppen
 			self.stopCurrentPlaying();
 		} 
@@ -249,7 +256,7 @@
 
 		if (trackToPlay != self.trackNumberPlaying) { 
 			self.audioElements[ trackToPlay ].currentTime = 0;
-		}
+		};
 		
 
 		self.trackNumberPlaying = trackToPlay;
@@ -471,7 +478,7 @@
 		var bodyHeight = window.innerHeight;
 
 		if ( parseInt(topTrack + heightBox) > window.innerHeight ) {
-			$('.audio-info-box').css("bottom", (window.innerHeight - topTrack -  window.innerHeight * 0.05 ));
+			$('.audio-info-box').css("bottom", ( window.innerHeight - topTrack));
 			$(".time-box").css("top", ( topTrack + 4 ) + "px" );
 
 		}  else {
@@ -493,4 +500,4 @@
 
 	}
 
-}
+};

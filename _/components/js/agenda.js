@@ -102,7 +102,7 @@ var Agenda = {
 
 			html += "</div>";
 
-			html += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div></div><img class='scroll-left' src='icons_e/arrow-left.svg'/><img class='scroll-right' src='icons_e/arrow-right.svg'/></div>";
+			html += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div><div class='strich'></div></div></div>";
 			self.html = html;
 
 
@@ -151,9 +151,9 @@ var Agenda = {
 
 		// set right Event in place
 
-			$(self.navMenuItem).animate( {"left": 400 + "px"}, 500);
-			var scrollRatio = 400/(self.scrollWidth - 48);
-			$(".agenda").animate( { "left": -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth }, 500);
+			$(self.navMenuItem).animate( {"left": 150 + "px"}, 700);
+			var scrollRatio = 150/(self.scrollWidth - 48);
+			$(".agenda").animate( { "left": -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth }, 700);
 
 
 	},
