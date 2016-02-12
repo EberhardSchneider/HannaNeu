@@ -141,6 +141,8 @@ var Agenda = {
 		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
 		$(".agenda").css("width", self.timelineLength + "px");
 
+		$(".agenda").mousewheel( self.mouseScrollHandler );
+
 		$(".event-image").click( function() {
 			$(this).toggleClass("scroll-out");
 		} );
@@ -243,6 +245,22 @@ var Agenda = {
 			
 
 		}
+
+	},
+
+	mouseScrollHandler: function( event ) {
+			var self = Agenda;
+
+			var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 20;
+			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+
+
+			$(self.navMenuItem).css("left", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.scrollWidth - 48);
+			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth }, 100 );
+
+			self.oldNavItemPos = newItemPos;
 
 	}
 

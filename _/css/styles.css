@@ -546,10 +546,10 @@ img {
   position: relative;
   display: block;
   overflow: hidden;
-  height: 36%;
+  height: 35%;
   width: 100%;
   top: 0;
-  margin-bottom: 9%;
+  margin-bottom: 10%;
   z-index: 250;
   background-color: #fff; }
 /* line 186, ../components/sass/_modules.scss */
@@ -751,29 +751,33 @@ a {
   left: 5%;
   top: 40%;
   height: 15%;
+  fill: white;
   background-color: transparent;
   border-radius: 100%; }
-/* line 419, ../components/sass/_modules.scss */
+/* line 420, ../components/sass/_modules.scss */
 .overlay .arrow-left img {
-  height: 15%; }
-/* line 424, ../components/sass/_modules.scss */
+  height: 15%;
+  fill: white; }
+/* line 426, ../components/sass/_modules.scss */
 .overlay .arrow-left:hover {
   cursor: pointer; }
-/* line 431, ../components/sass/_modules.scss */
+/* line 433, ../components/sass/_modules.scss */
 .overlay .arrow-right {
   position: absolute;
   right: 5%;
   top: 40%;
   height: 15%;
+  fill: white;
   background-color: transparent;
   border-radius: 100%; }
-/* line 437, ../components/sass/_modules.scss */
+/* line 440, ../components/sass/_modules.scss */
 .overlay .arrow-right img {
-  height: 15%; }
-/* line 443, ../components/sass/_modules.scss */
+  height: 15%;
+  fill: white; }
+/* line 447, ../components/sass/_modules.scss */
 .overlay .arrow-right:hover {
   cursor: pointer; }
-/* line 450, ../components/sass/_modules.scss */
+/* line 454, ../components/sass/_modules.scss */
 .overlay .download-icon {
   position: fixed;
   bottom: 10%;
@@ -781,14 +785,14 @@ a {
   background-color: #fff;
   height: 5%;
   width: 5vh; }
-/* line 458, ../components/sass/_modules.scss */
+/* line 462, ../components/sass/_modules.scss */
 .overlay .download-icon img {
   height: 5%; }
-/* line 462, ../components/sass/_modules.scss */
+/* line 466, ../components/sass/_modules.scss */
 .overlay .download-icon:hover {
   cursor: pointer; }
 
-/* line 471, ../components/sass/_modules.scss */
+/* line 475, ../components/sass/_modules.scss */
 .kontakt-wrapper {
   position: absolute;
   top: 0;
@@ -797,16 +801,16 @@ a {
   bottom: 0;
   padding: 5px;
   overflow: hidden; }
-/* line 482, ../components/sass/_modules.scss */
+/* line 486, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0; }
-/* line 488, ../components/sass/_modules.scss */
+/* line 492, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-image img {
   height: 100%; }
-/* line 491, ../components/sass/_modules.scss */
+/* line 495, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-schablone {
   position: absolute;
   width: 150%;
@@ -815,7 +819,7 @@ a {
   left: 0;
   height: 70px;
   background-color: #fff; }
-/* line 501, ../components/sass/_modules.scss */
+/* line 505, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-text {
   padding: 1%;
   position: absolute;
@@ -824,7 +828,7 @@ a {
   left: 0;
   right: 0;
   font-size: 100%; }
-/* line 510, ../components/sass/_modules.scss */
+/* line 514, ../components/sass/_modules.scss */
 .kontakt-wrapper .kontakt-text > div {
   position: relative;
   display: inline-block;
@@ -833,15 +837,15 @@ a {
   overflow: hidden;
   float: left;
   padding: 5%; }
-/* line 525, ../components/sass/_modules.scss */
+/* line 529, ../components/sass/_modules.scss */
 .kontakt-wrapper .impressum-link {
   margin-top: 25px; }
-/* line 527, ../components/sass/_modules.scss */
+/* line 531, ../components/sass/_modules.scss */
 .kontakt-wrapper .impressum-link:hover {
   cursor: pointer;
   color: black; }
 
-/* line 539, ../components/sass/_modules.scss */
+/* line 543, ../components/sass/_modules.scss */
 .impressum-overlay {
   position: absolute;
   z-index: 255;
@@ -850,21 +854,21 @@ a {
   bottom: 2%;
   right: 2%;
   background-color: rgba(0, 0, 0, 0.95); }
-/* line 549, ../components/sass/_modules.scss */
+/* line 553, ../components/sass/_modules.scss */
 .impressum-overlay .close-icon {
   position: absolute;
   width: 48px;
   right: 25px;
   top: 25px;
   z-index: 250; }
-/* line 555, ../components/sass/_modules.scss */
+/* line 559, ../components/sass/_modules.scss */
 .impressum-overlay .close-icon img {
   width: 48px; }
-/* line 559, ../components/sass/_modules.scss */
+/* line 563, ../components/sass/_modules.scss */
 .impressum-overlay .close-icon:hover {
   cursor: pointer; }
 
-/* line 568, ../components/sass/_modules.scss */
+/* line 572, ../components/sass/_modules.scss */
 .impressum {
   position: absolute;
   color: white;
@@ -872,7 +876,7 @@ a {
   margin-right: 5%;
   font-size: 92%;
   z-index: 255; }
-/* line 581, ../components/sass/_modules.scss */
+/* line 585, ../components/sass/_modules.scss */
 .impressum h1 {
   left: 25%;
   width: 50%;
@@ -882,7 +886,7 @@ a {
   border-bottom: solid 2px;
   margin-top: 2%;
   margin-bottom: 25px; }
-/* line 592, ../components/sass/_modules.scss */
+/* line 596, ../components/sass/_modules.scss */
 .impressum h2 {
   font-size: 110%;
   margin-top: 10px;

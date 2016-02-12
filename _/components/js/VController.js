@@ -29,7 +29,7 @@ var VController = (function(window, document, undefined) {
 
 		$items.find("text").each( function() { 
 			if ($(this) !== undefined) { 
-				$(this)[0].setAttribute("textLength", 372 );
+				$(this)[0].setAttribute("textLength", 1 );
 				$(this)[0].setAttribute("y", 0);
 			}
 		});
@@ -93,9 +93,9 @@ var VController = (function(window, document, undefined) {
 
 		var menuX = 10;
 
-		if (screenRatio > (15/9) ) {
+		/*if (screenRatio > (15/9) ) {
 			menuX += (screenRatio - (15/9)) * parseInt( window.innerHeight, 10) / 10;
-		}
+		}*/
 		
 		var homeState = [];
 		for (var i = 0; i<5; i++ ) {
@@ -133,7 +133,7 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("vita");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 1 ) {
-				vitaState.push({ x: 0.3 * window.innerWidth + menuX - 10, y: menuTop + i*menuItemHeight, width: 190 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				vitaState.push({ x: 0.24 * window.innerWidth + menuX - 10, y: menuTop + i*menuItemHeight, width: 230 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
 			vitaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}

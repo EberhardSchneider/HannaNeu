@@ -19,9 +19,9 @@ var Gallery = {
 					"big" : "ORPH_3.jpg",
 					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"3": { "thumb": "papagena_ei_thb.jpg",
-					"big" : "papagena_ei.png",
-					"comment": "Copyright FEHLT!!!" },
+		"3": { "thumb": "PAPAGENA_THB.JPG",
+					"big" : "PAPAGENA.JPG",
+					"comment": "BREGENZER FESTSPIELE: ZAUBERFLÖTE; Papagena (Hanna Herfurtner) (c) Karl Forster 2014" },
 
 		"4": { "thumb": "ASCH_1_THB.jpg",
 					"big" : "ASCH_1.png",
@@ -57,7 +57,19 @@ var Gallery = {
 
 		"12": { "thumb": "WHAT_THB.jpg",
 					"big" : "WHAT.jpg",
-					"comment": "Copyright FEHLT" }
+					"comment": "BREGENZER FESTSPIELE: L´HIRONDELLE INATTENDUE; Prokné (Hanna Herfurtner) (c) Karl Forster 2014" },
+
+		"13": { "thumb": "BOY_1_THB.JPG",
+					"big" : "BOY_1.JPG",
+					"comment": "BREGENZER FESTSPIELE: THE MERCHANT OF VENICE; Boy (Hanna Herfurtner) (c) Karl Forster 2013" },
+
+		"14": { "thumb": "BOY_2_THB.JPG",
+					"big" : "BOY_2.JPG",
+					"comment": "BREGENZER FESTSPIELE: THE MERCHANT OF VENICE; Boy (Hanna Herfurtner) (c) Karl Forster 2013" },
+
+		"15": { "thumb": "PROKNE_THB.JPG",
+					"big" : "PROKNE.JPG",
+					"comment": "BREGENZER FESTSPIELE: L´HIRONDELLE INATTENDUE; Prokné (Hanna Herfurtner) (c) Karl Forster 2014" }
 
 	},
 	_portraitImageNames: {
@@ -107,7 +119,7 @@ var Gallery = {
 
 		// give img containers the correct width
 
-		var imgWidth = 0.3 * window.innerHeight;
+		var imgWidth = 0.254 * window.innerHeight;
 
 		var sceneImagesContainerWidth = imgWidth * Math.floor( self._sceneImages.length / 2) + 1;
 		var portraitImagesContainerWidth = imgWidth * self._portraitImages.length + 1;
@@ -224,6 +236,9 @@ var Gallery = {
 		$(".sehen-scroll-div")[0].addEventListener("mousedown", self._mouseDownHandler, false );
 		document.body.addEventListener("mouseup", self._mouseUpHandler, false );
 		document.body.addEventListener("mousemove", self._mouseMoveHandler, false );
+
+		$(".content").mousewheel( self.mouseScrollHandler );
+
 
 
 	},
@@ -508,6 +523,24 @@ var Gallery = {
 		$(".close-icon").on("click", self._closeImage );
 
 	self._presentedImageIndex = currentIndex;
-	} // _arrowRightClickHandler
+	}, // _arrowRightClickHandler
+
+		mouseScrollHandler: function( event ) {
+			var self = Gallery;
+
+			var newItemPos = parseInt( $(".sehen-kloetzchen").css("left"), 10) + event.deltaY * 40;
+			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+
+			$(self.navMenuItem).css("left", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.scrollWidth - 48);
+			$(".scene-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+			/*$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );*/
+			$(".portrait-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+
+			self.oldNavItemPos = newItemPos;
+
+	}
+
 
 };

@@ -29,6 +29,9 @@ var Vita = {
 		console.log("_MaxScrollHeight: " + self._maxScrollHeight);
 		self.activateNavigation();
 
+		$(".content").mousewheel( self.mouseScrollHandler );
+
+
 	},
 
 	activateNavigation: 	function() {
@@ -100,6 +103,22 @@ var Vita = {
 			
 
 		}
+
+	},
+
+		mouseScrollHandler: function( event ) {
+			var self = Vita;
+
+			var newItemPos = parseInt( $(".vita-kloetzchen").css("top"), 10) - event.deltaY * 20;
+			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollHeight - 48) ? self.scrollHeight - 48 : newItemPos;
+
+			$(self.navMenuItem).css("top", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.scrollHeight - 48);
+			$(".vita-text").css("top", -scrollRatio * self._maxScrollHeight );
+
+
+			self.oldNavItemPos = newItemPos;
 
 	}
 

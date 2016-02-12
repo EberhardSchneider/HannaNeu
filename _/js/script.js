@@ -201,7 +201,7 @@ var Content = function(a, b, c) {
         b.push($(".home-button")), b.push($(".play-button")), b.push($(".menu-name")), b.push($(".menu-sopran")), 
         a.cc = new ContentController($(".content")), this.mc = new MenuController(b, this._browser), 
         AudioPlayer.init(), b.find("text").each(function() {
-            $(this) !== c && ($(this)[0].setAttribute("textLength", 372), $(this)[0].setAttribute("y", 0));
+            $(this) !== c && ($(this)[0].setAttribute("textLength", 1), $(this)[0].setAttribute("y", 0));
         }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
         a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita))), 
         a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
@@ -215,278 +215,276 @@ var Content = function(a, b, c) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
-        var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), c = .22 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
-        f = f > 300 ? 300 : f;
-        var g = 10, h = 10, i = .0062 * a.innerHeight, j = i / 5.5, k = 10;
-        b > 15 / 9 && (k += (b - 15 / 9) * parseInt(a.innerHeight, 10) / 10);
-        for (var l = [], m = 0; 5 > m; m++) {
-            var n = [ 372 * j, 210 * j, 318 * j, 304 * j, 395 * j ][m];
-            l.push({
-                x: e,
-                y: c + m * d,
-                width: n,
-                height: d,
-                fontSize: i,
+        var b = (parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), .22 * a.innerHeight), c = .09 * a.innerHeight, d = .4 * a.innerWidth, e = .29 * a.innerWidth;
+        e = e > 300 ? 300 : e;
+        for (var f = 10, g = 10, h = .0062 * a.innerHeight, i = h / 5.5, j = 10, k = [], l = 0; 5 > l; l++) {
+            var m = [ 372 * i, 210 * i, 318 * i, 304 * i, 395 * i ][l];
+            k.push({
+                x: d,
+                y: b + l * c,
+                width: m,
+                height: c,
+                fontSize: h,
                 opacity: .1
             });
         }
-        l.push({
-            x: g,
-            y: h,
+        k.push({
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), l.push({
+        }), k.push({
             x: -130,
-            y: c + 2.65 * d,
+            y: b + 2.65 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
-        }), l.push({
-            x: e - 130,
-            y: c - 85,
+        }), k.push({
+            x: d - 130,
+            y: b - 85,
             width: 310,
             height: 128,
-            fontSize: i / 2.2,
+            fontSize: h / 2.2,
             opacity: 1
-        }), l.push({
-            x: e - 130,
-            y: c - 48,
+        }), k.push({
+            x: d - 130,
+            y: b - 48,
             width: 130,
             height: 128,
-            fontSize: i / 2.2,
+            fontSize: h / 2.2,
             opacity: 1
-        }), this.mc.addState("home", new State("home", l));
-        var o = [];
-        this.mc.removeState("agenda"), o.push({
-            x: k + 40,
-            y: c,
-            width: 372 * j,
-            height: d,
-            fontSize: i - .5,
+        }), this.mc.addState("home", new State("home", k));
+        var n = [];
+        this.mc.removeState("agenda"), n.push({
+            x: j + 40,
+            y: b,
+            width: 372 * i,
+            height: c,
+            fontSize: h - .5,
             opacity: 1
         });
-        for (var m = 1; 5 > m; m++) o.push({
-            x: k,
-            y: c + m * d,
-            width: f,
-            height: d,
-            fontSize: i - 2,
+        for (var l = 1; 5 > l; l++) n.push({
+            x: j,
+            y: b + l * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
+            opacity: .5
+        });
+        n.push({
+            x: f,
+            y: g,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), n.push({
+            x: -130,
+            y: b + 2.65 * c,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), n.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), n.push({
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("agenda", new State("agenda", n));
+        var o = [];
+        this.mc.removeState("vita");
+        for (var l = 0; 5 > l; l++) 1 == l ? o.push({
+            x: .24 * a.innerWidth + j - 10,
+            y: b + l * c,
+            width: 230 * i,
+            height: c,
+            fontSize: h - .5,
+            opacity: 1
+        }) : o.push({
+            x: j,
+            y: b + l * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
             opacity: .5
         });
         o.push({
-            x: g,
-            y: h,
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
         }), o.push({
             x: -130,
-            y: c + 2.65 * d,
+            y: b + 2.65 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
         }), o.push({
-            x: e - 50,
-            y: c - 30,
+            x: d - 50,
+            y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
         }), o.push({
-            x: e - 50,
-            y: c - 30,
+            x: d - 50,
+            y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("agenda", new State("agenda", o));
+        }), this.mc.addState("vita", new State("vita", o));
         var p = [];
-        this.mc.removeState("vita");
-        for (var m = 0; 5 > m; m++) 1 == m ? p.push({
-            x: .3 * a.innerWidth + k - 10,
-            y: c + m * d,
-            width: 190 * j,
-            height: d,
-            fontSize: i - .5,
+        this.mc.removeState("hören");
+        for (var l = 0; 5 > l; l++) 2 == l ? p.push({
+            x: j + 64,
+            y: b + l * c,
+            width: 318 * i,
+            height: c,
+            fontSize: h - .5,
             opacity: 1
         }) : p.push({
-            x: k,
-            y: c + m * d,
-            width: f,
-            height: d,
-            fontSize: i - 2,
+            x: j,
+            y: b + l * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
             opacity: .5
         });
         p.push({
-            x: g,
-            y: h,
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
         }), p.push({
-            x: -130,
-            y: c + 2.65 * d,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), p.push({
-            x: e - 50,
-            y: c - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), p.push({
-            x: e - 50,
-            y: c - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("vita", new State("vita", p));
-        var q = [];
-        this.mc.removeState("hören");
-        for (var m = 0; 5 > m; m++) 2 == m ? q.push({
-            x: k + 64,
-            y: c + m * d,
-            width: 318 * j,
-            height: d,
-            fontSize: i - .5,
-            opacity: 1
-        }) : q.push({
-            x: k,
-            y: c + m * d,
-            width: f,
-            height: d,
-            fontSize: i - 2,
-            opacity: .5
-        });
-        q.push({
-            x: g,
-            y: h,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), q.push({
             x: 5,
-            y: c + 2.65 * d,
+            y: b + 2.65 * c,
             width: a.innerHeight / 14,
             height: a.innerHeight / 14,
             fontSize: 0,
             opacity: 1
-        }), q.push({
-            x: e - 50,
-            y: c - 30,
+        }), p.push({
+            x: d - 50,
+            y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), q.push({
-            x: e - 50,
-            y: c - 30,
+        }), p.push({
+            x: d - 50,
+            y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), this.mc.addState("hören", new State("hören", q));
-        var r = [];
+        }), this.mc.addState("hören", new State("hören", p));
+        var q = [];
         this.mc.removeState("sehen");
-        for (var m = 0; 5 > m; m++) 3 == m ? r.push({
+        for (var l = 0; 5 > l; l++) 3 == l ? q.push({
             x: .25 * a.innerWidth,
-            y: c + m * d,
-            width: 304 * j,
-            height: d,
-            fontSize: i - .5,
+            y: b + l * c,
+            width: 304 * i,
+            height: c,
+            fontSize: h - .5,
+            opacity: 1
+        }) : q.push({
+            x: j,
+            y: b + l * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
+            opacity: .5
+        });
+        q.push({
+            x: f,
+            y: g,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), q.push({
+            x: -130,
+            y: b + 2.65 * c,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), q.push({
+            x: d - 50,
+            y: b - 30,
+            width: 0,
+            height: 0,
+            fontSize: 0,
+            opacity: 0
+        }), q.push({
+            x: d - 50,
+            y: b - 30,
+            width: 0,
+            height: 0,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("sehen", new State("sehen", q));
+        for (var r = [], l = 0; 5 > l; l++) 4 == l ? r.push({
+            x: .25 * a.innerWidth,
+            y: b + l * c,
+            width: 395 * i,
+            height: c,
+            fontSize: h - .5,
             opacity: 1
         }) : r.push({
-            x: k,
-            y: c + m * d,
-            width: f,
-            height: d,
-            fontSize: i - 2,
+            x: j,
+            y: b + l * c,
+            width: e,
+            height: c,
+            fontSize: h - 2,
             opacity: .5
         });
         r.push({
-            x: g,
-            y: h,
+            x: f,
+            y: g,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 1
         }), r.push({
             x: -130,
-            y: c + 2.65 * d,
+            y: b + 2.65 * c,
             width: 64,
             height: 64,
             fontSize: 0,
             opacity: 0
         }), r.push({
-            x: e - 50,
-            y: c - 30,
-            width: 0,
-            height: 0,
+            x: d - 50,
+            y: b - 30,
+            width: 128,
+            height: 128,
             fontSize: 0,
             opacity: 0
         }), r.push({
-            x: e - 50,
-            y: c - 30,
-            width: 0,
-            height: 0,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("sehen", new State("sehen", r));
-        for (var s = [], m = 0; 5 > m; m++) 4 == m ? s.push({
-            x: .25 * a.innerWidth,
-            y: c + m * d,
-            width: 395 * j,
-            height: d,
-            fontSize: i - .5,
-            opacity: 1
-        }) : s.push({
-            x: k,
-            y: c + m * d,
-            width: f,
-            height: d,
-            fontSize: i - 2,
-            opacity: .5
-        });
-        s.push({
-            x: g,
-            y: h,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 1
-        }), s.push({
-            x: -130,
-            y: c + 2.65 * d,
-            width: 64,
-            height: 64,
-            fontSize: 0,
-            opacity: 0
-        }), s.push({
-            x: e - 50,
-            y: c - 30,
+            x: d - 50,
+            y: b - 30,
             width: 128,
             height: 128,
             fontSize: 0,
             opacity: 0
-        }), s.push({
-            x: e - 50,
-            y: c - 30,
-            width: 128,
-            height: 128,
-            fontSize: 0,
-            opacity: 0
-        }), this.mc.addState("kontakt", new State("kontakt", s));
+        }), this.mc.addState("kontakt", new State("kontakt", r));
     }, d.prototype._detectBrowser = function() {
         var a, b, c, d = (navigator.appVersion, navigator.userAgent), e = navigator.appName, f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10);
         -1 != (b = d.indexOf("Opera")) && (e = "Opera", f = d.substring(b + 6), -1 != (b = d.indexOf("Version")) && (f = d.substring(b + 8))), 
@@ -518,7 +516,8 @@ var Content = function(a, b, c) {
         a.scrollHeight = parseInt($(".vita-scroll-div").css("height"), 10), a._maxScrollHeight = window.getComputedStyle($(".vita-text")[0], null).height, 
         a._maxScrollHeight = parseInt(a._maxScrollHeight, 10) - .5 * window.innerHeight, 
         console.log("Height Vita-Text: " + window.getComputedStyle($(".vita-text")[0], null).height), 
-        console.log("_MaxScrollHeight: " + a._maxScrollHeight), a.activateNavigation();
+        console.log("_MaxScrollHeight: " + a._maxScrollHeight), a.activateNavigation(), 
+        $(".content").mousewheel(a.mouseScrollHandler);
     },
     activateNavigation: function() {
         var a = Vita;
@@ -554,6 +553,12 @@ var Content = function(a, b, c) {
             var d = c / (b.scrollHeight - 48);
             $(".vita-text").css("top", -d * b._maxScrollHeight);
         }
+    },
+    mouseScrollHandler: function(a) {
+        var b = Vita, c = parseInt($(".vita-kloetzchen").css("top"), 10) - 20 * a.deltaY;
+        c = 0 > c ? 0 : c, c = c > b.scrollHeight - 48 ? b.scrollHeight - 48 : c, $(b.navMenuItem).css("top", c + "px");
+        var d = c / (b.scrollHeight - 48);
+        $(".vita-text").css("top", -d * b._maxScrollHeight), b.oldNavItemPos = c;
     }
 }, Agenda = {
     container: {
@@ -616,7 +621,8 @@ var Content = function(a, b, c) {
     callback: function() {
         var a = this;
         a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1, a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), 
-        $(".agenda").css("width", a.timelineLength + "px"), $(".event-image").click(function() {
+        $(".agenda").css("width", a.timelineLength + "px"), $(".agenda").mousewheel(a.mouseScrollHandler), 
+        $(".event-image").click(function() {
             $(this).toggleClass("scroll-out");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
         a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth, $(a.navMenuItem).animate({
@@ -663,6 +669,14 @@ var Content = function(a, b, c) {
             var d = c / (b.scrollWidth - 48);
             $(".agenda").css("left", -d * b._maxScrollWidth + .3 * window.innerWidth);
         }
+    },
+    mouseScrollHandler: function(a) {
+        var b = Agenda, c = parseInt($(".kloetzchen").css("left"), 10) + 20 * a.deltaY;
+        c = 0 > c ? 0 : c, c = c > b.scrollWidth - 48 ? b.scrollWidth - 48 : c, $(b.navMenuItem).css("left", c + "px");
+        var d = c / (b.scrollWidth - 48);
+        $(".agenda").stop().animate({
+            left: -d * b._maxScrollWidth + .3 * window.innerWidth
+        }, 100), b.oldNavItemPos = c;
     }
 }, AudioPlayer = {
     _html: "",
@@ -784,7 +798,7 @@ var Content = function(a, b, c) {
     playNextTrack: function() {
         var a, b = AudioPlayer;
         a = b.isAudioPlaying ? b.trackNumberPlaying + 1 == b.audioElements.length ? 0 : b.trackNumberPlaying + 1 : 0, 
-        console.log(a), b.playTrack(a);
+        0 == a ? b.stopCurrentPlaying() : b.playTrack(a);
     },
     clearAudioNavigation: function() {
         var a = AudioPlayer;
@@ -905,9 +919,9 @@ var Content = function(a, b, c) {
             comment: "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve"
         },
         "3": {
-            thumb: "papagena_ei_thb.jpg",
-            big: "papagena_ei.png",
-            comment: "Copyright FEHLT!!!"
+            thumb: "PAPAGENA_THB.JPG",
+            big: "PAPAGENA.JPG",
+            comment: "BREGENZER FESTSPIELE: ZAUBERFLÖTE; Papagena (Hanna Herfurtner) (c) Karl Forster 2014"
         },
         "4": {
             thumb: "ASCH_1_THB.jpg",
@@ -952,7 +966,22 @@ var Content = function(a, b, c) {
         "12": {
             thumb: "WHAT_THB.jpg",
             big: "WHAT.jpg",
-            comment: "Copyright FEHLT"
+            comment: "BREGENZER FESTSPIELE: L´HIRONDELLE INATTENDUE; Prokné (Hanna Herfurtner) (c) Karl Forster 2014"
+        },
+        "13": {
+            thumb: "BOY_1_THB.JPG",
+            big: "BOY_1.JPG",
+            comment: "BREGENZER FESTSPIELE: THE MERCHANT OF VENICE; Boy (Hanna Herfurtner) (c) Karl Forster 2013"
+        },
+        "14": {
+            thumb: "BOY_2_THB.JPG",
+            big: "BOY_2.JPG",
+            comment: "BREGENZER FESTSPIELE: THE MERCHANT OF VENICE; Boy (Hanna Herfurtner) (c) Karl Forster 2013"
+        },
+        "15": {
+            thumb: "PROKNE_THB.JPG",
+            big: "PROKNE.JPG",
+            comment: "BREGENZER FESTSPIELE: L´HIRONDELLE INATTENDUE; Prokné (Hanna Herfurtner) (c) Karl Forster 2014"
         }
     },
     _portraitImageNames: {
@@ -987,7 +1016,7 @@ var Content = function(a, b, c) {
         }), a._makeHTML();
     },
     activate: function() {
-        var a = Gallery, b = .3 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
+        var a = Gallery, b = .254 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
         a._sceneMaxScrollWidth = c - .7 * window.innerWidth, a._portraitMaxScrollWidth = d - .7 * window.innerWidth, 
         $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
         a.arrowLeft = new Image(), a.arrowLeft.src = "icons_e/arrow-left.svg", a.arrowLeft.className = "arrow-left", 
@@ -1029,7 +1058,8 @@ var Content = function(a, b, c) {
     _activateNavigation: function() {
         var a = Gallery;
         $(a.navMenuItem).off(), $(".sehen-scroll-div")[0].addEventListener("mousedown", a._mouseDownHandler, !1), 
-        document.body.addEventListener("mouseup", a._mouseUpHandler, !1), document.body.addEventListener("mousemove", a._mouseMoveHandler, !1);
+        document.body.addEventListener("mouseup", a._mouseUpHandler, !1), document.body.addEventListener("mousemove", a._mouseMoveHandler, !1), 
+        $(".content").mousewheel(a.mouseScrollHandler);
     },
     _mouseDownHandler: function(a) {
         var b = Gallery, c = $(".sehen-scroll-div")[0].getBoundingClientRect(), d = c.left, e = parseInt($(b.navMenuItem).css("left"), 10), f = a.pageX - d;
@@ -1138,6 +1168,13 @@ var Content = function(a, b, c) {
         Gallery._presentPortraitImage(b)), $(".arrow-right").click(a._arrowRightClickHandler.bind(a)), 
         $(".arrow-left").click(a._arrowLeftClickHandler.bind(a)), $(".close-icon").on("click", a._closeImage), 
         a._presentedImageIndex = b;
+    },
+    mouseScrollHandler: function(a) {
+        var b = Gallery, c = parseInt($(".sehen-kloetzchen").css("left"), 10) + 40 * a.deltaY;
+        c = 0 > c ? 0 : c, c = c > b.scrollWidth - 48 ? b.scrollWidth - 48 : c, $(b.navMenuItem).css("left", c + "px");
+        var d = c / (b.scrollWidth - 48);
+        $(".scene-images-container").css("left", -d * b._sceneMaxScrollWidth), $(".portrait-images-container").css("left", -d * b._sceneMaxScrollWidth), 
+        b.oldNavItemPos = c;
     }
 };
 

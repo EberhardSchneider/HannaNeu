@@ -199,16 +199,20 @@
 
 		var nextAudioTrack;
 
+
+
 		if (!self.isAudioPlaying) {
 			nextAudioTrack = 0;
 		}  else {
 			nextAudioTrack = ( (self.trackNumberPlaying+1) == self.audioElements.length ) ? 0 : ( self.trackNumberPlaying + 1 );
 		}
 
-		console.log( nextAudioTrack );
 
-		self.playTrack( nextAudioTrack );
-
+		if ( nextAudioTrack == 0 ) { 
+			self.stopCurrentPlaying();
+			} else {
+			  self.playTrack( nextAudioTrack );
+			}
 
 	},
 
@@ -256,7 +260,7 @@
 
 		if (trackToPlay != self.trackNumberPlaying) { 
 			self.audioElements[ trackToPlay ].currentTime = 0;
-		};
+		}
 		
 
 		self.trackNumberPlaying = trackToPlay;
