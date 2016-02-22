@@ -141,7 +141,7 @@ var Agenda = {
 		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
 		$(".agenda").css("width", self.timelineLength + "px");
 
-		$(".agenda").mousewheel( self.mouseScrollHandler );
+		$("body").mousewheel( self.mouseScrollHandler );
 
 		$(".event-image").click( function() {
 			$(this).toggleClass("scroll-out");
@@ -166,15 +166,9 @@ var Agenda = {
 	activateNavigation: 	function() {
 		var self = Agenda;
 
-
-		
 		$(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
 		document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
 		document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
-
-
-		
-
 	
 	},
 
@@ -183,17 +177,14 @@ var Agenda = {
 		$(".agenda")[0],removeEventListener("mousedown", self.mouseDownHandler );
 		document.body.removeEventListener("mouseup", self.mouseUpHandler );
 		document.body.removeEventListener("mouesemove", self.mosueMoveHandler );
-	},
+		$("body").off("mousewheel", false);
+		},
 
 
 	animateTimeline: 	function() {
 		var self = Agenda;
 
-
-
 		$(".agenda").css("left", self.leftPos + "px" );
-
-
 	},
 	
 
@@ -237,11 +228,11 @@ var Agenda = {
 	if ( self.isMouseDown ) {
 			var newItemPos = self.oldNavItemPos + ( event.pageX - self.startX );
 			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;
 
 			$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.scrollWidth - 48);
-			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth );
+			var scrollRatio = newItemPos/(self.scrollWidth -  32);
+			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth );
 			
 
 		}
@@ -251,14 +242,14 @@ var Agenda = {
 	mouseScrollHandler: function( event ) {
 			var self = Agenda;
 
-			var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 20;
+			var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 10;
 			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;
 
 
 			$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.scrollWidth - 48);
-			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth }, 100 );
+			var scrollRatio = newItemPos/(self.scrollWidth - 32);
+			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth }, 100 );
 
 			self.oldNavItemPos = newItemPos;
 

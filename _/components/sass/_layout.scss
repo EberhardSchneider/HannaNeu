@@ -49,15 +49,22 @@
 	left: 30%;
 	top: 19%;
 
-	height: 60%;
+	height: 52%;
+	min-height:540px;
 	overflow: hidden;
 
 	z-index: -255;
+	@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+		left: 2%;
+	}
 }
 
 .scroll-div-wrapper {
 	position: absolute;
-	top: 81%;
+	bottom: 8%;
 	height: 5%;
 	left: 29%;
 	right: 0;

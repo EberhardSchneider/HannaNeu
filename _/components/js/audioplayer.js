@@ -34,7 +34,7 @@
 		{ komponist: "Giovanni Battista Pergolesi", titel: "Salve Regina", src: "audio/Salve_Regina.mp3" },
 		{ komponist: "Martino Pesenti", titel: "Filli, Filli, non t'amo più", src: "audio/Filli_Filli.mp3" },
 		{ komponist: "GIOVANNI ANTONIO RIGATTI", titel: "O dolcezza incredibile d´amore", src: "audio/O_dolcezza_incredibile.mp3" },
-		{ komponist: "ARNOLD SCHÖNBERG", titel: "Erwartung", src: "audio/Erwartung.wav" },
+		{ komponist: "Wolfgang Heiniger", titel: "Lapislazuli", src: "audio/Lapislazuli.mp3" },
 		{ komponist: "ERNEST CHAUSSON", titel: "Sérénade", src: "audio/Chausson_Serenade.mp3" }
 	],
 
@@ -57,14 +57,15 @@
 		},
 		{
 			ort: "Berlin", jahr: "2015",
-			besetzung: [ "stefanpaul - Klavier" ]
+			besetzung: [ "<br>Oboe - Christoph Hartmann", "Sopran - Hanna Hefurtner", "Elektronik - Wolfgang Heiniger" ]
 		},
 		{
 			ort: "Tokio", jahr: "2012",
-			beschreibung: 'Livemitschnitt<br>"The Art of Colratura"<br>Musashino Cultural Hall',
+			beschreibung: 'Livemitschnitt<br>"The Art of Coloratura"<br>Musashino Cultural Hall',
 			besetzung: [ "Masahiro Saitoh - Klavier" ]
 		}
 	],
+
 
 	audioElements: [],
 	audioElementsLoaded: 	0,
@@ -470,6 +471,7 @@
 
 
 		self.currentTrackDiv.append( box );
+		/*var rectInfoBox = $(".audio-info-box")[0].getBoundingClientRect();*/
 
 
 

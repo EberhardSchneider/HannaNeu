@@ -25,11 +25,13 @@ var Vita = {
 		self.scrollHeight = parseInt( $(".vita-scroll-div").css("height"), 10);  // Höhe des Scroll-Divs
 		self._maxScrollHeight = window.getComputedStyle( $(".vita-text")[0], null ).height;
 		self._maxScrollHeight = parseInt( self._maxScrollHeight, 10) - 0.5 * window.innerHeight;
-		console.log("Height Vita-Text: " +  window.getComputedStyle( $(".vita-text")[0], null ).height);
-		console.log("_MaxScrollHeight: " + self._maxScrollHeight);
-		self.activateNavigation();
-
-		$(".content").mousewheel( self.mouseScrollHandler );
+		
+		var textRect = $(".vita-text")[0].getBoundingClientRect();
+		if (textRect.bottom > window.innerHeight) {
+			self.activateNavigation();
+			$(".content").mousewheel( self.mouseScrollHandler );
+			$(".vita-scroll-div").removeClass("hide");
+		}
 
 
 	},

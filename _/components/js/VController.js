@@ -80,7 +80,7 @@ var VController = (function(window, document, undefined) {
 		var screenRatio = parseInt(window.innerWidth, 10) / parseInt(window.innerHeight, 10);
 
 
-		var menuTop = window.innerHeight * 0.22;
+		var menuTop = window.innerHeight * 0.21;
 		var menuItemHeight = window.innerHeight * 0.09;
 		var menuLeft = window.innerWidth * 0.4;
 		var menuLength = window.innerWidth * 0.29;
@@ -92,6 +92,12 @@ var VController = (function(window, document, undefined) {
 		var menuLengthRatio = homeFontSize/5.5;
 
 		var menuX = 10;
+		var menuCorrection=0;
+		var screenRatio = window.innerWidth/window.innerHeight;
+		if (screenRatio>15/9) {
+			menuCorrection = 30;
+		}
+
 
 		/*if (screenRatio > (15/9) ) {
 			menuX += (screenRatio - (15/9)) * parseInt( window.innerHeight, 10) / 10;
@@ -104,8 +110,8 @@ var VController = (function(window, document, undefined) {
 		}
 		homeState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 0 });  // home-button
 		homeState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		homeState.push( { x: menuLeft - 130, y: menuTop - 85, width: 310, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-name
-		homeState.push( { x: menuLeft - 130, y: menuTop - 48, width: 130, height: 128, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-sopran
+		homeState.push( { x: menuLeft - 130, y: menuTop - 10, width: 310, height: homeFontSize*10, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-name
+		homeState.push( { x: menuLeft - 130, y: menuTop+menuItemHeight*0.50 - 10, width: 130, height: homeFontSize*10, fontSize: homeFontSize/2.2, opacity: 1 });  // menu-sopran
 		this.mc.addState("home", new State( "home", homeState) );
 
 		// agenda-State
@@ -119,8 +125,8 @@ var VController = (function(window, document, undefined) {
 		}
 		agendaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		agendaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
-		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
+		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
 		
 
 
@@ -133,15 +139,15 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("vita");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 1 ) {
-				vitaState.push({ x: 0.24 * window.innerWidth + menuX - 10, y: menuTop + i*menuItemHeight, width: 230 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				vitaState.push({ x: 0.3 * window.innerWidth + menuX, y: menuTop + i*menuItemHeight, width: 230 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
 			vitaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}
 		}
 		vitaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		vitaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
-		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
+		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("vita", new State( "vita", vitaState ));
 
 		// hören-State
@@ -158,8 +164,8 @@ var VController = (function(window, document, undefined) {
 		}
 		hoerenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		hoerenState.push( { x: 5, y: menuTop +  2.65 * menuItemHeight, width: window.innerHeight/14, height:window.innerHeight/14, fontSize: 0, opacity: 1 });  // play-button
-		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
-		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
+		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("hören", new State( "hören", hoerenState ));
 
 		// sehen-State
@@ -176,8 +182,8 @@ var VController = (function(window, document, undefined) {
 		}
 		sehenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		sehenState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 0, height: 0, fontSize: 0, opacity: 0 });  // menu-decoration
-		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 0, height: 0, fontSize: 0, opacity: 0 });  // menu-decoration
+		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("sehen", new State( "sehen", sehenState ));
 
 		// kontakt-State
@@ -193,8 +199,8 @@ var VController = (function(window, document, undefined) {
 		}
 		kontaktState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
 		kontaktState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
-		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
-		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: 128, fontSize: 0, opacity: 0 });  // menu-decoration
+		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
 		this.mc.addState("kontakt", new State( "kontakt", kontaktState ));
 
 

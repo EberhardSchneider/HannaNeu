@@ -50,17 +50,17 @@ var Item = (function() {
 		duration = duration || 1.5;
 
 		if (newWidth == -1) {
-			TweenMax.to( self._$svg, duration, {  width: 300, onComplete: callback, ease: Power1.easeInOut  });
+			TweenMax.to( self._$svg, duration, {  width: 300, onComplete: callback, ease: Back.easeInOut  });
 			return;
 		}
 
-		TweenMax.to( self._$svg, duration, { "width": newWidth, onComplete: callback, ease: Power1.easeInOut  });
+		TweenMax.to( self._$svg, duration, { "width": newWidth, onComplete: callback, ease: Back.easeInOut  });
 		if (self._$text) { 
-			TweenMax.to( self._$text, duration, { attr:{ "textLength": ( (newWidth>5) ? newWidth-5 : 0) }, ease: Power1.easeInOut  } );
+			TweenMax.to( self._$text, duration, { attr:{ "textLength": ( (newWidth>5) ? newWidth-5 : 0) }, ease: Back.easeInOut  } );
 		}
 
 		if ( self._$obj.find("img") ) {
-				TweenMax.to( self._$obj.find("img"), duration, {  "width": newWidth, ease: Power1.easeInOut });
+				TweenMax.to( self._$obj.find("img"), duration, {  "width": newWidth, ease: Back.easeInOut });
 		}
 
 	};
@@ -69,12 +69,12 @@ var Item = (function() {
 		// default animation function
 		var self = this;
 		duration = duration || 1.5;
-
+		console.log(self.browser);
 		self._$svg.attr( { height: newHeight });
-		if ( (this._browser != "Firefox") && (this._browser != "Microsoft Internet Explorer") ) {
+		if ( (this._browser != "Firefox") && (this._browser != "Microsoft Internet Explorer") && (this._browser != "Safari")) {
 			self._$text.attr( { y: (newHeight - 5) });
 		} else {
-			self._$text.attr( { y: -10 });
+			self._$text.attr( { y: -5 });
 		}
 
 		TweenMax.to( self._$svg, duration, { attr: { "height": newHeight }, onComplete: callback} );
@@ -87,8 +87,8 @@ var Item = (function() {
 		var self = this;
 		duration = duration || 1.5;
 		if (self._$text == undefined) { return; }
-		TweenMax.to(self._$obj, duration, { y: newFontSize*7.5, onComplete: callback, ease: Back.easeInOut  } );
-		TweenMax.to( self._$text, duration, { "font-size": newFontSize*15, ease: Back.easeInOut });
+		TweenMax.to(self._$obj, duration, { y: newFontSize*7.5, onComplete: callback, ease: Power1.easeInOut  } );
+		TweenMax.to( self._$text, duration, { "font-size": newFontSize*15, ease: Power1.easeInOut });
 
 	};
 

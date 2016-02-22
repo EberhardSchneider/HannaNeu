@@ -1,7 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:800);
+
 body {
 	/* font-family: gothic; */
 	font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;;
-	font-size: 1.9vh;
+	font-size: 1rem;
 	overflow: hidden;
 
 	@include box-sizing(border-box);
@@ -17,8 +19,8 @@ body {
 	background-color: rgba( 0,0,0,0 );
 	text-decoration: none;
 
-	font-family: 'Open Sans', sans-serif;
-	font-weight: bold;
+	font-family: 'Raleway', sans-serif;
+	font-weight: extra-bold;
 
 	&:hover {
 		cursor: pointer;
@@ -28,9 +30,9 @@ body {
 
 }
 
-/* svg  {
+ svg  {
 	alignment-baseline: baseline;
-} */
+} 
 
 .hover-black {
 	

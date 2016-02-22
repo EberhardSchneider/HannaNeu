@@ -6,73 +6,10 @@ var Gallery = {
 
 	isOrientationChecked: false, // sind die img mit 'portrait' bzw. 'landscape' Klassen ausgestattet?
 
-	_sceneImageNames: {
-		"0": { "thumb": "ORPH_1_THB.jpg",
-					"big" : "ORPH_1.jpg",
-					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"1": { "thumb": "ORPH_2_THB.jpg",
-					"big" : "ORPH_2.jpg",
-					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
 
-		"2": { "thumb": "ORPH_3_THB.jpg",
-					"big" : "ORPH_3.jpg",
-					"comment": "NEDERLANDSE REISOPERA: ORPHÈE ET EURYDICE (Gluck), L´Amour (Hanna Herfurtner), 2015 Ⓒ Marco Borggreve" },
-
-		"3": { "thumb": "PAPAGENA_THB.JPG",
-					"big" : "PAPAGENA.JPG",
-					"comment": "BREGENZER FESTSPIELE: ZAUBERFLÖTE; Papagena (Hanna Herfurtner) (c) Karl Forster 2014" },
-
-		"4": { "thumb": "ASCH_1_THB.jpg",
-					"big" : "ASCH_1.png",
-					"comment": "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun" },
-
-		"5": { "thumb": "ASCH_2_THB.jpg",
-					"big" : "ASCH_2.png",
-					"comment": "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun"},
-
-		"6": { "thumb": "ASCH_3_THB.jpg",
-					"big" : "ASCH_3.png",
-					"comment": "STAATSOPER BERLIN: ASCHENPUTTEL (Wolf-Ferrari); Aschenputtel (Hanna Herfurtner); 2011 ⓒ Barbara Braun" },
-
-		"7": { "thumb": "GISELA_1_THB.JPG",
-					"big" : "GISELA_1.JPG",
-					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
-
-		"8": { "thumb": "GISELA_2_THB.JPG",
-					"big" : "GISELA_2.JPG",
-					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
-
-		"9": { "thumb": "GISELA_3_THB.JPG",
-					"big" : "GISELA_3.JPG",
-					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
-
-		"10": {"thumb": "GISELA_4_THB.JPG",
-					"big" : "GISELA_4.JPG",
-					"comment": "RUHRTRIENNALE (GLADBECK): GISELA (Henze), Gisela (Hanna Herfurtner); 2010 ⓒ  Ursula Kaufmann" },
-
-		"11": { "thumb": "JUDY_THB.jpeg",
-					"big" : "JUDY.jpeg",
-					"comment": "STAATSOPER BERLIN: PUNCH AND JUDY (Birtwistle), Pretty Polly (Hanna Herfurtner);  2014 ⓒ Vincent Stefan" },
-
-		"12": { "thumb": "WHAT_THB.jpg",
-					"big" : "WHAT.jpg",
-					"comment": "BREGENZER FESTSPIELE: L´HIRONDELLE INATTENDUE; Prokné (Hanna Herfurtner) (c) Karl Forster 2014" },
-
-		"13": { "thumb": "BOY_1_THB.JPG",
-					"big" : "BOY_1.JPG",
-					"comment": "BREGENZER FESTSPIELE: THE MERCHANT OF VENICE; Boy (Hanna Herfurtner) (c) Karl Forster 2013" },
-
-		"14": { "thumb": "BOY_2_THB.JPG",
-					"big" : "BOY_2.JPG",
-					"comment": "BREGENZER FESTSPIELE: THE MERCHANT OF VENICE; Boy (Hanna Herfurtner) (c) Karl Forster 2013" },
-
-		"15": { "thumb": "PROKNE_THB.JPG",
-					"big" : "PROKNE.JPG",
-					"comment": "BREGENZER FESTSPIELE: L´HIRONDELLE INATTENDUE; Prokné (Hanna Herfurtner) (c) Karl Forster 2014" }
-
-	},
-	_portraitImageNames: {
+	_sceneImageNames: [],
+	/*_portraitImageNames: {
 		"0": { "thumb": "PORTR_1_THB.jpg",
 		"big": "PORTR_1.jpg",
 		"comment": "Hanna Herfurtner 2011 Ⓒ Jörg Frank"  },
@@ -84,7 +21,8 @@ var Gallery = {
 				"2":	{ "thumb": "PORTR_3_THB.jpg",
 		"big": "PORTR_3.jpg",
 		"comment": "Hanna Herfurtner 2011 Ⓒ Jörg Frank"  }
-	},
+	},*/
+	_portraitImageNames: [],
 	_sceneImages: [],
 	_sceneImagesComments: [],
 	_portraitImages: [],
@@ -95,18 +33,55 @@ var Gallery = {
 
 	init: function() {
 		var self = Gallery;
+	
 
-		self._numberOfSceneImages = 0;
-		$.each( self._sceneImageNames, function( key, elem ) {
+	$.ajax({
+		  url: "include/db_scene_images.php",   /* include/db_ajax.php */
+			type: 'POST',
+			
+			dataType: 'json',
+			async: false,
+		  
+		  success:  function( data ) { 
+
+		  var html = "";
+
+			$.each( data, function( key, elem ) {
+				self._sceneImageNames.push( elem );
+			}); // each
+
+			self._numberOfSceneImages = 0;
+			$.each( self._sceneImageNames, function( key, elem ) {
 			self._addSceneImage( elem.thumb, elem.big, elem.comment );
 			self._numberOfSceneImages++;
 		});
 
-		self._numberOfPortraitImages = 0;
-		$.each( self._portraitImageNames, function( key, elem ) {
+		} // success
+	});
+
+	$.ajax({
+		  url: "include/db_portr_images.php",   /* include/db_ajax.php */
+			type: 'POST',
+			
+			dataType: 'json',
+			async: false,
+		  
+		  success:  function( data ) { 
+
+		  	var html = "";
+
+			$.each( data, function( key, elem ) {
+				self._portraitImageNames.push( elem );
+			}); // each
+
+			self._numberOfPortraitImages = 0;
+			$.each( self._portraitImageNames, function( key, elem ) {
 			self._addPortraitImage( elem.thumb, elem.big, elem.comment );
 			self._numberOfPortraitImages++;
 		});
+
+		} // success
+	});
 
 
 		self._makeHTML();
@@ -442,7 +417,7 @@ var Gallery = {
 		$image = $(image);
 
 
-		var downloadLink = $("<a src = 'portait1.jpg' download = '" + [ "images/PORTR_1_FULL.jpg", "images/PORTR_2_FULL.jpg", "images/PORTR_3_FULL.jpg" ] [ index ] + "' class='download-icon'></a> ")[0];
+		var downloadLink = $("<a href = '" + [ "image_download/PORTR_1_FULL.jpg", "image_download/PORTR_2_FULL.jpg", "image_download/PORTR_3_FULL.jpg" ] [ index ] + "' class='download-icon' download data-tooltip='In voller Qualität herunterladen.'></a> ")[0];
 
 		downloadLink.appendChild( self.downloadIcon );
 
