@@ -90,6 +90,14 @@
 
 	@include user-select(none);
 
+
+
+	@media screen and ( max-height: 700px ) {
+		width: 208px;
+		font-size: 16px;
+	}
+
+
 	
 
 
@@ -176,10 +184,10 @@
 	position: relative;
 	display: block;
 	overflow: hidden;
-	height: 35%;
+	height: 32%;
 	width: 100%;
 	top: 0;
-	margin-bottom: 10%;
+	margin-bottom: 12%;
 
 	z-index: 250;
 	background-color: #fff;
@@ -191,10 +199,12 @@
 
 .vita-text-wrapper {
 	font-size: 110%;
-	position: relative;
-	width: 95%;
+	position: absolute;
+	left: 0; 
+	right: 10%;
+	top: 45%;
+	bottom: 0;
 	
-	top: 1%;
 	text-align: justify;
 
 	p {
@@ -591,6 +601,13 @@ a {
 
 
 		font-size: 92%;
+
+		@media screen and ( max-height: 750px ) {
+			font-size: 85%;
+		}
+		@media screen and ( max-height: 700px ) {
+			font-size: 75%;
+		}
 
 
 		z-index: 255;

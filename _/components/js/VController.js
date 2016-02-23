@@ -139,7 +139,7 @@ var VController = (function(window, document, undefined) {
 		this.mc.removeState("vita");
 		for (var i = 0; i < 5; i++ ) {
 			if ( i == 1 ) {
-				vitaState.push({ x: 0.3 * window.innerWidth + menuX, y: menuTop + i*menuItemHeight, width: 230 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+				vitaState.push({ x: 0.3 * window.innerWidth, y: menuTop + i*menuItemHeight, width: 230 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
 			vitaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
 			}

@@ -57,7 +57,7 @@
 		},
 		{
 			ort: "Berlin", jahr: "2015",
-			besetzung: [ "<br>Oboe - Christoph Hartmann", "Sopran - Hanna Hefurtner", "Elektronik - Wolfgang Heiniger" ]
+			besetzung: [ "<br>Oboe - Christoph Hartmann", "Sopran - Hanna Herfurtner", "Elektronik - Wolfgang Heiniger" ]
 		},
 		{
 			ort: "Tokio", jahr: "2012",

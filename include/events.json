@@ -46,12 +46,12 @@
 	},
 
 	"3":{ 
-	"title": 			"HIMMLISCHES JERUSALEM",
+	"title": 			"HIMMLISCHES<br>JERUSALEM",
 	"komponist": 		"Rossi/de Victoria/de Sumaya",
 	"ort":				"Friedenskirche, Köln Ehrenfeld",
 	"datum":			"10. März 2016",
 	"besetzung":		{
-		"Musikalische Leitung":	"Michael Alexander Willens",
+		"Dirigat":	"Michael Alexander Willens",
 		
 		"-1":			"Kölner Akademie"
 		}

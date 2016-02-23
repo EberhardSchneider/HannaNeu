@@ -124,6 +124,8 @@ var Agenda = {
 		self.navMenuItem = $(".kloetzchen")[0];
 		self.activateNavigation();
 
+		$(".scroll-div-wrapper").toggleClass("hide");  // hide scroll Bar (in case it must be moved in 'callback')
+
 
 	},
 
@@ -136,6 +138,15 @@ var Agenda = {
 	// callback after html is inserted
 	callback: function() {
 		var self = this;
+
+		if (window.innerHeight < 750) {   // if screen is to narrow move scroll div to bottom
+			$(".scroll-div-wrapper").css("bottom","0");
+		}
+		if (window.innerHeight < 700) {
+			$(".event").css({ "font-size": "80%", "height": ""})
+		}
+		$(".scroll-div-wrapper").toggleClass("hide");  // then show it
+
 
 		self.eventBoxWidth = $(".event")[0].getBoundingClientRect()["width"] + 1;
 		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
@@ -177,7 +188,7 @@ var Agenda = {
 		$(".agenda")[0],removeEventListener("mousedown", self.mouseDownHandler );
 		document.body.removeEventListener("mouseup", self.mouseUpHandler );
 		document.body.removeEventListener("mouesemove", self.mosueMoveHandler );
-		$("body").off("mousewheel", false);
+		$("body").off();
 		},
 
 
@@ -242,7 +253,7 @@ var Agenda = {
 	mouseScrollHandler: function( event ) {
 			var self = Agenda;
 
-			var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 10;
+			var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 8;
 			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
 			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;
 

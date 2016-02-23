@@ -39,9 +39,13 @@ var Kontakt = {
 		overlay.append( self.closeIcon );
 
 		var impressumDiv = $("<div class='impressum'></div>");
+		if (window.innerHeight < 725) {
+			impressumDiv.css("font-size","85%");
+		}
 		if (window.innerHeight < 700) {
 			impressumDiv.css("font-size","75%");
 		}
+
 
 		impressumDiv.append( $(".impressum-text").html() );
 		overlay.append(impressumDiv);

@@ -270,7 +270,7 @@ var Gallery = {
 		self.navMenuItem.removeEventListener( "mousedown", self._mouseDownHandler);
 		document.body.removeEventListener( "mouseup", self._mouseUpHandler);
 		document.body.removeEventListener( "mousemove", self._mouseMoveHandler);
-
+		$(".content").off();  // deactivate mousewheel functionality
 		$(".menu-item").eq(3).on( "click", function() { events.emit("itemClicked", $(this).index() ); });
 
 	},

@@ -105,8 +105,8 @@ var Content = function(a, b, c) {
         var a = Kontakt, b = $("<div class = 'impressum-overlay'></div>");
         b.append(a.closeIcon);
         var c = $("<div class='impressum'></div>");
-        window.innerHeight < 700 && c.css("font-size", "75%"), c.append($(".impressum-text").html()), 
-        b.append(c), $("body").append(b), $(".close-icon")[0].addEventListener("click", function() {
+        window.innerHeight < 725 && c.css("font-size", "85%"), window.innerHeight < 700 && c.css("font-size", "75%"), 
+        c.append($(".impressum-text").html()), b.append(c), $("body").append(b), $(".close-icon")[0].addEventListener("click", function() {
             $(".impressum-overlay").remove();
         });
     }
@@ -310,7 +310,7 @@ var Content = function(a, b, c) {
         var q = [];
         this.mc.removeState("vita");
         for (var n = 0; 5 > n; n++) 1 == n ? q.push({
-            x: .3 * a.innerWidth + k,
+            x: .3 * a.innerWidth,
             y: c + n * d,
             width: 230 * j,
             height: d,
@@ -617,16 +617,19 @@ var Content = function(a, b, c) {
     },
     activate: function() {
         var a = Agenda;
-        a.navMenuItem = $(".kloetzchen")[0], a.activateNavigation();
+        a.navMenuItem = $(".kloetzchen")[0], a.activateNavigation(), $(".scroll-div-wrapper").toggleClass("hide");
     },
     deactivate: function() {
         Agenda.deactivateNavigation();
     },
     callback: function() {
         var a = this;
-        a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1, a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), 
-        $(".agenda").css("width", a.timelineLength + "px"), $("body").mousewheel(a.mouseScrollHandler), 
-        $(".event-image").click(function() {
+        window.innerHeight < 750 && $(".scroll-div-wrapper").css("bottom", "0"), window.innerHeight < 700 && $(".event").css({
+            "font-size": "80%",
+            height: ""
+        }), $(".scroll-div-wrapper").toggleClass("hide"), a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1, 
+        a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), $(".agenda").css("width", a.timelineLength + "px"), 
+        $("body").mousewheel(a.mouseScrollHandler), $(".event-image").click(function() {
             $(this).toggleClass("scroll-out");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
         a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth, $(a.navMenuItem).animate({
@@ -644,7 +647,7 @@ var Content = function(a, b, c) {
     deactivateNavigation: function() {
         var a = Agenda;
         $(".agenda")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
-        document.body.removeEventListener("mouesemove", a.mosueMoveHandler), $("body").off("mousewheel", !1);
+        document.body.removeEventListener("mouesemove", a.mosueMoveHandler), $("body").off();
     },
     animateTimeline: function() {
         var a = Agenda;
@@ -675,7 +678,7 @@ var Content = function(a, b, c) {
         }
     },
     mouseScrollHandler: function(a) {
-        var b = Agenda, c = parseInt($(".kloetzchen").css("left"), 10) + 10 * a.deltaY;
+        var b = Agenda, c = parseInt($(".kloetzchen").css("left"), 10) + 8 * a.deltaY;
         c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px");
         var d = c / (b.scrollWidth - 32);
         $(".agenda").stop().animate({
@@ -740,7 +743,7 @@ var Content = function(a, b, c) {
     }, {
         ort: "Berlin",
         jahr: "2015",
-        besetzung: [ "<br>Oboe - Christoph Hartmann", "Sopran - Hanna Hefurtner", "Elektronik - Wolfgang Heiniger" ]
+        besetzung: [ "<br>Oboe - Christoph Hartmann", "Sopran - Hanna Herfurtner", "Elektronik - Wolfgang Heiniger" ]
     }, {
         ort: "Tokio",
         jahr: "2012",
@@ -1014,7 +1017,8 @@ var Content = function(a, b, c) {
     _deactivateNavigation: function() {
         var a = Gallery;
         a.navMenuItem.removeEventListener("mousedown", a._mouseDownHandler), document.body.removeEventListener("mouseup", a._mouseUpHandler), 
-        document.body.removeEventListener("mousemove", a._mouseMoveHandler), $(".menu-item").eq(3).on("click", function() {
+        document.body.removeEventListener("mousemove", a._mouseMoveHandler), $(".content").off(), 
+        $(".menu-item").eq(3).on("click", function() {
             events.emit("itemClicked", $(this).index());
         });
     },
