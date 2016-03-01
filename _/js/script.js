@@ -26,23 +26,7 @@ var Content = function(a, b, c) {
             setTimeout(b._content[b._currentContentName].callback, 900);
         }));
     }, d;
-}(window, document), events = {
-    events: {},
-    on: function(a, b) {
-        this.events[a] = this.events[a] || [], this.events[a].push(b);
-    },
-    off: function(a, b) {
-        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
-            this.events[a].splice(c, 1);
-            break;
-        }
-    },
-    emit: function(a, b) {
-        this.events[a] && this.events[a].forEach(function(a) {
-            a(b);
-        });
-    }
-}, GalleryClass = function() {
+}(window, document), GalleryClass = function() {
     function a(a) {
         this._images = [], this._imageFilenames = [], this._sources = a, this._isMouseDown = !1, 
         this._draggedObject = {
@@ -147,27 +131,6 @@ var Content = function(a, b, c) {
             a.stretch(d.width[c], b._propertiesAnimationHandler.bind(b)), a.changeHeight(d.height[c], b._propertiesAnimationHandler.bind(b)), 
             a.changeFontSize(d.fontSize[c], b._propertiesAnimationHandler.bind(b)), a.changeOpacity(d.opacity[c], b._propertiesAnimationHandler.bind(b));
         }), void (this._currentState = d));
-    }, d;
-}(window, document), State = function() {
-    function a(a, b) {
-        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
-        this.opacity = [];
-        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
-        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
-    }
-    return a.prototype.getName = function() {
-        return this._name;
-    }, a;
-}(), MenuStates = function(a, b, c) {
-    function d() {
-        this._numberItems = 0, this._states = [];
-    }
-    return d.prototype.addState = function(a, b) {
-        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
-    }, d.prototype.removeState = function(a) {
-        delete this._states[a], this._numberOfItems = this._states.length;
-    }, d.prototype.getState = function(a) {
-        return this._states[a];
     }, d;
 }(window, document), Thumbnail = function() {
     function a(a, b, c, d) {
@@ -580,6 +543,7 @@ var Content = function(a, b, c) {
     numberOfEventboxes: 0,
     deceleration: .9,
     isMouseDown: !1,
+    isTouch: !1,
     draggedObject: {
         domElement: {},
         x: 0,
@@ -604,8 +568,9 @@ var Content = function(a, b, c) {
                     var d = "";
                     Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
                         d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
-                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div>\r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + '</div>\r\n							</div>\r\n							<div class="event-low">\r\n								<div class="besetzung">' + d + "</div>\r\n							</div>", 
-                    void 0 !== b.image && (c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div>'), 
+                    }), c += '<div class="event">\n							<div class="event-up">\n								<div class="komponist">' + b.komponist + '</div>\n								<div class="title">' + b.title + '</div>\n								<div class="ort">' + b.ort + '</div>\n							</div> \n							<div class="event-date">\n								<div class="datum">' + b.datum + "</div>\n							</div>", 
+                    void 0 !== b.image ? (c += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">' + d + "</div></div>", 
+                    c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div></div>') : c += '<div class="card"><div class="event-low"><div class="besetzung">' + d + "</div></div></div>", 
                     c += "</div>";
                 }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div><div class='strich'></div></div></div>", 
                 a.html = c;
@@ -629,8 +594,8 @@ var Content = function(a, b, c) {
             height: ""
         }), $(".scroll-div-wrapper").toggleClass("hide"), a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1, 
         a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), $(".agenda").css("width", a.timelineLength + "px"), 
-        $("body").mousewheel(a.mouseScrollHandler), $(".event-image").click(function() {
-            $(this).toggleClass("scroll-out");
+        $("body").mousewheel(a.mouseScrollHandler), $(".flippable").click(function() {
+            $("div", this).toggleClass("flipped");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
         a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth, $(a.navMenuItem).animate({
             left: "150px"
@@ -642,7 +607,9 @@ var Content = function(a, b, c) {
     },
     activateNavigation: function() {
         $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
-        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1);
+        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1), 
+        $(document).on("touchstart", ".agenda", Agenda.touchStartHandler), $(document).on("touchend", "body", Agenda.touchEndHandler), 
+        $(document).on("touchmove", "body", Agenda.touchMoveHandler);
     },
     deactivateNavigation: function() {
         var a = Agenda;
@@ -684,6 +651,27 @@ var Content = function(a, b, c) {
         $(".agenda").stop().animate({
             left: -d * b._maxScrollWidth + .28 * window.innerWidth
         }, 100), b.oldNavItemPos = c;
+    },
+    touchStartHandler: function(a) {
+        console.log(a.originalEvent.touches[0].pageX);
+        var b = Agenda, c = $(".scroll-div")[0].getBoundingClientRect(), d = c.left;
+        parseInt($(b.navMenuItem).css("left"), 10);
+        b.startX = a.originalEvent.touches[0].pageX;
+        var e = b.startX - d;
+        e = 24 > e ? 24 : e, b.oldAgendaLeft = parseInt($(".agenda").css("left"), 10), b.isTouch = !0;
+    },
+    touchEndHandler: function() {
+        var a = Agenda;
+        a.isTouch = !1;
+    },
+    touchMoveHandler: function(a) {
+        if (Agenda.isTouch) {
+            var b = Agenda, c = a.originalEvent.touches[0].pageX - b.startX, d = b.oldAgendaLeft + c;
+            d = d > .28 * window.innerWidth ? .28 * window.innerWidth : d, d = d < -b._maxScrollWidth - b.eventBoxWidth + .6 * window.innerWidth ? -b._maxScrollWidth - b.eventBoxWidth + .6 * window.innerWidth : d, 
+            $(".agenda").css("left", d + "px");
+            var e = (.3 * window.innerWidth - d) * (b.scrollWidth - 32) / b._maxScrollWidth;
+            $(".kloetzchen").css("left", e);
+        }
     }
 }, AudioPlayer = {
     _html: "",
@@ -905,6 +893,22 @@ var Content = function(a, b, c) {
     audioReady: function() {
         var a = AudioPlayer;
         a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
+    }
+}, events = {
+    events: {},
+    on: function(a, b) {
+        this.events[a] = this.events[a] || [], this.events[a].push(b);
+    },
+    off: function(a, b) {
+        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
+            this.events[a].splice(c, 1);
+            break;
+        }
+    },
+    emit: function(a, b) {
+        this.events[a] && this.events[a].forEach(function(a) {
+            a(b);
+        });
     }
 }, Gallery = {
     html: "",
@@ -1206,4 +1210,25 @@ var Item = function() {
         this._height = d || this._height, this._fontSize = e || this._fontSize, this._opacity = f || this._opacity, 
         this._animateXY(g._x, g._y, function() {}, .1);
     }, a;
-}();
+}(), State = function() {
+    function a(a, b) {
+        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
+        this.opacity = [];
+        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
+        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
+    }
+    return a.prototype.getName = function() {
+        return this._name;
+    }, a;
+}(), MenuStates = function(a, b, c) {
+    function d() {
+        this._numberItems = 0, this._states = [];
+    }
+    return d.prototype.addState = function(a, b) {
+        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
+    }, d.prototype.removeState = function(a) {
+        delete this._states[a], this._numberOfItems = this._states.length;
+    }, d.prototype.getState = function(a) {
+        return this._states[a];
+    }, d;
+}(window, document);

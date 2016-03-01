@@ -22,6 +22,7 @@ var Agenda = {
 	deceleration: 	0.9,
 
 	isMouseDown: 	false,
+	isTouch:        false,
 	draggedObject: 	{
 		domElement: 	{},
 		x: 	0,
@@ -85,17 +86,22 @@ var Agenda = {
 								<div class="komponist">' + elem.komponist + '</div>
 								<div class="title">'+ elem.title +'</div>
 								<div class="ort">'+ elem.ort +'</div>
-							</div>
+							</div> 
 							<div class="event-date">
 								<div class="datum">'+ elem.datum +'</div>
-							</div>
-							<div class="event-low">
-								<div class="besetzung">'+ besetzung +'</div>
-							</div>';
+							</div>'; //event-date 
+							//  <div class="card">
+							// <div class="event-low">
+							// 	<div class="besetzung">'+ besetzung +'</div>
+							// </div>';  */
 
 						if ( elem.image !== undefined ) {
-							html += ' <div class="event-image"> <img src ="'+ elem.image +'"/> </div>';
-						}	
+							html += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">'+ besetzung +'</div></div>';
+
+							html += ' <div class="event-image"> <img src ="'+ elem.image +'"/> </div></div>';
+						} else {
+							html += '<div class="card"><div class="event-low"><div class="besetzung">'+ besetzung +'</div></div></div>';
+						}
 
 						html += '</div>';
 				});		// each
@@ -154,8 +160,8 @@ var Agenda = {
 
 		$("body").mousewheel( self.mouseScrollHandler );
 
-		$(".event-image").click( function() {
-			$(this).toggleClass("scroll-out");
+		$(".flippable").click( function() {
+			$("div", this).toggleClass("flipped");
 		} );
 
 		self.scrollWidth = parseInt( $(".scroll-div").css("width"), 10);  // Breite des Scroll-Divs
@@ -180,6 +186,10 @@ var Agenda = {
 		$(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
 		document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
 		document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
+
+		$(document).on("touchstart",".agenda", Agenda.touchStartHandler );
+		$(document).on("touchend", "body", Agenda.touchEndHandler );
+		$(document).on("touchmove", "body", Agenda.touchMoveHandler );
 	
 	},
 
@@ -263,6 +273,64 @@ var Agenda = {
 			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth }, 100 );
 
 			self.oldNavItemPos = newItemPos;
+
+	},
+
+	touchStartHandler: function( event ) {
+		console.log(event.originalEvent.touches[0].pageX);
+
+		var self = Agenda;
+
+		var scrollDivRect = $(".scroll-div")[0].getBoundingClientRect();
+		var scrollDivX = scrollDivRect.left;
+		var kloetzchenX = parseInt( $(self.navMenuItem).css("left"),10 );
+
+
+		self.startX = event.originalEvent.touches[0].pageX;
+		var clickX = self.startX - scrollDivX;
+		clickX = ( clickX < 24 ) ? 24 : clickX;
+
+		self.oldAgendaLeft = parseInt( $(".agenda").css("left"), 10 );
+		
+	
+		self.isTouch = true;
+
+	},
+
+	touchEndHandler: function() {
+		var self = Agenda;
+
+		self.isTouch = false;
+	},
+
+	touchMoveHandler: function( event ) {
+
+		if (Agenda.isTouch) {
+			var self = Agenda;
+
+			/*var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 8;
+			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;*/
+
+			var deltaX = event.originalEvent.touches[0].pageX - self.startX;
+			var newLeft = self.oldAgendaLeft + deltaX;
+
+			newLeft = ( newLeft > 0.28 * window.innerWidth ) ? 0.28*window.innerWidth : newLeft;
+			newLeft = ( newLeft < (-self._maxScrollWidth - self.eventBoxWidth + 0.6 * window.innerWidth ) ) ? (-self._maxScrollWidth - self.eventBoxWidth + 0.6 * window.innerWidth ) : newLeft ;
+
+			$(".agenda").css("left", newLeft + "px" );
+			
+
+			var kloetzchenPos = (0.3 * window.innerWidth - newLeft ) * ( self.scrollWidth - 32 ) / self._maxScrollWidth;
+			$(".kloetzchen").css("left", kloetzchenPos );
+
+			/*$(self.navMenuItem).css("left", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.scrollWidth - 32);
+			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth }, 100 );
+
+			self.oldNavItemPos = newItemPos;*/
+
+		} // touchMove Handler
 
 	}
 

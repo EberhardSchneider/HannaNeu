@@ -1,4 +1,4 @@
-require 'C:\Ruby22-x64\lib\ruby\gems\2.2.0\gems\susy-2.2.12\lib\susy.rb'
+require 'susy'
 css_dir = '_/css'
 sass_dir = '_/components/sass'
 javascript_dir = '_/js'
