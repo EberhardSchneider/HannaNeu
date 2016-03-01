@@ -194,25 +194,27 @@ img {
   left: 50%;
   transform: translate(-50%, -50%); }
 
-/* line 107, ../components/sass/_layout.scss */
-.home-circle {
-  position: fixed;
-  width: 90vh;
-  height: 90vh;
-  border-radius: 80vh;
-  z-index: 99;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden; }
-/* line 120, ../components/sass/_layout.scss */
-.home-circle img {
-  width: 110%;
-  height: auto;
-  opacity: 0.3;
-  display: none; }
+/* .home-circle {
+	position: fixed;
+	width: 90vh;
+	height: 90vh;
 
+	border-radius: 80vh;
+	
+	z-index: 99;
+
+	@include centerer;
+
+	overflow: hidden;
+
+	img {
+		width: 110%;
+		height: auto;
+		opacity: 0.3;
+		display: none;
+	}
+
+} */
 /* line 134, ../components/sass/_layout.scss */
 .vita-wrapper {
   position: relative;
