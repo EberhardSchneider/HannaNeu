@@ -522,7 +522,7 @@ var Content = function(a, b, c) {
         }
     },
     mouseScrollHandler: function(a) {
-        var b = Vita, c = parseInt($(".vita-kloetzchen").css("top"), 10) - 20 * a.deltaY;
+        var b = Vita, c = parseInt($(".vita-kloetzchen").css("top"), 10) - 12 * a.deltaY;
         c = 0 > c ? 0 : c, c = c > b.scrollHeight - 48 ? b.scrollHeight - 48 : c, $(b.navMenuItem).css("top", c + "px");
         var d = c / (b.scrollHeight - 48);
         $(".vita-text").css("top", -d * b._maxScrollHeight), b.oldNavItemPos = c;

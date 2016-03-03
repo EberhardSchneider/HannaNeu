@@ -134,7 +134,7 @@
 .vita-wrapper {
 	position: relative;
 	left: 30%;
-	width: 60%;
+	width: 55%;
 	height: 100%;
 
 	padding: 5px;
@@ -173,6 +173,19 @@
 	width: 1px;
 	background-color: black;
 	@include centerer;
+}
+
+.button-wrapper {
+	position: fixed;
+	top: 40%;
+	right: 0;
+	width: 11%;
+	margin: 2%;
+
+	>div {
+		display: block;
+		margin: 15% 2%;
+	}
 }
 
 // audio ------------------------------------------------------------------

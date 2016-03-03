@@ -83,7 +83,7 @@
 	padding-left: 15px;
 	padding-right: 15px;
 
-	font-size: 20px;
+	font-size: 100% !important;
 
 	border: solid 2px  rgba(0,0,0,0);
 	margin-right: 28px;
@@ -101,7 +101,7 @@
 
 	@media screen and ( max-height: 700px ) {
 		width: 208px;
-		font-size: 16px;
+		font-size: 91% !important;
 	}
 
 
@@ -236,7 +236,7 @@
 	font-size: 110%;
 	position: absolute;
 	left: 0; 
-	right: 10%;
+	right: 5%;
 	top: 45%;
 	bottom: 0;
 	
@@ -259,7 +259,32 @@ a {
 
 .vita-text {
 	position: relative;
+	i {
+		font-style: italic;
+		white-space: nowrap;
+	}
+
+	b {
+		font-weight: bold;
+		white-space: nowrap;
+
+	}
 }
+
+.button-wrapper {
+	
+	font-size: 65%;
+	font-variant: small-caps;
+	a {
+		color: #000;
+		opacity: 0.6;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
 
 
 // audio -----------------------------------------------------------------------

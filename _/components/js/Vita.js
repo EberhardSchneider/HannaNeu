@@ -111,7 +111,7 @@ var Vita = {
 		mouseScrollHandler: function( event ) {
 			var self = Vita;
 
-			var newItemPos = parseInt( $(".vita-kloetzchen").css("top"), 10) - event.deltaY * 20;
+			var newItemPos = parseInt( $(".vita-kloetzchen").css("top"), 10) - event.deltaY * 12;
 			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
 			newItemPos = ( newItemPos > self.scrollHeight - 48) ? self.scrollHeight - 48 : newItemPos;
 
