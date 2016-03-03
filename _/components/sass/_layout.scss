@@ -30,11 +30,11 @@
 
 
 .content {
-	position: relative;
+	position: absolute;
 	display: inline-block;
 	width: 100vw;
 	height: 100vh;
-	@include centerer;
+	
 	background-color: #fff;
 	
 	z-index: -255;
@@ -47,7 +47,7 @@
 	position: absolute;
 	left: 30%;
 	top: 19%;
-
+	width: 5000%;
 	height: 52%;
 	min-height:540px;
 	overflow: hidden;

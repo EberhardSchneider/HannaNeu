@@ -44,7 +44,6 @@
 
 .agenda {
 	@include user-select(none);
-	width: 150%;
 	display: inline-block;
 }
 
@@ -276,6 +275,7 @@ a {
 	font-size: 65%;
 	font-variant: small-caps;
 	a {
+		font-family: Raleway;
 		color: #000;
 		opacity: 0.6;
 
