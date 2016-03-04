@@ -96,7 +96,7 @@ var Gallery = {
 
 		var imgWidth = 0.254 * window.innerHeight;
 
-		var sceneImagesContainerWidth = imgWidth * Math.floor( self._sceneImages.length / 2) + 1;
+		var sceneImagesContainerWidth = imgWidth * ( Math.floor( self._sceneImages.length / 2) + 1);
 		var portraitImagesContainerWidth = imgWidth * self._portraitImages.length + 1;
 
 		
@@ -213,6 +213,10 @@ var Gallery = {
 		document.body.addEventListener("mousemove", self._mouseMoveHandler, false );
 
 		$(".content").mousewheel( self.mouseScrollHandler );
+
+		$(document).on("touchstart",".scene-images-container", self.touchStartHandler );
+		$(document).on("touchend", "body", self.touchEndHandler );
+		$(document).on("touchmove", "body", self.touchMoveHandler );
 
 
 
@@ -500,20 +504,81 @@ var Gallery = {
 	self._presentedImageIndex = currentIndex;
 	}, // _arrowRightClickHandler
 
-		mouseScrollHandler: function( event ) {
+	mouseScrollHandler: function( event ) {
+		var self = Gallery;
+
+		var newItemPos = parseInt( $(".sehen-kloetzchen").css("left"), 10) + event.deltaY * 40;
+		newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
+		newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+
+		$(self.navMenuItem).css("left", newItemPos + "px");
+		var scrollRatio = newItemPos/(self.scrollWidth - 48);
+		$(".scene-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+		/*$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );*/
+		$(".portrait-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+
+		self.oldNavItemPos = newItemPos;
+
+	},
+
+	touchStartHandler: function( event ) {
+		var self = Gallery;
+
+
+		var scrollDivRect = $(".sehen-scroll-div")[0].getBoundingClientRect();
+		var scrollDivX = scrollDivRect.left;
+		var kloetzchenX = parseInt( $(self.navMenuItem).css("left"),10 );
+
+
+		self.startX = event.originalEvent.touches[0].pageX;
+		var clickX = self.startX - scrollDivX;
+		clickX = ( clickX < 24 ) ? 24 : clickX;
+
+		self.oldSehenLeft = parseInt( $(".scene-images-container").css("left"), 10 );
+		
+	
+		self.isTouch = true;
+
+	},
+
+	touchEndHandler: function() {
+		var self = Gallery;
+
+
+		self.isTouch = false;
+	},
+
+	touchMoveHandler: function( event ) {
+
+		if (Gallery.isTouch) {
 			var self = Gallery;
 
-			var newItemPos = parseInt( $(".sehen-kloetzchen").css("left"), 10) + event.deltaY * 40;
+
+			/*var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 8;
 			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.scrollWidth - 48) ? self.scrollWidth - 48 : newItemPos;
+			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;*/
 
-			$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.scrollWidth - 48);
-			$(".scene-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
-			/*$(".portrait-images-container").css("left", -scrollRatio * self._portraitMaxScrollWidth );*/
-			$(".portrait-images-container").css("left", -scrollRatio * self._sceneMaxScrollWidth );
+			var deltaX = event.originalEvent.touches[0].pageX - self.startX;
+			var newLeft = self.oldSehenLeft + deltaX;
 
-			self.oldNavItemPos = newItemPos;
+			newLeft = ( newLeft > 0 ) ? 0: newLeft;
+			newLeft = ( newLeft < (-self._sceneMaxScrollWidth) ) ? (-self._sceneMaxScrollWidth) : newLeft ;
+
+			$(".scene-images-container").css("left", newLeft + "px" );
+			$(".portrait-images-container").css("left", newLeft + "px" );
+			console.log("Old: " + self.oldSehenLeft + "  delta: " + deltaX + " New: " + newLeft );
+			
+
+			var kloetzchenPos = -newLeft * ( self.scrollWidth - 32 ) / self._sceneMaxScrollWidth;
+			$(".sehen-kloetzchen").css("left", kloetzchenPos );
+
+			/*$(self.navMenuItem).css("left", newItemPos + "px");
+			var scrollRatio = newItemPos/(self.scrollWidth - 32);
+			$(".agenda").stop().animate( {"left": -scrollRatio * self._sceneMaxScrollWidth + 0.28 * window.innerWidth }, 100 );
+
+			self.oldNavItemPos = newItemPos;*/
+
+		} // touchMove Handler
 
 	}
 

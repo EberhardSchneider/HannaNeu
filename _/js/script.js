@@ -950,7 +950,7 @@ var Content = function(a, b, c) {
         }), a._makeHTML();
     },
     activate: function() {
-        var a = Gallery, b = .254 * window.innerHeight, c = b * Math.floor(a._sceneImages.length / 2) + 1, d = b * a._portraitImages.length + 1;
+        var a = Gallery, b = .254 * window.innerHeight, c = b * (Math.floor(a._sceneImages.length / 2) + 1), d = b * a._portraitImages.length + 1;
         a._sceneMaxScrollWidth = c - .7 * window.innerWidth, a._portraitMaxScrollWidth = d - .7 * window.innerWidth, 
         $(".scene-images-container").css("width", c), $(".portrait-images-container").css("width", d), 
         a.arrowLeft = new Image(), a.arrowLeft.src = "icons_e/arrow-left.svg", a.arrowLeft.className = "arrow-left", 
@@ -993,7 +993,8 @@ var Content = function(a, b, c) {
         var a = Gallery;
         $(a.navMenuItem).off(), $(".sehen-scroll-div")[0].addEventListener("mousedown", a._mouseDownHandler, !1), 
         document.body.addEventListener("mouseup", a._mouseUpHandler, !1), document.body.addEventListener("mousemove", a._mouseMoveHandler, !1), 
-        $(".content").mousewheel(a.mouseScrollHandler);
+        $(".content").mousewheel(a.mouseScrollHandler), $(document).on("touchstart", ".scene-images-container", a.touchStartHandler), 
+        $(document).on("touchend", "body", a.touchEndHandler), $(document).on("touchmove", "body", a.touchMoveHandler);
     },
     _mouseDownHandler: function(a) {
         var b = Gallery, c = $(".sehen-scroll-div")[0].getBoundingClientRect(), d = c.left, e = parseInt($(b.navMenuItem).css("left"), 10), f = a.pageX - d;
@@ -1110,6 +1111,28 @@ var Content = function(a, b, c) {
         var d = c / (b.scrollWidth - 48);
         $(".scene-images-container").css("left", -d * b._sceneMaxScrollWidth), $(".portrait-images-container").css("left", -d * b._sceneMaxScrollWidth), 
         b.oldNavItemPos = c;
+    },
+    touchStartHandler: function(a) {
+        var b = Gallery, c = $(".sehen-scroll-div")[0].getBoundingClientRect(), d = c.left;
+        parseInt($(b.navMenuItem).css("left"), 10);
+        b.startX = a.originalEvent.touches[0].pageX;
+        var e = b.startX - d;
+        e = 24 > e ? 24 : e, b.oldSehenLeft = parseInt($(".scene-images-container").css("left"), 10), 
+        b.isTouch = !0;
+    },
+    touchEndHandler: function() {
+        var a = Gallery;
+        a.isTouch = !1;
+    },
+    touchMoveHandler: function(a) {
+        if (Gallery.isTouch) {
+            var b = Gallery, c = a.originalEvent.touches[0].pageX - b.startX, d = b.oldSehenLeft + c;
+            d = d > 0 ? 0 : d, d = d < -b._sceneMaxScrollWidth ? -b._sceneMaxScrollWidth : d, 
+            $(".scene-images-container").css("left", d + "px"), $(".portrait-images-container").css("left", d + "px"), 
+            console.log("Old: " + b.oldSehenLeft + "  delta: " + c + " New: " + d);
+            var e = -d * (b.scrollWidth - 32) / b._sceneMaxScrollWidth;
+            $(".sehen-kloetzchen").css("left", e);
+        }
     }
 };
 

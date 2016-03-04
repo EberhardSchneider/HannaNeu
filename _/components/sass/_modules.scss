@@ -1,6 +1,6 @@
 .home-button {
 	position: absolute;
-	width: 128px;
+	width: 8%;
 	top: 0px;
 	z-index: 255;
 	padding: 10px;
@@ -15,7 +15,7 @@
 	}
 	img {
 		color: black;
-		width: 128px;
+		width: 8%;
 	}
 }
 
@@ -302,6 +302,23 @@ a {
 	}
 	
 	z-index: 255;
+
+	@media screen and ( max-height: 700px ) {
+		font-size: 85% !important;
+		margin-bottom: 30px;
+	}
+
+	@media screen and ( max-height: 650px ) {
+		font-size: 75% !important;
+		margin-bottom: 25px;
+
+	}
+
+	@media screen and ( max-height: 600px ) {
+		font-size: 65% !important;
+		margin-bottom: 20px;
+
+	}
 }
 
 .selected {

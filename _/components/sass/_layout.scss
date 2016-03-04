@@ -49,12 +49,13 @@
 	top: 19%;
 	width: 5000%;
 	height: 52%;
-	min-height:540px;
+	min-height:520px;
 	overflow: hidden;
 
 	z-index: -255;
 	@media screen and ( max-height: 700px ) {
-		height: 41.6%;
+		height: 3.6%;
+		min-height: 460px;
 	}
 }
 
