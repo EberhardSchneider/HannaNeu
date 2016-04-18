@@ -170,9 +170,13 @@ var Agenda = {
 
 		// set right Event in place
 
-			$(self.navMenuItem).animate( {"left": 150 + "px"}, 700);
-			var scrollRatio = 150/(self.scrollWidth - 48);
-			$(".agenda").animate( { "left": -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth }, 700);
+			var leftPosAtStart = $(".event").eq(8).position().left;
+			console.log( leftPosAtStart );
+			
+			var kloetzchenPos = (leftPosAtStart - 0.28 * window.innerWidth ) * (self.scrollWidth - 32) / self._maxScrollWidth;
+			$(self.navMenuItem).animate( {"left": kloetzchenPos + "px"}, 700);
+			
+			self.scrollAgendaAccordingScrollIcon( kloetzchenPos );
 
 
 	},
@@ -252,8 +256,9 @@ var Agenda = {
 			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;
 
 			$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.scrollWidth -  32);
-			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth );
+			/*var scrollRatio = newItemPos/(self.scrollWidth -  32);
+			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth );*/
+			self.scrollAgendaAccordingScrollIcon();
 			
 
 		}
@@ -332,6 +337,18 @@ var Agenda = {
 
 		} // touchMove Handler
 
-	}
+		},
+		scrollAgendaAccordingScrollIcon: function( pos ) {
+			var self = this;
+
+			var newItemPos = pos || $(self.navMenuItem).css("left");
+			console.log(pos + " .. " + newItemPos );
+			var scrollRatio = newItemPos/(self.scrollWidth -  32);
+			$(".agenda").animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth}, 700 );
+
+
+		}
+
+	
 
 }; // Agenda

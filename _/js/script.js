@@ -26,7 +26,23 @@ var Content = function(a, b, c) {
             setTimeout(b._content[b._currentContentName].callback, 900);
         }));
     }, d;
-}(window, document), GalleryClass = function() {
+}(window, document), events = {
+    events: {},
+    on: function(a, b) {
+        this.events[a] = this.events[a] || [], this.events[a].push(b);
+    },
+    off: function(a, b) {
+        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
+            this.events[a].splice(c, 1);
+            break;
+        }
+    },
+    emit: function(a, b) {
+        this.events[a] && this.events[a].forEach(function(a) {
+            a(b);
+        });
+    }
+}, GalleryClass = function() {
     function a(a) {
         this._images = [], this._imageFilenames = [], this._sources = a, this._isMouseDown = !1, 
         this._draggedObject = {
@@ -131,6 +147,27 @@ var Content = function(a, b, c) {
             a.stretch(d.width[c], b._propertiesAnimationHandler.bind(b)), a.changeHeight(d.height[c], b._propertiesAnimationHandler.bind(b)), 
             a.changeFontSize(d.fontSize[c], b._propertiesAnimationHandler.bind(b)), a.changeOpacity(d.opacity[c], b._propertiesAnimationHandler.bind(b));
         }), void (this._currentState = d));
+    }, d;
+}(window, document), State = function() {
+    function a(a, b) {
+        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
+        this.opacity = [];
+        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
+        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
+    }
+    return a.prototype.getName = function() {
+        return this._name;
+    }, a;
+}(), MenuStates = function(a, b, c) {
+    function d() {
+        this._numberItems = 0, this._states = [];
+    }
+    return d.prototype.addState = function(a, b) {
+        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
+    }, d.prototype.removeState = function(a) {
+        delete this._states[a], this._numberOfItems = this._states.length;
+    }, d.prototype.getState = function(a) {
+        return this._states[a];
     }, d;
 }(window, document), Thumbnail = function() {
     function a(a, b, c, d) {
@@ -568,7 +605,7 @@ var Content = function(a, b, c) {
                     var d = "";
                     Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
                         d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
-                    }), c += '<div class="event">\n							<div class="event-up">\n								<div class="komponist">' + b.komponist + '</div>\n								<div class="title">' + b.title + '</div>\n								<div class="ort">' + b.ort + '</div>\n							</div> \n							<div class="event-date">\n								<div class="datum">' + b.datum + "</div>\n							</div>", 
+                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div> \r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + "</div>\r\n							</div>", 
                     void 0 !== b.image ? (c += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">' + d + "</div></div>", 
                     c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div></div>') : c += '<div class="card"><div class="event-low"><div class="besetzung">' + d + "</div></div></div>", 
                     c += "</div>";
@@ -597,13 +634,13 @@ var Content = function(a, b, c) {
         $("body").mousewheel(a.mouseScrollHandler), $(".flippable").click(function() {
             $("div", this).toggleClass("flipped");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
-        a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth, $(a.navMenuItem).animate({
-            left: "150px"
-        }, 700);
-        var b = 150 / (a.scrollWidth - 48);
-        $(".agenda").animate({
-            left: -b * a._maxScrollWidth + .3 * window.innerWidth
-        }, 700);
+        a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth;
+        var b = $(".event").eq(8).position().left;
+        console.log(b);
+        var c = (b - .28 * window.innerWidth) * (a.scrollWidth - 32) / a._maxScrollWidth;
+        $(a.navMenuItem).animate({
+            left: c + "px"
+        }, 700), a.scrollAgendaAccordingScrollIcon(c);
     },
     activateNavigation: function() {
         $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
@@ -639,9 +676,8 @@ var Content = function(a, b, c) {
         var b = Agenda;
         if (b.isMouseDown) {
             var c = b.oldNavItemPos + (a.pageX - b.startX);
-            c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px");
-            var d = c / (b.scrollWidth - 32);
-            $(".agenda").css("left", -d * b._maxScrollWidth + .28 * window.innerWidth);
+            c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px"), 
+            b.scrollAgendaAccordingScrollIcon();
         }
     },
     mouseScrollHandler: function(a) {
@@ -672,6 +708,14 @@ var Content = function(a, b, c) {
             var e = (.3 * window.innerWidth - d) * (b.scrollWidth - 32) / b._maxScrollWidth;
             $(".kloetzchen").css("left", e);
         }
+    },
+    scrollAgendaAccordingScrollIcon: function(a) {
+        var b = this, c = a || $(b.navMenuItem).css("left");
+        console.log(a + " .. " + c);
+        var d = c / (b.scrollWidth - 32);
+        $(".agenda").animate({
+            left: -d * b._maxScrollWidth + .28 * window.innerWidth
+        }, 700);
     }
 }, AudioPlayer = {
     _html: "",
@@ -893,22 +937,6 @@ var Content = function(a, b, c) {
     audioReady: function() {
         var a = AudioPlayer;
         a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
-    }
-}, events = {
-    events: {},
-    on: function(a, b) {
-        this.events[a] = this.events[a] || [], this.events[a].push(b);
-    },
-    off: function(a, b) {
-        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
-            this.events[a].splice(c, 1);
-            break;
-        }
-    },
-    emit: function(a, b) {
-        this.events[a] && this.events[a].forEach(function(a) {
-            a(b);
-        });
     }
 }, Gallery = {
     html: "",
@@ -1187,9 +1215,9 @@ var Item = function() {
         })));
     }, a.prototype._animateHeight = function(a, b, c) {
         var d = this;
-        c = c || 1.5, console.log(d.browser), d._$svg.attr({
+        c = c || 1.5, d._$svg.attr({
             height: a
-        }), "Firefox" != this._browser && "Microsoft Internet Explorer" != this._browser && "Safari" != this._browser ? d._$text.attr({
+        }), "Chrome" != this._browser && "Firefox" != this._browser && "Microsoft Internet Explorer" != this._browser && "Safari" != this._browser ? d._$text.attr({
             y: a - 5
         }) : d._$text.attr({
             y: -5
@@ -1233,25 +1261,4 @@ var Item = function() {
         this._height = d || this._height, this._fontSize = e || this._fontSize, this._opacity = f || this._opacity, 
         this._animateXY(g._x, g._y, function() {}, .1);
     }, a;
-}(), State = function() {
-    function a(a, b) {
-        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
-        this.opacity = [];
-        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
-        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
-    }
-    return a.prototype.getName = function() {
-        return this._name;
-    }, a;
-}(), MenuStates = function(a, b, c) {
-    function d() {
-        this._numberItems = 0, this._states = [];
-    }
-    return d.prototype.addState = function(a, b) {
-        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
-    }, d.prototype.removeState = function(a) {
-        delete this._states[a], this._numberOfItems = this._states.length;
-    }, d.prototype.getState = function(a) {
-        return this._states[a];
-    }, d;
-}(window, document);
+}();

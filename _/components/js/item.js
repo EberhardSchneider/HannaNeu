@@ -69,9 +69,8 @@ var Item = (function() {
 		// default animation function
 		var self = this;
 		duration = duration || 1.5;
-		console.log(self.browser);
 		self._$svg.attr( { height: newHeight });
-		if ( (this._browser != "Firefox") && (this._browser != "Microsoft Internet Explorer") && (this._browser != "Safari")) {
+		if ( (this._browser != "Chrome") &&  (this._browser != "Firefox") && (this._browser != "Microsoft Internet Explorer") && (this._browser != "Safari")) {
 			self._$text.attr( { y: (newHeight - 5) });
 		} else {
 			self._$text.attr( { y: -5 });
