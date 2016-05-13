@@ -170,7 +170,7 @@ var Agenda = {
 
 		// set right Event in place
 
-			var leftPosAtStart = $(".event").eq(8).position().left;
+			var leftPosAtStart = $(".event").eq(11).position().left;
 			console.log( leftPosAtStart );
 			
 			var kloetzchenPos = (leftPosAtStart - 0.28 * window.innerWidth ) * (self.scrollWidth - 32) / self._maxScrollWidth;
