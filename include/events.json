@@ -166,7 +166,144 @@
 		"-1":	"Frankfurter Opern- und Museumsorchester"
 		}
 	},
+
+	"10":{ 
+	"title": 			"Magnificat, Jauchzet Gott",
+	"komponist": 		"<br>Bach",
+	"ort":				"St. Sebald Nürnberg",
+	"datum":			"15. Mai 2016",
+	"besetzung":		{
+		"Dirigat":	"Bernhard Buttmann",
+		"Sopran":	"Hanna Herfurtner",
+		"Altus":	"Regina Pätzer",
+		"Tenor":	"Martin Platz",
+		"Bass":		"Thomas Gropper",
+
+		
+		"-1":			"Sebalder Kantorei",
+		"-2": "Nürnberger Bach-Orchester"
+		}
+	},
+
+
+	"11":{ 
+	"title": 			"IL RITORNO DI TOBIA",
+	"komponist": 		"<br>Haydn",
+	"ort":				"St. Elisabethkirche, Berlin",
+	"datum":			"4. Juni 2016",
+	"besetzung":		{
+		"Musikalische Leitung":	"Kai-Uwe Jirka",
+		
+		
+		"-1":			"Sing-Akademie Berlin",
+		"-2":			"Kammerakademie Potsdam"
+		}
+	},
+
+
 	"12":{ 
+	"title": 			"MAUERSCHAU (UA)",
+	"komponist": 		"<br>Berheide",
+	"ort":				"Reithalle, München",
+	"datum":			"29. Juni 2016",
+	"besetzung":		{
+		"Dirigat":	"Oksana Lyniv",
+		"Regie/Libretto": "Amy Stebbins",
+		"Penthesilea": "Adriana Bastidas-Gamboa",
+		"Penthesileas hoher Schatten": "Leela Subramaniam",
+		"Penthesileas tiefer Schatten": "Hanna Herfurtner",
+		"Achill": "Edwin Crossley-Mercer",
+		"Achills hoher Schatten": "Joshua Owen Mills",
+		"Achills tiefer Schatten": "Frederic Jost",
+		"Botin": "Hildegard Schmahl",
+		
+		
+		"-1":			"Bayerisches Staatsorchester",
+		"-2":			"Extrachor der Bayerischen Staatsoper"
+		}
+	},
+
+	"13":{ 
+	"title": 			"MAUERSCHAU",
+	"komponist": 		"<br>Berheide",
+	"ort":				"Reithalle, München",
+	"datum":			"30. Juni 2016",
+	"besetzung":		{
+		"Dirigat":	"Oksana Lyniv",
+		"Regie/Libretto": "Amy Stebbins",
+		"Penthesilea": "Adriana Bastidas-Gamboa",
+		"Penthesileas hoher Schatten": "Leela Subramaniam",
+		"Penthesileas tiefer Schatten": "Hanna Herfurtner",
+		"Achill": "Edwin Crossley-Mercer",
+		"Achills hoher Schatten": "Joshua Owen Mills",
+		"Achills tiefer Schatten": "Frederic Jost",
+		"Botin": "Hildegard Schmahl",
+		
+		
+		"-1":			"Bayerisches Staatsorchester",
+		"-2":			"Extrachor der Bayerischen Staatsoper"
+		}
+	},
+
+	"14":{ 
+	"title": 			"MAUERSCHAU",
+	"komponist": 		"<br>Berheide",
+	"ort":				"Reithalle, München",
+	"datum":			"1. Juli 2016",
+	"besetzung":		{
+		"Dirigat":	"Oksana Lyniv",
+		"Regie/Libretto": "Amy Stebbins",
+		"Penthesilea": "Adriana Bastidas-Gamboa",
+		"Penthesileas hoher Schatten": "Leela Subramaniam",
+		"Penthesileas tiefer Schatten": "Hanna Herfurtner",
+		"Achill": "Edwin Crossley-Mercer",
+		"Achills hoher Schatten": "Joshua Owen Mills",
+		"Achills tiefer Schatten": "Frederic Jost",
+		"Botin": "Hildegard Schmahl",
+		
+		
+		"-1":			"Bayerisches Staatsorchester",
+		"-2":			"Extrachor der Bayerischen Staatsoper"
+		}
+	},
+
+	"15":{ 
+	"title": 			"MAUERSCHAU",
+	"komponist": 		"<br>Berheide",
+	"ort":				"Reithalle, München",
+	"datum":			"3. Juli 2016",
+	"besetzung":		{
+		"Dirigat":	"Oksana Lyniv",
+		"Regie/Libretto": "Amy Stebbins",
+		"Penthesilea": "Adriana Bastidas-Gamboa",
+		"Penthesileas hoher Schatten": "Leela Subramaniam",
+		"Penthesileas tiefer Schatten": "Hanna Herfurtner",
+		"Achill": "Edwin Crossley-Mercer",
+		"Achills hoher Schatten": "Joshua Owen Mills",
+		"Achills tiefer Schatten": "Frederic Jost",
+		"Botin": "Hildegard Schmahl",
+		
+		
+		"-1":			"Bayerisches Staatsorchester",
+		"-2":			"Extrachor der Bayerischen Staatsoper"
+		}
+	},
+
+	"16":{
+	"title":			"„UNGEFROREN IST DIE ERDE“ (UA)/ 7. SYMPHONIE",
+	"komponist":		"Osplad/Mahler",
+	"datum":			"4. Juli 2016",
+	"ort":				"Moritzkirche, Coburg",
+	"besetzung":		{
+		"Dirigat":		"GMD Roland Kluttig",
+		"Sopran":		"Hanna Herfurtner",
+		"-1":			"Philharmonisches Orchester Landestheater Coburg"
+	}
+
+	},
+
+
+	"17":{ 
 	"title": 			"DIE WALKÜRE",
 	"komponist": 		"<br>Wagner",
 	"ort":				"Oper Frankfurt",
@@ -191,21 +328,8 @@
 		"-1":	"Frankfurter Opern- und Museumsorchester"
 		}
 	},
-	"11":{ 
-	"title": 			"IL RITORNO DI TOBIA",
-	"komponist": 		"<br>Haydn",
-	"ort":				"St. Elisabethkirche, Berlin",
-	"datum":			"4. Juni 2016",
-	"besetzung":		{
-		"Musikalische Leitung":	"Kai-Uwe Jirka",
-		
-		
-		"-1":			"Sing-Akademie Berlin",
-		"-2":			"Kammerakademie Potsdam"
-		}
-	},
 
-	"13":{ 
+	"18":{ 
 	"title": 			"HYMNEN AN DIE NACHT",
 	"komponist": 		"<br>Kirsch",
 	"ort":				"Paul-Gerhard-Kirche, München",
@@ -217,7 +341,7 @@
 		}
 	},
 
-	"14":{ 
+	"19":{ 
 	"title": 			"WEIHNACHTSORATORIUM IV-VI",
 	"komponist": 		"Bach",
 	"ort":				"Kreuzkirche Dresden",
@@ -227,24 +351,6 @@
 		
 		"-1":			"Dresdner Kreuzchor",
 		"-2": "Dresdner Philharmonie"
-		}
-	},
-
-	"10":{ 
-	"title": 			"Magnificat, Jauchzet Gott",
-	"komponist": 		"<br>Bach",
-	"ort":				"St. Sebald Nürnberg",
-	"datum":			"15. Mai 2016",
-	"besetzung":		{
-		"Dirigat":	"Bernhard Buttmann",
-		"Sopran":	"Hanna Herfurtner",
-		"Altus":	"Regina Pätzer",
-		"Tenor":	"Martin Platz",
-		"Bass":		"Thomas Gropper",
-
-		
-		"-1":			"Sebalder Kantorei",
-		"-2": "Nürnberger Bach-Orchester"
 		}
 	}
 }
