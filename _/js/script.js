@@ -541,6 +541,7 @@ var Content = function(a, b, c) {
     },
     markUp: "",
     numberOfEventboxes: 0,
+    upcomingEvent: 0,
     deceleration: .9,
     isMouseDown: !1,
     isTouch: !1,
@@ -559,14 +560,28 @@ var Content = function(a, b, c) {
     init: function() {
         var a = Agenda, b = document.createElement("div");
         b.className = "agenda invisible", $.ajax({
+            url: "include/db_events.php",
+            type: "POST",
             dataType: "json",
-            url: "include/events.json",
+            async: !1,
             success: function(b) {
-                Agenda.numberOfEventboxes = 0;
+                today = new Date(), console.log(today);
                 var c = "<div class='agenda'>";
                 $.each(b, function(a, b) {
                     var d = "";
-                    Agenda.numberOfEventboxes++, $.each(b.besetzung, function(a, b) {
+                    if (Agenda.numberOfEventboxes++, b.besetzung = $.parseJSON(b.besetzung), datum = new Date(b.datum), 
+                    datum < today && (Agenda.upcomingEvent = a), 0 == datum.getHours()) var e = {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                    }; else var e = {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric"
+                    };
+                    b.datum = datum.toLocaleDateString("de-De", e).replace(":", "h"), $.each(b.besetzung, function(a, b) {
                         d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
                     }), c += '<div class="event">\n							<div class="event-up">\n								<div class="komponist">' + b.komponist + '</div>\n								<div class="title">' + b.title + '</div>\n								<div class="ort">' + b.ort + '</div>\n							</div> \n							<div class="event-date">\n								<div class="datum">' + b.datum + "</div>\n							</div>", 
                     void 0 !== b.image ? (c += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">' + d + "</div></div>", 
@@ -598,7 +613,7 @@ var Content = function(a, b, c) {
             $("div", this).toggleClass("flipped");
         }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
         a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth;
-        var b = $(".event").eq(11).position().left;
+        var b = $(".event").eq(Agenda.upcomingEvent + 1).position().left;
         console.log(b);
         var c = (b - .28 * window.innerWidth) * (a.scrollWidth - 32) / a._maxScrollWidth;
         $(a.navMenuItem).animate({

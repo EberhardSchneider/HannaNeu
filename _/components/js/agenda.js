@@ -18,6 +18,7 @@ var Agenda = {
 	markUp: 	"",   // hier das einzuhängende HTML
 
 	numberOfEventboxes: 0 ,
+	upcomingEvent: 0,
 
 	deceleration: 	0.9,
 
@@ -48,29 +49,48 @@ var Agenda = {
 
 
 	init: 	function() {
-		var self = Agenda;		
+		var self = Agenda;	
 
 		// loadData and make HTML
 		var agenda = document.createElement('div');
 		agenda.className = "agenda invisible";
 
-	
 
 		$.ajax({
-		  dataType: "json",
-		  url: "include/events.json",
+		  
+		  url: "include/db_events.php",
+		  type: 'POST',
+			
+			dataType: 'json',
+			async: false,
 		  
 		  success:  function( data ) { 
 
-		  	Agenda.numberOfEventboxes = 0;
+		  	
+		  	today = new Date();
+		  	console.log(today);
+		  	
 
 		  	var html = "<div class='agenda'>";
 
 			$.each( data, function( key, elem ) {
-				// events.push( elem );
-
+				
 				var besetzung = "";
 				Agenda.numberOfEventboxes++;
+
+				elem.besetzung = $.parseJSON( elem.besetzung );
+				datum = new Date( elem.datum );
+				if (datum < today) {
+					Agenda.upcomingEvent = key;
+				}
+
+				if (datum.getHours() == 0) { 
+					var options = { year: 'numeric', month: 'long', day: 'numeric' };
+				}
+				else {
+					var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+				}
+				elem.datum = datum.toLocaleDateString("de-De", options).replace(":", "h");
 
 				$.each( elem.besetzung, function( rolle, darsteller ) { 
 					if ( rolle.substring(0, 1) != "-" ) {			
@@ -170,7 +190,7 @@ var Agenda = {
 
 		// set right Event in place
 
-			var leftPosAtStart = $(".event").eq(11).position().left;
+			var leftPosAtStart = $(".event").eq(Agenda.upcomingEvent+1).position().left;
 			console.log( leftPosAtStart );
 			
 			var kloetzchenPos = (leftPosAtStart - 0.28 * window.innerWidth ) * (self.scrollWidth - 32) / self._maxScrollWidth;

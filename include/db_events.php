@@ -7,7 +7,7 @@ include 'connect.php';
 mysqli_query($db, 'SET NAMES utf-8');
 
 
-$result = $db->query("SELECT * FROM events ORDER BY datum DESC");
+$result = $db->query("SELECT * FROM events ORDER BY datum");
 
 
 $index = 0;
