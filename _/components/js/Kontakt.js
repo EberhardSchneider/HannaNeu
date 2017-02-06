@@ -22,7 +22,6 @@ var Kontakt = {
 
 		if (window.innerHeight < 700) {
 			$(".kontakt-text").css("font-size","85%");
-		
 		}
 	},
 

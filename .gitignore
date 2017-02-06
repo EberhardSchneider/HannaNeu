@@ -18,3 +18,5 @@
 
 *.sass-cache*
 
+include/connect.php
+

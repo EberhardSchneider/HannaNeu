@@ -58,7 +58,7 @@ var Agenda = {
 
 		$.ajax({
 		  
-		  url: "include/db_events.php",
+		  url: "include/events.json",
 		  type: 'POST',
 			
 			dataType: 'json',
@@ -66,6 +66,7 @@ var Agenda = {
 		  
 		  success:  function( data ) { 
 
+		  	console.log("SUCCESS!!!!!!!!!!!!!!!!!!!!!!!");
 		  	
 		  	today = new Date();
 		  	console.log(today);

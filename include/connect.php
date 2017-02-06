@@ -1,8 +1,8 @@
 <?php
 	
 	$host = "localhost";
-	$user = "d02119e2";
-	$password = "castorp7";
+	$user = "root";
+	$password = "";
 	$link = "d02119e2";
 
 
