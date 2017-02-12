@@ -602,30 +602,30 @@ var Content = function(a, b, c) {
             dataType: "json",
             async: !1,
             success: function(b) {
-                console.log("SUCCESS!!!!!!!!!!!!!!!!!!!!!!!"), today = new Date(), console.log(today);
-                var c = "<div class='agenda'>";
+                today = new Date(), console.log(today);
+                var c = "<div class='agenda'><div class='scroll-container'>";
                 $.each(b, function(a, b) {
                     var d = "";
-                    if (Agenda.numberOfEventboxes++, b.besetzung = $.parseJSON(b.besetzung), datum = new Date(b.datum), 
-                    datum < today && (Agenda.upcomingEvent = a), 0 == datum.getHours()) var e = {
+                    Agenda.numberOfEventboxes++, b.besetzung = $.parseJSON(b.besetzung);
+                    var e = b.datum, f = e.split(" "), g = f[0].split("-"), h = f[1].split(":"), i = new Date(g[0], g[1] - 1, g[2], h[0], h[1], h[2]);
+                    if (i < today && (Agenda.upcomingEvent = a), 0 == i.getHours()) var j = {
                         year: "numeric",
                         month: "long",
                         day: "numeric"
-                    }; else var e = {
+                    }; else var j = {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
                         hour: "numeric",
                         minute: "numeric"
                     };
-                    b.datum = datum.toLocaleDateString("de-De", e).replace(":", "h"), $.each(b.besetzung, function(a, b) {
+                    b.datum = i.toLocaleDateString("de-De", j).replace(":", "h"), $.each(b.besetzung, function(a, b) {
                         d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
                     }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div> \r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + "</div>\r\n							</div>", 
                     void 0 !== b.image ? (c += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">' + d + "</div></div>", 
                     c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div></div>') : c += '<div class="card"><div class="event-low"><div class="besetzung">' + d + "</div></div></div>", 
                     c += "</div>";
-                }), c += "</div>", c += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div><div class='strich'></div></div></div>", 
-                a.html = c;
+                }), c += "</div></div>", a.html = c;
             }
         });
     },
@@ -645,23 +645,15 @@ var Content = function(a, b, c) {
             "font-size": "80%",
             height: ""
         }), $(".scroll-div-wrapper").toggleClass("hide"), a.eventBoxWidth = $(".event")[0].getBoundingClientRect().width + 1, 
-        a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), $(".agenda").css("width", a.timelineLength + "px"), 
-        $("body").mousewheel(a.mouseScrollHandler), $(".flippable").click(function() {
-            $("div", this).toggleClass("flipped");
-        }), a.scrollWidth = parseInt($(".scroll-div").css("width"), 10), a._maxScrollWidth = window.getComputedStyle($(".agenda")[0], null).width, 
-        a._maxScrollWidth = parseInt(a._maxScrollWidth, 10) - .7 * window.innerWidth;
+        a.timelineLength = Agenda.numberOfEventboxes * (a.eventBoxWidth + 28), $(".scroll-container").css("width", a.timelineLength + "px"), 
+        $(".agenda").mCustomScrollbar({
+            axis: "x",
+            autoHideScrollbar: !1
+        }), console.log(Agenda.upcomingEvent);
         var b = $(".event").eq(Agenda.upcomingEvent + 1).position().left;
-        console.log(b);
-        var c = (b - .28 * window.innerWidth) * (a.scrollWidth - 32) / a._maxScrollWidth;
-        $(a.navMenuItem).animate({
-            left: c + "px"
-        }, 700), a.scrollAgendaAccordingScrollIcon(c);
+        console.log(b), $(".agenda").mCustomScrollbar("scrollTo", b + "");
     },
     activateNavigation: function() {
-        $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, !1), 
-        document.body.addEventListener("mouseup", Agenda.mouseUpHandler, !1), document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, !1), 
-        $(document).on("touchstart", ".agenda", Agenda.touchStartHandler), $(document).on("touchend", "body", Agenda.touchEndHandler), 
-        $(document).on("touchmove", "body", Agenda.touchMoveHandler);
     },
     deactivateNavigation: function() {
         var a = Agenda;
@@ -731,6 +723,11 @@ var Content = function(a, b, c) {
         $(".agenda").animate({
             left: -d * b._maxScrollWidth + .28 * window.innerWidth
         }, 700);
+    },
+    parseISO8601: function(a) {
+        var b, c = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/, d = new Date(NaN), e = c.exec(a);
+        return e && (b = +e[2], d.setFullYear(e[1], b - 1, e[3]), b != d.getMonth() + 1 && d.setTime(NaN)), 
+        d;
     }
 }, AudioPlayer = {
     _html: "",

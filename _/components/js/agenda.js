@@ -58,7 +58,7 @@ var Agenda = {
 
 		$.ajax({
 		  
-		  url: "include/events.json",
+		  url: "include/db_events.php",
 		  type: 'POST',
 			
 			dataType: 'json',
@@ -66,13 +66,12 @@ var Agenda = {
 		  
 		  success:  function( data ) { 
 
-		  	console.log("SUCCESS!!!!!!!!!!!!!!!!!!!!!!!");
 		  	
 		  	today = new Date();
 		  	console.log(today);
 		  	
 
-		  	var html = "<div class='agenda'>";
+		  	var html = "<div class='agenda'><div class='scroll-container'>";
 
 			$.each( data, function( key, elem ) {
 				
@@ -80,7 +79,11 @@ var Agenda = {
 				Agenda.numberOfEventboxes++;
 
 				elem.besetzung = $.parseJSON( elem.besetzung );
-				datum = new Date( elem.datum );
+				var dateStr=elem.datum; 
+				var a=dateStr.split(" ");
+				var d=a[0].split("-");
+				var t=a[1].split(":");
+				var datum = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
 				if (datum < today) {
 					Agenda.upcomingEvent = key;
 				}
@@ -127,9 +130,9 @@ var Agenda = {
 						html += '</div>';
 				});		// each
 
-			html += "</div>";
+			html += "</div></div>";
 
-			html += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div><div class='strich'></div></div></div>";
+			//html += "<div class='scroll-div-wrapper'><div class='scroll-div'><div class='kloetzchen'></div><div class='strich'></div></div></div>";
 			self.html = html;
 
 
@@ -175,29 +178,38 @@ var Agenda = {
 		$(".scroll-div-wrapper").toggleClass("hide");  // then show it
 
 
+
+		
+
+
 		self.eventBoxWidth = $(".event")[0].getBoundingClientRect()["width"] + 1;
 		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
-		$(".agenda").css("width", self.timelineLength + "px");
+		$(".scroll-container").css("width", self.timelineLength + "px");
 
-		$("body").mousewheel( self.mouseScrollHandler );
+		$(".agenda").mCustomScrollbar({
+			axis: "x",
+			autoHideScrollbar: false
+		});
 
-		$(".flippable").click( function() {
-			$("div", this).toggleClass("flipped");
-		} );
+		// $("body").mousewheel( self.mouseScrollHandler );
 
-		self.scrollWidth = parseInt( $(".scroll-div").css("width"), 10);  // Breite des Scroll-Divs
-		self._maxScrollWidth = window.getComputedStyle( $(".agenda")[0], null ).width;
-		self._maxScrollWidth = parseInt( self._maxScrollWidth, 10) - 0.7 * window.innerWidth;
+		// $(".flippable").click( function() {
+		// 	$("div", this).toggleClass("flipped");
+		// } );
 
-		// set right Event in place
+		// self.scrollWidth = parseInt( $(".scroll-div").css("width"), 10);  // Breite des Scroll-Divs
+		// self._maxScrollWidth = window.getComputedStyle( $(".agenda")[0], null ).width;
+		// self._maxScrollWidth = parseInt( self._maxScrollWidth, 10) - 0.7 * window.innerWidth;
 
-			var leftPosAtStart = $(".event").eq(Agenda.upcomingEvent+1).position().left;
-			console.log( leftPosAtStart );
+		// // set right Event in place
+		console.log(Agenda.upcomingEvent);
+		var leftPosAtStart = $(".event").eq(Agenda.upcomingEvent+1).position().left;
+		console.log( leftPosAtStart );
+		$(".agenda").mCustomScrollbar("scrollTo",leftPosAtStart+"");
+		// 	var kloetzchenPos = (leftPosAtStart - 0.28 * window.innerWidth ) * (self.scrollWidth - 32) / self._maxScrollWidth;
+		// 	$(self.navMenuItem).animate( {"left": kloetzchenPos + "px"}, 700);
 			
-			var kloetzchenPos = (leftPosAtStart - 0.28 * window.innerWidth ) * (self.scrollWidth - 32) / self._maxScrollWidth;
-			$(self.navMenuItem).animate( {"left": kloetzchenPos + "px"}, 700);
-			
-			self.scrollAgendaAccordingScrollIcon( kloetzchenPos );
+		// 	self.scrollAgendaAccordingScrollIcon( kloetzchenPos );
 
 
 	},
@@ -208,13 +220,13 @@ var Agenda = {
 	activateNavigation: 	function() {
 		var self = Agenda;
 
-		$(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
-		document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
-		document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
+		// $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
+		// document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
+		// document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
 
-		$(document).on("touchstart",".agenda", Agenda.touchStartHandler );
-		$(document).on("touchend", "body", Agenda.touchEndHandler );
-		$(document).on("touchmove", "body", Agenda.touchMoveHandler );
+		// $(document).on("touchstart",".agenda", Agenda.touchStartHandler );
+		// $(document).on("touchend", "body", Agenda.touchEndHandler );
+		// $(document).on("touchmove", "body", Agenda.touchMoveHandler );
 	
 	},
 
@@ -368,7 +380,24 @@ var Agenda = {
 			$(".agenda").animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth}, 700 );
 
 
-		}
+		},
+
+		// from: http://stackoverflow.com/questions/2182246/date-constructor-returns-nan-in-ie-but-works-in-firefox-and-chrome
+
+		parseISO8601: function(dateStringInRange) {
+    var isoExp = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/,
+        date = new Date(NaN), month,
+        parts = isoExp.exec(dateStringInRange);
+
+    if(parts) {
+      month = +parts[2];
+      date.setFullYear(parts[1], month - 1, parts[3]);
+      if(month != date.getMonth() + 1) {
+        date.setTime(NaN);
+      }
+    }
+    return date;
+  }
 
 	
 

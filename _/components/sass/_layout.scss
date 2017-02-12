@@ -41,13 +41,40 @@
 	overflow: hidden;
 }
 
+// customscrollbar
+
+div[id^="mCSB_"][id$="_scrollbar_horizontal"] {
+	.mCSB_draggerContainer {
+		right: 5%;
+		left:10%;
+	}	
+	.mCSB_draggerRail {
+		background-color: black !important;
+		height: 1px;
+		right: 5%;
+	}
+
+	.mCSB_dragger_bar {
+		background-color: black !important;
+		
+	}
+	.mCSB_dragger {
+		background-color: black !important;
+		height: 12px;
+		width: 64px !important;
+		border-radius: 0;
+		top: 1px;
+	}
+}
+
 //  agenda ----------------------------------------------------------------------
 
 .agenda {
 	position: absolute;
-	left: 30%;
+	left: 20%;
+	min-left: 440px;
 	top: 19%;
-	width: 5000%;
+	right: 0;
 	height: 52%;
 	min-height:520px;
 	overflow: hidden;
@@ -57,7 +84,14 @@
 		height: 3.6%;
 		min-height: 460px;
 	}
+
+	.scroll-container {
+		height: 100%;
+		width: 5000%;
+	}
 }
+
+
 
 .scroll-div-wrapper {
 	position: absolute;
@@ -67,6 +101,8 @@
 	right: 0;
 
 }
+
+
 
 .scroll-div {
 	position: absolute;
