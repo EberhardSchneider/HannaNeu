@@ -57,8 +57,11 @@ body {
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none; }
+/* line 9, ../components/sass/_base.scss */
+body b, body strong {
+  font-weight: bold !important; }
 
-/* line 16, ../components/sass/_base.scss */
+/* line 20, ../components/sass/_base.scss */
 .mobile-overlay {
   display: none;
   position: fixed;
@@ -72,11 +75,11 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
   color: white; }
 @media screen and (max-width: 600px), screen and (max-height: 480px) {
-  /* line 16, ../components/sass/_base.scss */
+  /* line 20, ../components/sass/_base.scss */
   .mobile-overlay {
     display: block !important; } }
 
-/* line 38, ../components/sass/_base.scss */
+/* line 42, ../components/sass/_base.scss */
 .menu-item {
   position: absolute !important;
   z-index: 206;
@@ -90,19 +93,19 @@ body {
   font-family: 'Raleway', sans-serif;
   font-weight: extra-bold;
   cursor: pointer; }
-/* line 51, ../components/sass/_base.scss */
+/* line 55, ../components/sass/_base.scss */
 .menu-item:hover {
   opacity: 1 !important; }
 
-/* line 59, ../components/sass/_base.scss */
+/* line 63, ../components/sass/_base.scss */
 svg {
   alignment-baseline: baseline; }
 
-/* line 67, ../components/sass/_base.scss */
+/* line 71, ../components/sass/_base.scss */
 .hide {
   display: none; }
 
-/* line 71, ../components/sass/_base.scss */
+/* line 75, ../components/sass/_base.scss */
 img {
   -ms-interpolation-mode: bicubic; }
 
