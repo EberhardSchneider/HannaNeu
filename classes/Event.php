@@ -49,12 +49,18 @@ public $active = null;
 
 public function __construct( $data=array() ) {
 	if ( isset ($data['id'] )) $this->id = (int) $data['id'];
-	if ( isset ($data['title'] )) $this->title = utf8_encode( $data['title'] );
-	if ( isset ($data['komponist'] )) $this->komponist = utf8_encode( $data['komponist'] );
-	if ( isset ($data['ort'] )) $this->ort = utf8_encode( $data['ort'] );
+	if ( isset ($data['title'] )) $this->title = $data['title'];
+	if ( isset ($data['komponist'] )) $this->komponist = $data['komponist'];
+	if ( isset ($data['ort'] )) $this->ort = $data['ort'];
 	if ( isset ($data['datum'] )) $this->datum = (int) $data['datum'];
 	if ( isset ($data['besetzung'] )) $this->besetzung = $data['besetzung'];
-	if ( isset ($data['active'] )) $this->active = (int) $data['active'];
+	if ( isset($data['active']) ) {
+		if ($data['active'] == "on") {
+			$this->active = 1;
+		} 
+		else $this->active = (int) $data['active'];
+	}
+	else $this->active =0;
 }
 
 
@@ -78,9 +84,9 @@ public function storeFormValues( $params ) {
 				list( $y, $m, $d ) = $date;
 				$this->datum = mktime( 0,0,0, $m, $d, $y);
 			}
-			
-			
 	} // if
+
+
 } // storeFormValues
 
 
@@ -146,7 +152,9 @@ public static function getEventById( $id ) {
 	    $st->bindValue( ":besetzung", $this->besetzung, PDO::PARAM_STR );
 	    $st->bindValue( ":active", $this->active, PDO::PARAM_INT );
 	    $st->execute();
+	    
 	    $this->id = $conn->lastInsertId();
+	 
 	    $conn = null;
 	  }
 
@@ -176,7 +184,7 @@ public static function getEventById( $id ) {
 		// Delete the Event
 		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 		$st = $conn->prepare( "DELETE FROM events WHERE id=:id");
-		$st->bindValue( ":id", $id, PDO::PARAM_INT );
+		$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
 		$st->execute();
 		$conn = null;
 	}

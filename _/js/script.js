@@ -1,3 +1,7 @@
+function hideLoadingPage() {
+    $(".loading").fadeOut(1e3);
+}
+
 var Content = function(a, b, c) {
     function d(a, b, c, d) {
         this.getMarkUp = a, this.activate = b, this.deactivate = c, this.callback = d;
@@ -1187,7 +1191,9 @@ $(function() {
         vc.clickHandler.bind(vc)(a);
     }), events.on("homeClicked", function() {
         vc.clickHandler.bind(vc)("home");
-    });
+    }), setInterval(function() {
+        hideLoadingPage();
+    }, 3e3);
 });
 
 var Item = function() {

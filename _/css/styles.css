@@ -79,7 +79,30 @@ body b, body strong {
   .mobile-overlay {
     display: block !important; } }
 
-/* line 42, ../components/sass/_base.scss */
+/* line 43, ../components/sass/_base.scss */
+.loading {
+  position: fixed;
+  background-color: #fff;
+  z-index: 255;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+/* line 55, ../components/sass/_base.scss */
+.loading img {
+  display: block;
+  width: 15em;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+/* line 63, ../components/sass/_base.scss */
 .menu-item {
   position: absolute !important;
   z-index: 206;
@@ -93,19 +116,19 @@ body b, body strong {
   font-family: 'Raleway', sans-serif;
   font-weight: extra-bold;
   cursor: pointer; }
-/* line 55, ../components/sass/_base.scss */
+/* line 76, ../components/sass/_base.scss */
 .menu-item:hover {
   opacity: 1 !important; }
 
-/* line 63, ../components/sass/_base.scss */
+/* line 84, ../components/sass/_base.scss */
 svg {
   alignment-baseline: baseline; }
 
-/* line 71, ../components/sass/_base.scss */
+/* line 92, ../components/sass/_base.scss */
 .hide {
   display: none; }
 
-/* line 75, ../components/sass/_base.scss */
+/* line 96, ../components/sass/_base.scss */
 img {
   -ms-interpolation-mode: bicubic; }
 
@@ -596,7 +619,7 @@ div[id^="mCSB_"][id$="_scrollbar_horizontal"] .mCSB_dragger {
 /* line 173, ../components/sass/_modules.scss */
 .event-date {
   display: block;
-  height: 15%;
+  height: 5em;
   width: 100%; }
 
 /* line 179, ../components/sass/_modules.scss */

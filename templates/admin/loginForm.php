@@ -1,6 +1,7 @@
-<?php include "templates/include/header.php" ?>
+<?php include "templates/include/admin-header.php" ?>
 
-
+		<h2>hannaherfurtner.de - Administration</h2>
+		<h3>Login</h3>
 		<form action="admin.php?action=login" method="post">
 			<input type="hidden" name="login" value="true">
 
@@ -17,7 +18,7 @@
 
 				<li>
 					<label for="password">Passwort</label>
-					<input type="text" name="password" id="password" placeholder="Passwort" required maxlength="20" />
+					<input type="password" name="password" id="password" placeholder="Passwort" required maxlength="20" />
 				</li>
 
 			</ul>

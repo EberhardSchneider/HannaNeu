@@ -13,4 +13,10 @@ $(function() {
 
 	events.on( "itemClicked", function( data ) { vc.clickHandler.bind( vc )( data ); } );
 	events.on( "homeClicked", function() { vc.clickHandler.bind( vc )( "home" ); });
+
+	setInterval( function() { hideLoadingPage() }, 3000 );
 });
+
+function hideLoadingPage() {
+	$('.loading').fadeOut( 1000 );
+}

@@ -79,7 +79,8 @@
 		else {
 			// User has not posted form yet, show edit form
 			$results['event'] = new Event();
-			require( TEMPLATE_PATH . "/admin/editArticle.php" );
+			$results['event']->id = 1; // set new events status to active
+			require( TEMPLATE_PATH . "/admin/editEvent.php" );
 		}
 	}
 
@@ -113,12 +114,14 @@ function editEvent() {
 }
 
 function deleteEvent() {
-	if ( !$article = Event::getArticleById( (int)$_GET['id'])) {
+
+	if ( !$event = Event::getEventById( (int)$_GET['eventId'])) {
 		header("Location: admin.php?error=eventNotFound");
 		return;
 	}
 
-	$article->delete();
+	$event->delete();
+	header("Location: admin.php?status=eventDeleted");
 }
 
 function listEvents() {

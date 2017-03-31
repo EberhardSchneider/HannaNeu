@@ -1,0 +1,215 @@
+body {
+	font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;
+}
+
+.adminHeader {
+	display: block;
+	border-bottom: 4px solid black;
+	margin-bottom: 1em;
+}
+
+/* --------------------------- listArticles.php */
+
+h1 {
+	font-size: 1.5em;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+.events-list {
+	text-align: center;
+}
+table {
+	border-spacing: 0.2em; 
+	margin: 0 auto;
+	border: 1px solid #bbb;
+	border-style: collapse;
+}
+
+tr:nth-child(2n) {
+	background: #eef;
+}
+
+tr {
+	line-height: 1.5em;
+}
+th {
+	border-bottom: 2px solid #ddd;
+	background-color: #c9b;
+}
+tr:hover {
+	background-color: #ddd;
+
+}
+
+.table-date {
+	width: 8em;
+	text-align: center;
+}
+
+.table-ort {
+	width: 16em;
+}
+
+.table-title {
+	width: 30em;
+}
+
+a {
+	color: black;
+}
+
+.statusMessage {
+	font-size: 120%;
+	color: red;
+	margin-bottom: 0.2em;
+}
+
+
+
+
+
+/* --------------------------- editArticles.php */
+
+.form-wrapper, .preview {
+	width: 49%;
+	display: inline-block;
+	float:left;
+	border: 1px solid black;
+	height: 80%;
+}
+
+input, textarea {
+	font-size: 1em;
+	padding: 3px;
+	border-radius: 4px;
+}
+
+label {
+	margin-top: 1em;
+	margin-bottom: 0.2em;
+	display: block;
+}
+
+ul {
+	list-style: none;
+}
+
+.buttons {
+	margin-left: 3em;
+}
+input[type=submit] {
+	margin: 0.3em 1em;
+	padding: 0.5em;
+	background: #0110aa;
+	color: white;
+	border: 2px solid black;
+}
+
+input[type=submit]:hover {
+	background: #0105cc;
+}
+
+.delete {
+	font-size: 1em;
+	display: block;
+	padding: 1px 3px;
+	margin: 0 3.5em;
+	width: 10em;
+	background: #0110aa;
+	color: white;
+	text-align:  center;
+	border-radius: 0.5em;
+}
+
+.delete a {
+	color: white;
+	text-decoration: none;
+}
+
+
+/* _____________________ Preview */
+
+.event {
+	
+	display: table;
+
+	top: 8em;
+	
+	width: 260px;
+	margin: 4em auto;
+
+	
+	padding-left: 15px;
+	padding-right: 15px;
+
+	font-size: 100% !important;
+
+	border: solid 2px  rgba(0,0,0,0);
+
+	background-color: #fff;
+
+	border: 2px solid #888;
+	padding: 2em 2em;
+
+}
+
+
+
+
+	.komponist {
+		font-size: 80%;
+		text-align: center;
+	}
+
+	.title {
+		font-size: 95%;
+		text-align: center;
+		font-weight: bold;
+		padding-bottom: 2px;
+		border-bottom: solid black 2px;
+	}
+
+	.ort {
+		font-size: 80%;
+		opacity: .6;
+		text-align: center;
+		padding-top: 2px;
+	}
+
+	.datum {
+		font-weight: bold;
+		font-size: 95%;
+		text-align: center;
+			
+	}
+
+	.besetzung {
+		position: relative;
+		font-size: 71%;
+		margin-left: 5px;
+		margin-right: 5px;
+		opacity: 0.6;
+}
+		.zeile {
+			padding-top: 4px;
+			padding-bottom: 2px;
+		}
+
+		.rolle {
+			left: 0;
+		}
+		
+		.darsteller {
+			float: right;
+		}
+
+		.one-line {
+			text-align: center;
+			margin: auto;
+		}
+
+
+	

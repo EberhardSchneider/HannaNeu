@@ -77,7 +77,7 @@ var Item = (function() {
 		}
 
 		TweenMax.to( self._$svg, duration, { attr: { "height": newHeight }, onComplete: callback} );
-		TweenMax.to( self._$text, duration, { "y": newHeight } );
+		self._$text.attr( { y: (newHeight) });
 
 	};
 

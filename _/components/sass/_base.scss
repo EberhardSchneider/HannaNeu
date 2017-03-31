@@ -2,7 +2,7 @@
 
 body {
 	/* font-family: gothic; */
-	font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;;
+	font-family: TimesNewRoman,Times New Roman,Times,Baskerville,Georgia,serif;
 	font-size: 1rem;
 	overflow: hidden;
 
@@ -38,6 +38,27 @@ body {
 		display: block !important;
 	}
 }
+
+// Loading screen
+	.loading {
+		position: fixed;
+		background-color: #fff;
+		z-index: 255;
+
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+
+
+
+		img {
+			display: block;
+			width: 15em;
+			@include vertical-align;
+			@include centerer;
+		}
+	}
 
 .menu-item {
 	position: absolute !important;
