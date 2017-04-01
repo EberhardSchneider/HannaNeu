@@ -30,23 +30,7 @@ var Content = function(a, b, c) {
             setTimeout(b._content[b._currentContentName].callback, 900);
         }));
     }, d;
-}(window, document), events = {
-    events: {},
-    on: function(a, b) {
-        this.events[a] = this.events[a] || [], this.events[a].push(b);
-    },
-    off: function(a, b) {
-        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
-            this.events[a].splice(c, 1);
-            break;
-        }
-    },
-    emit: function(a, b) {
-        this.events[a] && this.events[a].forEach(function(a) {
-            a(b);
-        });
-    }
-}, GalleryClass = function() {
+}(window, document), GalleryClass = function() {
     function a(a) {
         this._images = [], this._imageFilenames = [], this._sources = a, this._isMouseDown = !1, 
         this._draggedObject = {
@@ -151,27 +135,6 @@ var Content = function(a, b, c) {
             a.stretch(d.width[c], b._propertiesAnimationHandler.bind(b)), a.changeHeight(d.height[c], b._propertiesAnimationHandler.bind(b)), 
             a.changeFontSize(d.fontSize[c], b._propertiesAnimationHandler.bind(b)), a.changeOpacity(d.opacity[c], b._propertiesAnimationHandler.bind(b));
         }), void (this._currentState = d));
-    }, d;
-}(window, document), State = function() {
-    function a(a, b) {
-        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
-        this.opacity = [];
-        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
-        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
-    }
-    return a.prototype.getName = function() {
-        return this._name;
-    }, a;
-}(), MenuStates = function(a, b, c) {
-    function d() {
-        this._numberItems = 0, this._states = [];
-    }
-    return d.prototype.addState = function(a, b) {
-        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
-    }, d.prototype.removeState = function(a) {
-        delete this._states[a], this._numberOfItems = this._states.length;
-    }, d.prototype.getState = function(a) {
-        return this._states[a];
     }, d;
 }(window, document), Thumbnail = function() {
     function a(a, b, c, d) {
@@ -625,7 +588,7 @@ var Content = function(a, b, c) {
                     };
                     b.datum = i.toLocaleDateString("de-De", j).replace(":", "h"), $.each(b.besetzung, function(a, b) {
                         d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
-                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div> \r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + "</div>\r\n							</div>", 
+                    }), c += '<div class="event">\n							<div class="event-up">\n								<div class="komponist">' + b.komponist + '</div>\n								<div class="title">' + b.title + '</div>\n								<div class="ort">' + b.ort + '</div>\n							</div> \n							<div class="event-date">\n								<div class="datum">' + b.datum + "</div>\n							</div>", 
                     void 0 !== b.image ? (c += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">' + d + "</div></div>", 
                     c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div></div>') : c += '<div class="card"><div class="event-low"><div class="besetzung">' + d + "</div></div></div>", 
                     c += "</div>";
@@ -954,6 +917,22 @@ var Content = function(a, b, c) {
         var a = AudioPlayer;
         a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
     }
+}, events = {
+    events: {},
+    on: function(a, b) {
+        this.events[a] = this.events[a] || [], this.events[a].push(b);
+    },
+    off: function(a, b) {
+        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
+            this.events[a].splice(c, 1);
+            break;
+        }
+    },
+    emit: function(a, b) {
+        this.events[a] && this.events[a].forEach(function(a) {
+            a(b);
+        });
+    }
 }, Gallery = {
     html: "",
     isOrientationChecked: !1,
@@ -1244,7 +1223,7 @@ var Item = function() {
                 height: a
             },
             onComplete: b
-        }), TweenMax.to(d._$text, c, {
+        }), d._$text.attr({
             y: a
         });
     }, a.prototype._animateFontSize = function(a, b, c) {
@@ -1279,4 +1258,25 @@ var Item = function() {
         this._height = d || this._height, this._fontSize = e || this._fontSize, this._opacity = f || this._opacity, 
         this._animateXY(g._x, g._y, function() {}, .1);
     }, a;
-}();
+}(), State = function() {
+    function a(a, b) {
+        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
+        this.opacity = [];
+        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
+        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
+    }
+    return a.prototype.getName = function() {
+        return this._name;
+    }, a;
+}(), MenuStates = function(a, b, c) {
+    function d() {
+        this._numberItems = 0, this._states = [];
+    }
+    return d.prototype.addState = function(a, b) {
+        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
+    }, d.prototype.removeState = function(a) {
+        delete this._states[a], this._numberOfItems = this._states.length;
+    }, d.prototype.getState = function(a) {
+        return this._states[a];
+    }, d;
+}(window, document);
