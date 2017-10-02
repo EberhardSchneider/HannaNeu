@@ -181,7 +181,11 @@ var Content = function(a, b, c) {
             b._calculatePositions(), b.mc.render();
         }), a.onpopstate = function(a) {
             if (b.mc._isMenuAnimating) return void a.preventDefault();
+<<<<<<< HEAD
             var c = a.state.content || "home";
+=======
+            var c = a.state.content || 0;
+>>>>>>> 1db63c804550a9b8d3610e7aa89cf053de4a92c6
             b.handleHistoryStateChange(c);
         }, this._calculatePositions();
     }, d.prototype._manageContent = function(a) {

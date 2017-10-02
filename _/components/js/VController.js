@@ -56,7 +56,9 @@ var VController = (function(window, document, undefined) {
         event.preventDefault();
         return;
       }
+
       var index = event.state['content'] || "home";
+
       self.handleHistoryStateChange( index );
     };
 
