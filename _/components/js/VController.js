@@ -74,7 +74,7 @@ var VController = (function(window, document, undefined) {
 	};
 
 	VController.prototype._calculatePositions = function() {
-
+		console.log("Calcuale Positions");
 		// home-State
 
 		var screenRatio = parseInt(window.innerWidth, 10) / parseInt(window.innerHeight, 10);

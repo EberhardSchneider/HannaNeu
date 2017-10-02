@@ -40,7 +40,12 @@ body {
 }
 
 // Loading screen
+
+	.content {
+		display: none;
+	}
 	.loading {
+		display: block;
 		position: fixed;
 		background-color: #fff;
 		z-index: 255;

@@ -1,5 +1,5 @@
 function hideLoadingPage() {
-    $(".loading").fadeOut(1e3);
+    $(".loading").fadeOut(1e3), $(".content").fadeIn(1e3);
 }
 
 var Content = function(a, b, c) {
@@ -110,8 +110,8 @@ var Content = function(a, b, c) {
     }
     return d.prototype.render = function() {
         var a = this, b = this._currentState;
-        a._items.forEach(function(a, c) {
-            a.render(b.x[c], b.y[c], b.width[c], b.height[c], b.fontSize[c], b.opacity[c]);
+        console.log("MenuController render: " + b._name), a._items.forEach(function(a, c) {
+            console.log("Rendering index " + c), a.render(b.x[c], b.y[c], b.width[c], b.height[c], b.fontSize[c], b.opacity[c]);
         });
     }, d.prototype._propertiesAnimationHandler = function() {
         var a = this;
@@ -121,7 +121,7 @@ var Content = function(a, b, c) {
         }, 250));
     }, d.prototype.addState = function(a, b) {
         var d = this;
-        console.log(a + ": " + d._menuStates.getState(a)), d._menuStates.getState(a) !== c ? (d._currentState.getName().trim() == a.trim() && (d._currentState = b), 
+        d._menuStates.getState(a) !== c ? (d._currentState.getName().trim() == a.trim() && (d._currentState = b), 
         d._menuStates.removeState(a), d._menuStates.addState(a, b)) : d._menuStates.addState(a, b);
     }, d.prototype.removeState = function(a) {
         this._menuStates.removeState(a);
@@ -184,6 +184,7 @@ var Content = function(a, b, c) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
+        console.log("Calcuale Positions");
         var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), c = .21 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
         f = f > 300 ? 300 : f;
         var g = 10, h = 10, i = .0062 * a.innerHeight, j = i / 5.5, k = 10, l = 0, b = a.innerWidth / a.innerHeight;
@@ -1172,7 +1173,7 @@ $(function() {
         vc.clickHandler.bind(vc)("home");
     }), setInterval(function() {
         hideLoadingPage();
-    }, 3e3);
+    }, 1300);
 });
 
 var Item = function() {
