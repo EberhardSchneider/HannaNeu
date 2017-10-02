@@ -164,22 +164,26 @@ var Content = function(a, b, c) {
         this.mc.gotoState("home"), this._manageContent(-1);
     }
     return d.prototype._init = function() {
-        var a = this;
+        var b = this;
         this._detectBrowser();
-        var b = $(".menu-item");
-        b.push($(".home-button")), b.push($(".play-button")), b.push($(".menu-name")), b.push($(".menu-sopran")), 
-        a.cc = new ContentController($(".content")), this.mc = new MenuController(b, this._browser), 
-        AudioPlayer.init(), b.find("text").each(function() {
+        var d = $(".menu-item");
+        d.push($(".home-button")), d.push($(".play-button")), d.push($(".menu-name")), d.push($(".menu-sopran")), 
+        b.cc = new ContentController($(".content")), this.mc = new MenuController(d, this._browser), 
+        AudioPlayer.init(), d.find("text").each(function() {
             $(this) !== c && ($(this)[0].setAttribute("textLength", 1), $(this)[0].setAttribute("y", 0));
-        }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
-        a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita))), 
-        a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
-        a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
-        a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
-        a.cc.addContent("home", new Content(Home.getMarkUp, Home.activate, Home.deactivate)), 
+        }), Agenda.init(), Gallery.init(), b.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
+        b.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita))), 
+        b.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
+        b.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
+        b.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
+        b.cc.addContent("home", new Content(Home.getMarkUp, Home.activate, Home.deactivate)), 
         events.on("resize", function() {
-            a._calculatePositions(), a.mc.render();
-        }), this._calculatePositions();
+            b._calculatePositions(), b.mc.render();
+        }), a.onpopstate = function(a) {
+            if (b.mc._isMenuAnimating) return void a.preventDefault();
+            var c = a.state.content || "home";
+            b.handleHistoryStateChange(c);
+        }, this._calculatePositions();
     }, d.prototype._manageContent = function(a) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
@@ -470,9 +474,15 @@ var Content = function(a, b, c) {
         -1 != (c = f.indexOf(")")) && (f = f.substring(0, c)), g = parseInt("" + f, 10), 
         isNaN(g) && (f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10)), 
         this._browser = e;
-    }, d.prototype.clickHandler = function(a) {
-        this.mc._isMenuAnimating ? console.log("Click blocked") : ("home" == a ? (this.mc.gotoState("home"), 
-        a = -1) : this.mc.gotoState(this._menuItems[a]), this._manageContent(a));
+    }, d.prototype.clickHandler = function(b) {
+        this.mc._isMenuAnimating ? console.log("Click blocked") : ("home" == b ? (a.history.pushState({
+            content: "home"
+        }, null, "#home"), this.mc.gotoState("home"), b = -1) : (a.history.pushState({
+            content: b
+        }, null, "#" + this._menuItems[b]), this.mc.gotoState(this._menuItems[b])), this._manageContent(b));
+    }, d.prototype.handleHistoryStateChange = function(a) {
+        "home" == a ? (this.mc.gotoState("home"), a = -1) : this.mc.gotoState(this._menuItems[a]), 
+        this._manageContent(a);
     }, d;
 }(window, document), Vita = {
     getMarkUp: function() {
@@ -604,9 +614,7 @@ var Content = function(a, b, c) {
         var a = Agenda;
         a.navMenuItem = $(".kloetzchen")[0], a.activateNavigation(), $(".scroll-div-wrapper").toggleClass("hide");
     },
-    deactivate: function() {
-        Agenda.deactivateNavigation();
-    },
+    deactivate: function() {},
     callback: function() {
         var a = this;
         window.innerHeight < 750 && $(".scroll-div-wrapper").css("bottom", "0"), window.innerHeight < 700 && $(".event").css({
