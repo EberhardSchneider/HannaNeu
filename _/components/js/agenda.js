@@ -157,7 +157,6 @@ var Agenda = {
 	},
 
 	deactivate: function() {
-		Agenda.deactivateNavigation();  
 	},
 
 	
