@@ -58,15 +58,15 @@ var ContentController = (function(window, document, undefined) {
 		}
 	};
 
-	ContentController.prototype.changeContent = function( name ) {
+	ContentController.prototype.changeContent = function( newContent ) {
 		var self = this;
 
 
-		if ( this._content[name] === undefined) {
-			console.log( "ContentController: unknown content '" + name + "'" );
+		if ( this._content[newContent] === undefined) {
+			console.log( "ContentController: unknown content '" + newContent + "'" );
 			return;
 		} else
-		if ( this._currentContentName === name ) {
+		if ( this._currentContentName === newContent ) {
 			console.log("Content already present");
 			return;
 		}
@@ -77,11 +77,11 @@ var ContentController = (function(window, document, undefined) {
 		}
 		
 		this._animateOut( 700, function() {
-			self._currentMarkUp = self._content[name].getMarkUp();
+			self._currentMarkUp = self._content[newContent].getMarkUp();
 			self._$targetContainer.empty().html( self._currentMarkUp );
 			
 
-			self._currentContentName = name;
+			self._currentContentName = newContent;
 
 			self._content[ self._currentContentName ].activate();
 			self._animateIn();

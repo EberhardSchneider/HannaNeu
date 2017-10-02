@@ -617,85 +617,13 @@ var Content = function(a, b, c) {
         $(".agenda").mCustomScrollbar({
             axis: "x",
             autoHideScrollbar: !1
+        }), $(".flippable").click(function() {
+            $("div", this).toggleClass("flipped");
         }), console.log(Agenda.upcomingEvent);
         var b = $(".event").eq(Agenda.upcomingEvent + 1).position().left;
         console.log(b), $(".agenda").mCustomScrollbar("scrollTo", b + "");
     },
     activateNavigation: function() {
-    },
-    deactivateNavigation: function() {
-        var a = Agenda;
-        $(".agenda")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
-        document.body.removeEventListener("mouesemove", a.mosueMoveHandler), $("body").off();
-    },
-    animateTimeline: function() {
-        var a = Agenda;
-        $(".agenda").css("left", a.leftPos + "px");
-    },
-    mouseDownHandler: function(a) {
-        var b = Agenda, c = $(".scroll-div")[0].getBoundingClientRect(), d = c.left, e = parseInt($(b.navMenuItem).css("left"), 10), f = a.pageX - d;
-        if (f = 24 > f ? 24 : f, b.oldNavItemPos = parseInt(e, 10), b.startX = a.pageX, 
-        b.isMouseDown = !0, e > f || f > e) {
-            $(b.navMenuItem).css({
-                left: f - 24
-            }), b.oldNavItemPos = f - 24;
-            var g = f / (b.scrollWidth - 48);
-            $(".agenda").css("left", -g * b._maxScrollWidth + .3 * window.innerWidth);
-        }
-    },
-    mouseUpHandler: function(a) {
-        var b = Agenda;
-        b.isMouseDown = !1;
-    },
-    mouseMoveHandler: function(a) {
-        var b = Agenda;
-        if (b.isMouseDown) {
-            var c = b.oldNavItemPos + (a.pageX - b.startX);
-            c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px"), 
-            b.scrollAgendaAccordingScrollIcon();
-        }
-    },
-    mouseScrollHandler: function(a) {
-        var b = Agenda, c = parseInt($(".kloetzchen").css("left"), 10) + 8 * a.deltaY;
-        c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px");
-        var d = c / (b.scrollWidth - 32);
-        $(".agenda").stop().animate({
-            left: -d * b._maxScrollWidth + .28 * window.innerWidth
-        }, 100), b.oldNavItemPos = c;
-    },
-    touchStartHandler: function(a) {
-        console.log(a.originalEvent.touches[0].pageX);
-        var b = Agenda, c = $(".scroll-div")[0].getBoundingClientRect(), d = c.left;
-        parseInt($(b.navMenuItem).css("left"), 10);
-        b.startX = a.originalEvent.touches[0].pageX;
-        var e = b.startX - d;
-        e = 24 > e ? 24 : e, b.oldAgendaLeft = parseInt($(".agenda").css("left"), 10), b.isTouch = !0;
-    },
-    touchEndHandler: function() {
-        var a = Agenda;
-        a.isTouch = !1;
-    },
-    touchMoveHandler: function(a) {
-        if (Agenda.isTouch) {
-            var b = Agenda, c = a.originalEvent.touches[0].pageX - b.startX, d = b.oldAgendaLeft + c;
-            d = d > .28 * window.innerWidth ? .28 * window.innerWidth : d, d = d < -b._maxScrollWidth - b.eventBoxWidth + .6 * window.innerWidth ? -b._maxScrollWidth - b.eventBoxWidth + .6 * window.innerWidth : d, 
-            $(".agenda").css("left", d + "px");
-            var e = (.3 * window.innerWidth - d) * (b.scrollWidth - 32) / b._maxScrollWidth;
-            $(".kloetzchen").css("left", e);
-        }
-    },
-    scrollAgendaAccordingScrollIcon: function(a) {
-        var b = this, c = a || $(b.navMenuItem).css("left");
-        console.log(a + " .. " + c);
-        var d = c / (b.scrollWidth - 32);
-        $(".agenda").animate({
-            left: -d * b._maxScrollWidth + .28 * window.innerWidth
-        }, 700);
-    },
-    parseISO8601: function(a) {
-        var b, c = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/, d = new Date(NaN), e = c.exec(a);
-        return e && (b = +e[2], d.setFullYear(e[1], b - 1, e[3]), b != d.getMonth() + 1 && d.setTime(NaN)), 
-        d;
     }
 }, AudioPlayer = {
     _html: "",
