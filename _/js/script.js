@@ -1,5 +1,5 @@
 function hideLoadingPage() {
-    $(".loading").fadeOut(1e3);
+    $(".loading").fadeOut(1e3), $(".content").fadeIn(1e3);
 }
 
 var Content = function(a, b, c) {
@@ -126,8 +126,8 @@ var Content = function(a, b, c) {
     }
     return d.prototype.render = function() {
         var a = this, b = this._currentState;
-        a._items.forEach(function(a, c) {
-            a.render(b.x[c], b.y[c], b.width[c], b.height[c], b.fontSize[c], b.opacity[c]);
+        console.log("MenuController render: " + b._name), a._items.forEach(function(a, c) {
+            console.log("Rendering index " + c), a.render(b.x[c], b.y[c], b.width[c], b.height[c], b.fontSize[c], b.opacity[c]);
         });
     }, d.prototype._propertiesAnimationHandler = function() {
         var a = this;
@@ -137,7 +137,7 @@ var Content = function(a, b, c) {
         }, 250));
     }, d.prototype.addState = function(a, b) {
         var d = this;
-        console.log(a + ": " + d._menuStates.getState(a)), d._menuStates.getState(a) !== c ? (d._currentState.getName().trim() == a.trim() && (d._currentState = b), 
+        d._menuStates.getState(a) !== c ? (d._currentState.getName().trim() == a.trim() && (d._currentState = b), 
         d._menuStates.removeState(a), d._menuStates.addState(a, b)) : d._menuStates.addState(a, b);
     }, d.prototype.removeState = function(a) {
         this._menuStates.removeState(a);
@@ -201,27 +201,39 @@ var Content = function(a, b, c) {
         this.mc.gotoState("home"), this._manageContent(-1);
     }
     return d.prototype._init = function() {
-        var a = this;
+        var b = this;
         this._detectBrowser();
-        var b = $(".menu-item");
-        b.push($(".home-button")), b.push($(".play-button")), b.push($(".menu-name")), b.push($(".menu-sopran")), 
-        a.cc = new ContentController($(".content")), this.mc = new MenuController(b, this._browser), 
-        AudioPlayer.init(), b.find("text").each(function() {
+        var d = $(".menu-item");
+        d.push($(".home-button")), d.push($(".play-button")), d.push($(".menu-name")), d.push($(".menu-sopran")), 
+        b.cc = new ContentController($(".content")), this.mc = new MenuController(d, this._browser), 
+        AudioPlayer.init(), d.find("text").each(function() {
             $(this) !== c && ($(this)[0].setAttribute("textLength", 1), $(this)[0].setAttribute("y", 0));
-        }), Agenda.init(), Gallery.init(), a.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
-        a.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita))), 
-        a.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
-        a.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
-        a.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
-        a.cc.addContent("home", new Content(Home.getMarkUp, Home.activate, Home.deactivate)), 
+        }), Agenda.init(), Gallery.init(), b.cc.addContent("agenda", new Content(Agenda.getMarkUp.bind(Agenda), Agenda.activate.bind(Agenda), Agenda.deactivate.bind(Agenda), Agenda.callback.bind(Agenda))), 
+        b.cc.addContent("vita", new Content(Vita.getMarkUp.bind(Vita), Vita.activate.bind(Vita), Vita.deactivate.bind(Vita), Vita.callback.bind(Vita))), 
+        b.cc.addContent("hören", new Content(AudioPlayer.getMarkUp.bind(AudioPlayer), AudioPlayer.activate.bind(AudioPlayer), AudioPlayer.deactivate.bind(AudioPlayer), AudioPlayer.callback.bind(AudioPlayer))), 
+        b.cc.addContent("sehen", new Content(Gallery.getMarkUp.bind(Gallery), Gallery.activate.bind(Gallery), Gallery.deactivate.bind(Gallery), Gallery.callback.bind(Gallery))), 
+        b.cc.addContent("kontakt", new Content(Kontakt.getMarkUp.bind(Kontakt), Kontakt.activate.bind(Kontakt), Kontakt.deactivate.bind(Kontakt), Kontakt.callback.bind(Kontakt))), 
+        b.cc.addContent("home", new Content(Home.getMarkUp, Home.activate, Home.deactivate)), 
         events.on("resize", function() {
-            a._calculatePositions(), a.mc.render();
-        }), this._calculatePositions();
+            b._calculatePositions(), b.mc.render();
+        }), a.onpopstate = function(a) {
+            if (b.mc._isMenuAnimating) return void a.preventDefault();
+<<<<<<< HEAD
+            var c = a.state.content || "home";
+=======
+            var c = a.state.content || 0;
+>>>>>>> 1db63c804550a9b8d3610e7aa89cf053de4a92c6
+            b.handleHistoryStateChange(c);
+        }, this._calculatePositions();
     }, d.prototype._manageContent = function(a) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
+<<<<<<< HEAD
         if (console.log("Checking. innerWidth = " + a.innerWidth), a.innerWidth < 600) return void this._calculateMobilePositions();
+=======
+        console.log("Calcuale Positions");
+>>>>>>> 3a5e0ab99aadf52f44326571c6a5133b0f50b1f3
         var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), c = .21 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
         f = f > 300 ? 300 : f;
         var g = 10, h = 10, i = .0062 * a.innerHeight, j = i / 5.5, k = 10, l = 0, b = a.innerWidth / a.innerHeight;
@@ -781,9 +793,15 @@ var Content = function(a, b, c) {
         -1 != (c = f.indexOf(")")) && (f = f.substring(0, c)), g = parseInt("" + f, 10), 
         isNaN(g) && (f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10)), 
         this._browser = e;
-    }, d.prototype.clickHandler = function(a) {
-        this.mc._isMenuAnimating ? console.log("Click blocked") : ("home" == a ? (this.mc.gotoState("home"), 
-        a = -1) : this.mc.gotoState(this._menuItems[a]), this._manageContent(a));
+    }, d.prototype.clickHandler = function(b) {
+        this.mc._isMenuAnimating ? console.log("Click blocked") : ("home" == b ? (a.history.pushState({
+            content: "home"
+        }, null, "#home"), this.mc.gotoState("home"), b = -1) : (a.history.pushState({
+            content: b
+        }, null, "#" + this._menuItems[b]), this.mc.gotoState(this._menuItems[b])), this._manageContent(b));
+    }, d.prototype.handleHistoryStateChange = function(a) {
+        "home" == a ? (this.mc.gotoState("home"), a = -1) : this.mc.gotoState(this._menuItems[a]), 
+        this._manageContent(a);
     }, d;
 }(window, document), Vita = {
     getMarkUp: function() {
@@ -915,9 +933,7 @@ var Content = function(a, b, c) {
         var a = Agenda;
         a.navMenuItem = $(".kloetzchen")[0], a.activateNavigation(), $(".scroll-div-wrapper").toggleClass("hide");
     },
-    deactivate: function() {
-        Agenda.deactivateNavigation();
-    },
+    deactivate: function() {},
     callback: function() {
         var a = this;
         window.innerHeight < 750 && $(".scroll-div-wrapper").css("bottom", "0"), window.innerHeight < 700 && $(".event").css({
@@ -928,85 +944,13 @@ var Content = function(a, b, c) {
         $(".agenda").mCustomScrollbar({
             axis: "x",
             autoHideScrollbar: !1
+        }), $(".flippable").click(function() {
+            $("div", this).toggleClass("flipped");
         }), console.log(Agenda.upcomingEvent);
         var b = $(".event").eq(Agenda.upcomingEvent + 1).position().left;
         console.log(b), $(".agenda").mCustomScrollbar("scrollTo", b + "");
     },
     activateNavigation: function() {
-    },
-    deactivateNavigation: function() {
-        var a = Agenda;
-        $(".agenda")[0], removeEventListener("mousedown", a.mouseDownHandler), document.body.removeEventListener("mouseup", a.mouseUpHandler), 
-        document.body.removeEventListener("mouesemove", a.mosueMoveHandler), $("body").off();
-    },
-    animateTimeline: function() {
-        var a = Agenda;
-        $(".agenda").css("left", a.leftPos + "px");
-    },
-    mouseDownHandler: function(a) {
-        var b = Agenda, c = $(".scroll-div")[0].getBoundingClientRect(), d = c.left, e = parseInt($(b.navMenuItem).css("left"), 10), f = a.pageX - d;
-        if (f = 24 > f ? 24 : f, b.oldNavItemPos = parseInt(e, 10), b.startX = a.pageX, 
-        b.isMouseDown = !0, e > f || f > e) {
-            $(b.navMenuItem).css({
-                left: f - 24
-            }), b.oldNavItemPos = f - 24;
-            var g = f / (b.scrollWidth - 48);
-            $(".agenda").css("left", -g * b._maxScrollWidth + .3 * window.innerWidth);
-        }
-    },
-    mouseUpHandler: function(a) {
-        var b = Agenda;
-        b.isMouseDown = !1;
-    },
-    mouseMoveHandler: function(a) {
-        var b = Agenda;
-        if (b.isMouseDown) {
-            var c = b.oldNavItemPos + (a.pageX - b.startX);
-            c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px"), 
-            b.scrollAgendaAccordingScrollIcon();
-        }
-    },
-    mouseScrollHandler: function(a) {
-        var b = Agenda, c = parseInt($(".kloetzchen").css("left"), 10) + 8 * a.deltaY;
-        c = 0 > c ? 0 : c, c = c > b.scrollWidth - 32 ? b.scrollWidth - 32 : c, $(b.navMenuItem).css("left", c + "px");
-        var d = c / (b.scrollWidth - 32);
-        $(".agenda").stop().animate({
-            left: -d * b._maxScrollWidth + .28 * window.innerWidth
-        }, 100), b.oldNavItemPos = c;
-    },
-    touchStartHandler: function(a) {
-        console.log(a.originalEvent.touches[0].pageX);
-        var b = Agenda, c = $(".scroll-div")[0].getBoundingClientRect(), d = c.left;
-        parseInt($(b.navMenuItem).css("left"), 10);
-        b.startX = a.originalEvent.touches[0].pageX;
-        var e = b.startX - d;
-        e = 24 > e ? 24 : e, b.oldAgendaLeft = parseInt($(".agenda").css("left"), 10), b.isTouch = !0;
-    },
-    touchEndHandler: function() {
-        var a = Agenda;
-        a.isTouch = !1;
-    },
-    touchMoveHandler: function(a) {
-        if (Agenda.isTouch) {
-            var b = Agenda, c = a.originalEvent.touches[0].pageX - b.startX, d = b.oldAgendaLeft + c;
-            d = d > .28 * window.innerWidth ? .28 * window.innerWidth : d, d = d < -b._maxScrollWidth - b.eventBoxWidth + .6 * window.innerWidth ? -b._maxScrollWidth - b.eventBoxWidth + .6 * window.innerWidth : d, 
-            $(".agenda").css("left", d + "px");
-            var e = (.3 * window.innerWidth - d) * (b.scrollWidth - 32) / b._maxScrollWidth;
-            $(".kloetzchen").css("left", e);
-        }
-    },
-    scrollAgendaAccordingScrollIcon: function(a) {
-        var b = this, c = a || $(b.navMenuItem).css("left");
-        console.log(a + " .. " + c);
-        var d = c / (b.scrollWidth - 32);
-        $(".agenda").animate({
-            left: -d * b._maxScrollWidth + .28 * window.innerWidth
-        }, 700);
-    },
-    parseISO8601: function(a) {
-        var b, c = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/, d = new Date(NaN), e = c.exec(a);
-        return e && (b = +e[2], d.setFullYear(e[1], b - 1, e[3]), b != d.getMonth() + 1 && d.setTime(NaN)), 
-        d;
     }
 }, AudioPlayer = {
     _html: "",
@@ -1468,7 +1412,7 @@ $(function() {
         vc.clickHandler.bind(vc)("home");
     }), setInterval(function() {
         hideLoadingPage();
-    }, 3e3);
+    }, 1300);
 });
 
 var Item = function() {

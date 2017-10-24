@@ -50,12 +50,22 @@ var VController = (function(window, document, undefined) {
 
 		events.on("resize", function() { self._calculatePositions(); self.mc.render(); });
 
+    // enable browser history listener
+    window.onpopstate = function(event)  {
+      if ( self.mc._isMenuAnimating ) {
+        event.preventDefault();
+        return;
+      }
+
+      var index = event.state['content'] || "home";
+
+      self.handleHistoryStateChange( index );
+    };
+
 
 		this._calculatePositions();
 
-		/*$(".menu-item").hover(function(e) {
-			e.stopPropagation();
-		});*/
+		
 
 	};
 
@@ -74,6 +84,7 @@ var VController = (function(window, document, undefined) {
 	};
 
 	VController.prototype._calculatePositions = function() {
+
 		console.log("Checking. innerWidth = " + window.innerWidth );
 		if ( window.innerWidth < 600 ) {
 			this._calculateMobilePositions();
@@ -420,9 +431,12 @@ var VController = (function(window, document, undefined) {
 	VController.prototype.clickHandler = function( index ) {
 		if ( !this.mc._isMenuAnimating )	{
 			if ( index == "home" ) {
+        window.history.pushState( { content: "home" }, null, "#home");
 				this.mc.gotoState( "home" );
 				index = -1;
+        
 			} else {
+        window.history.pushState( { content: index }, null, "#" + this._menuItems[ index ] );
 				this.mc.gotoState( this._menuItems[ index ]);
 			}
 			
@@ -430,8 +444,16 @@ var VController = (function(window, document, undefined) {
 		} else console.log("Click blocked");
 	};
 
+  VController.prototype.handleHistoryStateChange = function( index ) {
+    if ( index == "home" ) {
+      this.mc.gotoState( "home" );
+      index = -1;
+    } else {
+      this.mc.gotoState( this._menuItems[ index ] );
+    }
 
-
+    this._manageContent( index );
+  }
 	
 
 	return VController;

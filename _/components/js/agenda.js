@@ -114,10 +114,7 @@ var Agenda = {
 							<div class="event-date">
 								<div class="datum">'+ elem.datum +'</div>
 							</div>'; //event-date 
-							//  <div class="card">
-							// <div class="event-low">
-							// 	<div class="besetzung">'+ besetzung +'</div>
-							// </div>';  */
+							
 
 						if ( elem.image !== undefined ) {
 							html += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">'+ besetzung +'</div></div>';
@@ -160,7 +157,6 @@ var Agenda = {
 	},
 
 	deactivate: function() {
-		Agenda.deactivateNavigation();  
 	},
 
 	
@@ -178,10 +174,6 @@ var Agenda = {
 		$(".scroll-div-wrapper").toggleClass("hide");  // then show it
 
 
-
-		
-
-
 		self.eventBoxWidth = $(".event")[0].getBoundingClientRect()["width"] + 1;
 		self.timelineLength = Agenda.numberOfEventboxes * ( self.eventBoxWidth + 28 );  // + margin!!!
 		$(".scroll-container").css("width", self.timelineLength + "px");
@@ -191,25 +183,19 @@ var Agenda = {
 			autoHideScrollbar: false
 		});
 
-		// $("body").mousewheel( self.mouseScrollHandler );
 
-		// $(".flippable").click( function() {
-		// 	$("div", this).toggleClass("flipped");
-		// } );
 
-		// self.scrollWidth = parseInt( $(".scroll-div").css("width"), 10);  // Breite des Scroll-Divs
-		// self._maxScrollWidth = window.getComputedStyle( $(".agenda")[0], null ).width;
-		// self._maxScrollWidth = parseInt( self._maxScrollWidth, 10) - 0.7 * window.innerWidth;
+		$(".flippable").click( function() {
+			$("div", this).toggleClass("flipped");
+		} );
+
 
 		// // set right Event in place
 		console.log(Agenda.upcomingEvent);
 		var leftPosAtStart = $(".event").eq(Agenda.upcomingEvent+1).position().left;
 		console.log( leftPosAtStart );
 		$(".agenda").mCustomScrollbar("scrollTo",leftPosAtStart+"");
-		// 	var kloetzchenPos = (leftPosAtStart - 0.28 * window.innerWidth ) * (self.scrollWidth - 32) / self._maxScrollWidth;
-		// 	$(self.navMenuItem).animate( {"left": kloetzchenPos + "px"}, 700);
-			
-		// 	self.scrollAgendaAccordingScrollIcon( kloetzchenPos );
+
 
 
 	},
@@ -220,184 +206,9 @@ var Agenda = {
 	activateNavigation: 	function() {
 		var self = Agenda;
 
-		// $(".scroll-div")[0].addEventListener("mousedown", Agenda.mouseDownHandler, false );
-		// document.body.addEventListener("mouseup", Agenda.mouseUpHandler, false );
-		// document.body.addEventListener("mousemove", Agenda.mouseMoveHandler, false );
-
-		// $(document).on("touchstart",".agenda", Agenda.touchStartHandler );
-		// $(document).on("touchend", "body", Agenda.touchEndHandler );
-		// $(document).on("touchmove", "body", Agenda.touchMoveHandler );
 	
-	},
+	}
 
-	deactivateNavigation: 	function() {
-		var self = Agenda;
-		$(".agenda")[0],removeEventListener("mousedown", self.mouseDownHandler );
-		document.body.removeEventListener("mouseup", self.mouseUpHandler );
-		document.body.removeEventListener("mouesemove", self.mosueMoveHandler );
-		$("body").off();
-		},
-
-
-	animateTimeline: 	function() {
-		var self = Agenda;
-
-		$(".agenda").css("left", self.leftPos + "px" );
-	},
-	
-
-	
-	mouseDownHandler: function( event ) {
-		var self = Agenda;
-
-		var scrollDivRect = $(".scroll-div")[0].getBoundingClientRect();
-		var scrollDivX = scrollDivRect.left;
-		var kloetzchenX = parseInt( $(self.navMenuItem).css("left"),10 );
-
-		var clickX = event.pageX - scrollDivX;
-		clickX = ( clickX < 24 ) ? 24 : clickX;
-
-		self.oldNavItemPos = parseInt( kloetzchenX, 10);
-		self.startX = event.pageX;
-	
-		self.isMouseDown = true;
-
-		if ( (clickX < kloetzchenX) || (clickX > kloetzchenX )) {
-			$(self.navMenuItem).css({left: clickX -24});
-			self.oldNavItemPos = clickX - 24;
-
-			var scrollRatio = clickX/(self.scrollWidth - 48);
-			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.3 * window.innerWidth );
-		}
-		
-			
-	},
-	
-	mouseUpHandler: function(event) {
-		var self = Agenda;
-		self.isMouseDown = false;
-	},
-	
-	mouseMoveHandler: function( event ) {
-
-		var self = Agenda;
-
-
-	if ( self.isMouseDown ) {
-			var newItemPos = self.oldNavItemPos + ( event.pageX - self.startX );
-			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;
-
-			$(self.navMenuItem).css("left", newItemPos + "px");
-			/*var scrollRatio = newItemPos/(self.scrollWidth -  32);
-			$(".agenda").css("left", -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth );*/
-			self.scrollAgendaAccordingScrollIcon();
-			
-
-		}
-
-	},
-
-	mouseScrollHandler: function( event ) {
-			var self = Agenda;
-
-			var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 8;
-			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;
-
-
-			$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.scrollWidth - 32);
-			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth }, 100 );
-
-			self.oldNavItemPos = newItemPos;
-
-	},
-
-	touchStartHandler: function( event ) {
-		console.log(event.originalEvent.touches[0].pageX);
-
-		var self = Agenda;
-
-		var scrollDivRect = $(".scroll-div")[0].getBoundingClientRect();
-		var scrollDivX = scrollDivRect.left;
-		var kloetzchenX = parseInt( $(self.navMenuItem).css("left"),10 );
-
-
-		self.startX = event.originalEvent.touches[0].pageX;
-		var clickX = self.startX - scrollDivX;
-		clickX = ( clickX < 24 ) ? 24 : clickX;
-
-		self.oldAgendaLeft = parseInt( $(".agenda").css("left"), 10 );
-		
-	
-		self.isTouch = true;
-
-	},
-
-	touchEndHandler: function() {
-		var self = Agenda;
-
-		self.isTouch = false;
-	},
-
-	touchMoveHandler: function( event ) {
-
-		if (Agenda.isTouch) {
-			var self = Agenda;
-
-			/*var newItemPos = parseInt( $(".kloetzchen").css("left"), 10) + event.deltaY * 8;
-			newItemPos = ( newItemPos < 0) ? 0 : newItemPos;
-			newItemPos = ( newItemPos > self.scrollWidth - 32) ? self.scrollWidth - 32 : newItemPos;*/
-
-			var deltaX = event.originalEvent.touches[0].pageX - self.startX;
-			var newLeft = self.oldAgendaLeft + deltaX;
-
-			newLeft = ( newLeft > 0.28 * window.innerWidth ) ? 0.28*window.innerWidth : newLeft;
-			newLeft = ( newLeft < (-self._maxScrollWidth - self.eventBoxWidth + 0.6 * window.innerWidth ) ) ? (-self._maxScrollWidth - self.eventBoxWidth + 0.6 * window.innerWidth ) : newLeft ;
-
-			$(".agenda").css("left", newLeft + "px" );
-			
-
-			var kloetzchenPos = (0.3 * window.innerWidth - newLeft ) * ( self.scrollWidth - 32 ) / self._maxScrollWidth;
-			$(".kloetzchen").css("left", kloetzchenPos );
-
-			/*$(self.navMenuItem).css("left", newItemPos + "px");
-			var scrollRatio = newItemPos/(self.scrollWidth - 32);
-			$(".agenda").stop().animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth }, 100 );
-
-			self.oldNavItemPos = newItemPos;*/
-
-		} // touchMove Handler
-
-		},
-		scrollAgendaAccordingScrollIcon: function( pos ) {
-			var self = this;
-
-			var newItemPos = pos || $(self.navMenuItem).css("left");
-			console.log(pos + " .. " + newItemPos );
-			var scrollRatio = newItemPos/(self.scrollWidth -  32);
-			$(".agenda").animate( {"left": -scrollRatio * self._maxScrollWidth + 0.28 * window.innerWidth}, 700 );
-
-
-		},
-
-		// from: http://stackoverflow.com/questions/2182246/date-constructor-returns-nan-in-ie-but-works-in-firefox-and-chrome
-
-		parseISO8601: function(dateStringInRange) {
-    var isoExp = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/,
-        date = new Date(NaN), month,
-        parts = isoExp.exec(dateStringInRange);
-
-    if(parts) {
-      month = +parts[2];
-      date.setFullYear(parts[1], month - 1, parts[3]);
-      if(month != date.getMonth() + 1) {
-        date.setTime(NaN);
-      }
-    }
-    return date;
-  }
 
 	
 

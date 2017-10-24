@@ -29,7 +29,9 @@ var MenuController = (function(window, document, undefined) {
 
 		var self = this;
 		var newState = this._currentState;
+		console.log("MenuController render: " + newState._name );
 		self._items.forEach(function( elem, index ) {
+			console.log("Rendering index " + index );
 			elem.render( 	newState.x[index], 
 										newState.y[index], 
 										newState.width[index],
@@ -57,7 +59,6 @@ var MenuController = (function(window, document, undefined) {
 
 	MenuController.prototype.addState = function( name, state ) {
 		var self = this;
-		console.log(name + ": " + self._menuStates.getState(name));
 		if ( self._menuStates.getState( name ) !== undefined ) {
 			 
 			if (self._currentState.getName().trim() == name.trim()) {
