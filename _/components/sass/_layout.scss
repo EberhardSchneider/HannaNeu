@@ -85,6 +85,11 @@ div[id^="mCSB_"][id$="_scrollbar_horizontal"] {
 		min-height: 460px;
 	}
 
+	@media all and ( max-height: 600px ) {
+		left: 5%;
+		top: 25%;
+	}
+
 	.scroll-container {
 		height: 100%;
 		width: 5000%;

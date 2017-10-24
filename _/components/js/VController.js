@@ -74,6 +74,11 @@ var VController = (function(window, document, undefined) {
 	};
 
 	VController.prototype._calculatePositions = function() {
+		console.log("Checking. innerWidth = " + window.innerWidth );
+		if ( window.innerWidth < 600 ) {
+			this._calculateMobilePositions();
+			return;
+		}
 
 		// home-State
 
@@ -99,9 +104,7 @@ var VController = (function(window, document, undefined) {
 		}
 
 
-		/*if (screenRatio > (15/9) ) {
-			menuX += (screenRatio - (15/9)) * parseInt( window.innerHeight, 10) / 10;
-		}*/
+
 		
 		var homeState = [];
 		for (var i = 0; i<5; i++ ) {
@@ -195,6 +198,138 @@ var VController = (function(window, document, undefined) {
 				kontaktState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: 395 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
 			} else {
 			kontaktState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: homeFontSize - 2, opacity: 0.5});
+			}
+		}
+		kontaktState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
+		kontaktState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		kontaktState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		this.mc.addState("kontakt", new State( "kontakt", kontaktState ));
+
+
+	};
+
+	VController.prototype._calculateMobilePositions = function() {
+
+		console.log("Mobile!");
+		// home-State
+
+		var screenRatio = parseInt(window.innerWidth, 10) / parseInt(window.innerHeight, 10);
+
+
+		var menuTop = window.innerHeight * 0.21;
+		var menuItemHeight = window.innerHeight * 0.09;
+		var menuLeft = window.innerWidth * 0.25;
+		var menuLength = window.innerWidth * 0.29;
+		menuLength = (menuLength > 300) ? 300 : menuLength;
+		var homeButtonX = 10;
+		var homeButtonY = 10;
+
+		var homeFontSize = window.innerHeight * 0.0052;
+		var menuLengthRatio = homeFontSize/5.5;
+
+		var menuX = 10;
+		var menuCorrection=0;
+		var screenRatio = window.innerWidth/window.innerHeight;
+		if (screenRatio>15/9) {
+			menuCorrection = 30;
+		}
+
+
+
+		
+		var homeState = [];
+		for (var i = 0; i<5; i++ ) {
+			var w = [372 * menuLengthRatio, 210 * menuLengthRatio, 318 * menuLengthRatio, 304 * menuLengthRatio, 395 * menuLengthRatio][i];
+			homeState.push( { x: menuLeft, y: menuTop + i*menuItemHeight, width: w , height: menuItemHeight, fontSize: homeFontSize, opacity: 0.1 });
+		}
+		homeState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 0 });  // home-button
+		homeState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		homeState.push( { x: menuLeft - 60, y: menuTop - 5, width: 160, height: homeFontSize*10, fontSize: homeFontSize/2.5, opacity: 1 });  // menu-name
+		homeState.push( { x: menuLeft - 60, y: menuTop+menuItemHeight*0.50 - 5, width: 64, height: homeFontSize*10, fontSize: homeFontSize/2.5, opacity: 1 });  // menu-sopran
+		this.mc.addState("home", new State( "home", homeState) );
+
+		// agenda-State
+
+		var agendaState = [];
+		
+		this.mc.removeState("agenda");
+		agendaState.push({ x: menuX + 40, y: menuTop - menuItemHeight, width: 372 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+		for (var i = 1; i < 5; i++ ) {
+			agendaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: 0, opacity: 0.5});
+		}
+		agendaState.push( { x: homeButtonX, y:homeButtonY, width: 100, height: 100, fontSize: 0, opacity: 1 });  // home-button
+		agendaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		agendaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		
+
+
+		this.mc.addState("agenda", new State( "agenda", agendaState )); 
+
+		// vita-State
+
+		var vitaState = [];
+		
+		this.mc.removeState("vita");
+		for (var i = 0; i < 5; i++ ) {
+			if ( i == 1 ) {
+				vitaState.push({ x: 0.3 * window.innerWidth, y: menuTop + i*menuItemHeight, width: 230 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+			} else {
+			vitaState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: 0, opacity: 0.5});
+			}
+		}
+		vitaState.push( { x: homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
+		vitaState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		vitaState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		this.mc.addState("vita", new State( "vita", vitaState ));
+
+		// hören-State
+
+		var hoerenState = [];
+		
+		this.mc.removeState("hören");
+		for (var i = 0; i < 5; i++ ) {
+			if ( i == 2 ) {
+				hoerenState.push({ x: menuX + 64, y: menuTop  + i*menuItemHeight, width: 318 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+			} else {
+			hoerenState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: 0, opacity: 0.5});
+			}
+		}
+		hoerenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
+		hoerenState.push( { x: 5, y: menuTop +  2.65 * menuItemHeight, width: window.innerHeight/14, height:window.innerHeight/14, fontSize: 0, opacity: 1 });  // play-button
+		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		hoerenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		this.mc.addState("hören", new State( "hören", hoerenState ));
+
+		// sehen-State
+
+		var sehenState = [];
+		
+		this.mc.removeState("sehen");
+		for (var i = 0; i < 5; i++ ) {
+			if ( i == 3 ) {
+				sehenState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: 304 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+			} else {
+			sehenState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: 0, opacity: 0.5});
+			}
+		}
+		sehenState.push( { x:homeButtonX, y:homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button
+		sehenState.push( { x: -130, y: menuTop +  2.65 * menuItemHeight, width: 64, height: 64, fontSize: 0, opacity: 0 });  // play-button
+		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		sehenState.push( { x: menuLeft - 50, y: menuTop - 30, width: 128, height: homeFontSize*10, fontSize: 0, opacity: 0 });  // menu-decoration
+		this.mc.addState("sehen", new State( "sehen", sehenState ));
+
+		// kontakt-State
+
+		var kontaktState = [];
+		
+		for (var i = 0; i < 5; i++ ) {
+			if ( i == 4 ) {
+				kontaktState.push({ x: window.innerWidth * 0.25, y: menuTop  + i*menuItemHeight, width: 395 * menuLengthRatio , height: menuItemHeight, fontSize: homeFontSize - 0.5, opacity: 1 });
+			} else {
+			kontaktState.push( { x: menuX, y: menuTop + i*menuItemHeight, width: menuLength , height: menuItemHeight, fontSize: 0, opacity: 0.5});
 			}
 		}
 		kontaktState.push( { x: homeButtonX, y: homeButtonY, width: 128, height: 128, fontSize: 0, opacity: 1 });  // home-button

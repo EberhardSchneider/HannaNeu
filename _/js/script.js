@@ -30,7 +30,23 @@ var Content = function(a, b, c) {
             setTimeout(b._content[b._currentContentName].callback, 900);
         }));
     }, d;
-}(window, document), GalleryClass = function() {
+}(window, document), events = {
+    events: {},
+    on: function(a, b) {
+        this.events[a] = this.events[a] || [], this.events[a].push(b);
+    },
+    off: function(a, b) {
+        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
+            this.events[a].splice(c, 1);
+            break;
+        }
+    },
+    emit: function(a, b) {
+        this.events[a] && this.events[a].forEach(function(a) {
+            a(b);
+        });
+    }
+}, GalleryClass = function() {
     function a(a) {
         this._images = [], this._imageFilenames = [], this._sources = a, this._isMouseDown = !1, 
         this._draggedObject = {
@@ -136,6 +152,27 @@ var Content = function(a, b, c) {
             a.changeFontSize(d.fontSize[c], b._propertiesAnimationHandler.bind(b)), a.changeOpacity(d.opacity[c], b._propertiesAnimationHandler.bind(b));
         }), void (this._currentState = d));
     }, d;
+}(window, document), State = function() {
+    function a(a, b) {
+        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
+        this.opacity = [];
+        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
+        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
+    }
+    return a.prototype.getName = function() {
+        return this._name;
+    }, a;
+}(), MenuStates = function(a, b, c) {
+    function d() {
+        this._numberItems = 0, this._states = [];
+    }
+    return d.prototype.addState = function(a, b) {
+        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
+    }, d.prototype.removeState = function(a) {
+        delete this._states[a], this._numberOfItems = this._states.length;
+    }, d.prototype.getState = function(a) {
+        return this._states[a];
+    }, d;
 }(window, document), Thumbnail = function() {
     function a(a, b, c, d) {
         this.sourceThumb = a, this.sourceBig = b, this.thumbClass = c, this.bigClass = d, 
@@ -184,6 +221,7 @@ var Content = function(a, b, c) {
         this.cc.getCurrentContentName();
         -1 == a ? newContentName = "home" : newContentName = this._menuItems[a], this.cc.changeContent(newContentName);
     }, d.prototype._calculatePositions = function() {
+        if (console.log("Checking. innerWidth = " + a.innerWidth), a.innerWidth < 600) return void this._calculateMobilePositions();
         var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), c = .21 * a.innerHeight, d = .09 * a.innerHeight, e = .4 * a.innerWidth, f = .29 * a.innerWidth;
         f = f > 300 ? 300 : f;
         var g = 10, h = 10, i = .0062 * a.innerHeight, j = i / 5.5, k = 10, l = 0, b = a.innerWidth / a.innerHeight;
@@ -456,6 +494,280 @@ var Content = function(a, b, c) {
             fontSize: 0,
             opacity: 0
         }), this.mc.addState("kontakt", new State("kontakt", t));
+    }, d.prototype._calculateMobilePositions = function() {
+        console.log("Mobile!");
+        var b = parseInt(a.innerWidth, 10) / parseInt(a.innerHeight, 10), c = .21 * a.innerHeight, d = .09 * a.innerHeight, e = .25 * a.innerWidth, f = .29 * a.innerWidth;
+        f = f > 300 ? 300 : f;
+        var g = 10, h = 10, i = .0052 * a.innerHeight, j = i / 5.5, k = 10, l = 0, b = a.innerWidth / a.innerHeight;
+        b > 15 / 9 && (l = 30);
+        for (var m = [], n = 0; 5 > n; n++) {
+            var o = [ 372 * j, 210 * j, 318 * j, 304 * j, 395 * j ][n];
+            m.push({
+                x: e,
+                y: c + n * d,
+                width: o,
+                height: d,
+                fontSize: i,
+                opacity: .1
+            });
+        }
+        m.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 0
+        }), m.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), m.push({
+            x: e - 60,
+            y: c - 5,
+            width: 160,
+            height: 10 * i,
+            fontSize: i / 2.5,
+            opacity: 1
+        }), m.push({
+            x: e - 60,
+            y: c + .5 * d - 5,
+            width: 64,
+            height: 10 * i,
+            fontSize: i / 2.5,
+            opacity: 1
+        }), this.mc.addState("home", new State("home", m));
+        var p = [];
+        this.mc.removeState("agenda"), p.push({
+            x: k + 40,
+            y: c - d,
+            width: 372 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        });
+        for (var n = 1; 5 > n; n++) p.push({
+            x: k,
+            y: c + n * d,
+            width: f,
+            height: d,
+            fontSize: 0,
+            opacity: .5
+        });
+        p.push({
+            x: g,
+            y: h,
+            width: 100,
+            height: 100,
+            fontSize: 0,
+            opacity: 1
+        }), p.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), p.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), p.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("agenda", new State("agenda", p));
+        var q = [];
+        this.mc.removeState("vita");
+        for (var n = 0; 5 > n; n++) 1 == n ? q.push({
+            x: .3 * a.innerWidth,
+            y: c + n * d,
+            width: 230 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        }) : q.push({
+            x: k,
+            y: c + n * d,
+            width: f,
+            height: d,
+            fontSize: 0,
+            opacity: .5
+        });
+        q.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), q.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), q.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), q.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("vita", new State("vita", q));
+        var r = [];
+        this.mc.removeState("hören");
+        for (var n = 0; 5 > n; n++) 2 == n ? r.push({
+            x: k + 64,
+            y: c + n * d,
+            width: 318 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        }) : r.push({
+            x: k,
+            y: c + n * d,
+            width: f,
+            height: d,
+            fontSize: 0,
+            opacity: .5
+        });
+        r.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), r.push({
+            x: 5,
+            y: c + 2.65 * d,
+            width: a.innerHeight / 14,
+            height: a.innerHeight / 14,
+            fontSize: 0,
+            opacity: 1
+        }), r.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), r.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("hören", new State("hören", r));
+        var s = [];
+        this.mc.removeState("sehen");
+        for (var n = 0; 5 > n; n++) 3 == n ? s.push({
+            x: .25 * a.innerWidth,
+            y: c + n * d,
+            width: 304 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        }) : s.push({
+            x: k,
+            y: c + n * d,
+            width: f,
+            height: d,
+            fontSize: 0,
+            opacity: .5
+        });
+        s.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), s.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), s.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), s.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("sehen", new State("sehen", s));
+        for (var t = [], n = 0; 5 > n; n++) 4 == n ? t.push({
+            x: .25 * a.innerWidth,
+            y: c + n * d,
+            width: 395 * j,
+            height: d,
+            fontSize: i - .5,
+            opacity: 1
+        }) : t.push({
+            x: k,
+            y: c + n * d,
+            width: f,
+            height: d,
+            fontSize: 0,
+            opacity: .5
+        });
+        t.push({
+            x: g,
+            y: h,
+            width: 128,
+            height: 128,
+            fontSize: 0,
+            opacity: 1
+        }), t.push({
+            x: -130,
+            y: c + 2.65 * d,
+            width: 64,
+            height: 64,
+            fontSize: 0,
+            opacity: 0
+        }), t.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), t.push({
+            x: e - 50,
+            y: c - 30,
+            width: 128,
+            height: 10 * i,
+            fontSize: 0,
+            opacity: 0
+        }), this.mc.addState("kontakt", new State("kontakt", t));
     }, d.prototype._detectBrowser = function() {
         var a, b, c, d = (navigator.appVersion, navigator.userAgent), e = navigator.appName, f = "" + parseFloat(navigator.appVersion), g = parseInt(navigator.appVersion, 10);
         -1 != (b = d.indexOf("Opera")) && (e = "Opera", f = d.substring(b + 6), -1 != (b = d.indexOf("Version")) && (f = d.substring(b + 8))), 
@@ -588,7 +900,7 @@ var Content = function(a, b, c) {
                     };
                     b.datum = i.toLocaleDateString("de-De", j).replace(":", "h"), $.each(b.besetzung, function(a, b) {
                         d += "-" != a.substring(0, 1) ? "<div class='zeile'><span class='rolle'>" + a + ":</span><span class='darsteller'>" + b + "</span></div>" : "<div class='zeile'><div class = 'one-line'>" + b + "</div></div>";
-                    }), c += '<div class="event">\n							<div class="event-up">\n								<div class="komponist">' + b.komponist + '</div>\n								<div class="title">' + b.title + '</div>\n								<div class="ort">' + b.ort + '</div>\n							</div> \n							<div class="event-date">\n								<div class="datum">' + b.datum + "</div>\n							</div>", 
+                    }), c += '<div class="event">\r\n							<div class="event-up">\r\n								<div class="komponist">' + b.komponist + '</div>\r\n								<div class="title">' + b.title + '</div>\r\n								<div class="ort">' + b.ort + '</div>\r\n							</div> \r\n							<div class="event-date">\r\n								<div class="datum">' + b.datum + "</div>\r\n							</div>", 
                     void 0 !== b.image ? (c += '<div class="card flippable"><div class="event-low flipped"><div class="besetzung">' + d + "</div></div>", 
                     c += ' <div class="event-image"> <img src ="' + b.image + '"/> </div></div>') : c += '<div class="card"><div class="event-low"><div class="besetzung">' + d + "</div></div></div>", 
                     c += "</div>";
@@ -917,22 +1229,6 @@ var Content = function(a, b, c) {
         var a = AudioPlayer;
         a.audioElementsLoaded += 1, a.audioElementsLoaded == a.audioElements.length;
     }
-}, events = {
-    events: {},
-    on: function(a, b) {
-        this.events[a] = this.events[a] || [], this.events[a].push(b);
-    },
-    off: function(a, b) {
-        if (this.events[a]) for (var c = 0; c < this.events[a].length; c++) if (this.events[a][c] === b) {
-            this.events[a].splice(c, 1);
-            break;
-        }
-    },
-    emit: function(a, b) {
-        this.events[a] && this.events[a].forEach(function(a) {
-            a(b);
-        });
-    }
 }, Gallery = {
     html: "",
     isOrientationChecked: !1,
@@ -1258,25 +1554,4 @@ var Item = function() {
         this._height = d || this._height, this._fontSize = e || this._fontSize, this._opacity = f || this._opacity, 
         this._animateXY(g._x, g._y, function() {}, .1);
     }, a;
-}(), State = function() {
-    function a(a, b) {
-        this._name = a, this.x = [], this.y = [], this.width = [], this.height = [], this.fontSize = [], 
-        this.opacity = [];
-        for (var c = 0; c < b.length; c++) this.x.push(b[c].x), this.y.push(b[c].y), this.width.push(b[c].width), 
-        this.height.push(b[c].height), this.fontSize.push(b[c].fontSize), this.opacity.push(b[c].opacity);
-    }
-    return a.prototype.getName = function() {
-        return this._name;
-    }, a;
-}(), MenuStates = function(a, b, c) {
-    function d() {
-        this._numberItems = 0, this._states = [];
-    }
-    return d.prototype.addState = function(a, b) {
-        b instanceof State ? (this._states[a] = b, this._numberOfItems = this._states.length) : console.log("MenuStates: Couldn't add state " + b + ".");
-    }, d.prototype.removeState = function(a) {
-        delete this._states[a], this._numberOfItems = this._states.length;
-    }, d.prototype.getState = function(a) {
-        return this._states[a];
-    }, d;
-}(window, document);
+}();
